@@ -1,5 +1,3 @@
-import { IArtists } from './ArtistsInterface';
-
 export interface IUser extends Document {
   [x: string]: any;
   _id: string;

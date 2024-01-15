@@ -11,6 +11,7 @@ const departmentSchema: Schema = new Schema(
     },
     active: Boolean,
     isAvailable: Boolean,
+    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
   },
   { timestamps: true }
 );

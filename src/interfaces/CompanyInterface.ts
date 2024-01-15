@@ -1,4 +1,4 @@
-export interface IEvents extends Document {
+export interface ICompany extends Document {
   _id: string;
   icon: {
     thumbnail: string;

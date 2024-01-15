@@ -1,13 +1,9 @@
-
 import { Router } from 'express';
-import artistController from './controllers/artistController';
+import companyController from './controllers/companyController';
 
-export const artistRouter = Router();
-artistRouter.get('/artists', artistController.listAllArtist);
-artistRouter.get('/artist/:artistId',  artistController.listOneArtist);
-artistRouter.post('/artist', artistController.saveArtist);
-artistRouter.put('/artist/:artistId', artistController.updateArtist);
-artistRouter.delete('/artist/:artistId', artistController.deleteArtist);
-
-
-
+export const companyRouter = Router();
+companyRouter.get('/company', companyController.listAllCompany);
+companyRouter.get('/company/:companyId', companyController.listOneCompany);
+companyRouter.post('/company', companyController.saveCompany);
+companyRouter.put('/company/:companyId', companyController.updateCompany);
+companyRouter.delete('/company/:companyId', companyController.deleteCompany);

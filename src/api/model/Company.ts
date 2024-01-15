@@ -1,15 +1,18 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import mongoose, { Model, Schema } from 'mongoose';
-import { IEvents } from '../../interfaces/CompanyInterface';
+import { ICompany } from '../../interfaces/CompanyInterface';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 
 const companySchema: Schema = new Schema(
   {
+    icon: {
+      thumbnail: String,
+      name: String,
+    },
     companyName: {
       type: String,
       required: true,
     },
-    address: String,
     active: Boolean,
     isAvailable: Boolean,
   },
@@ -17,5 +20,5 @@ const companySchema: Schema = new Schema(
 );
 
 // Export the model and return your IUser interface
-export const Event: Model<IEvents> =
-  mongoose.models.Event || mongoose.model('event', companySchema);
+export const Company: Model<ICompany> =
+  mongoose.models.Company || mongoose.model('Company', companySchema);

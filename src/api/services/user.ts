@@ -1,0 +1,71 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import bcrypt from 'bcrypt';
+import { User } from '../model/User';
+import { IUser, IUserRegister } from '../../interfaces/UserInterface';
+import { handleMongoError } from '../../util/errors/api-error';
+import { ISearch } from '../../interfaces/app/search';
+export default class AuthService {
+  public static async findAllUser({ limit, page }: ISearch) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const result = await User.find({})
+          .limit(Number(limit))
+          .skip(Number(page))
+          .populate('permission', '_id  id role type');
+        resolve(result);
+      } catch (error: unknown) {
+        reject(handleMongoError(error));
+      }
+    });
+  }
+  public static async findOneUser(userId: string) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const result = (await User.findById(userId).populate(
+          'permission',
+          '_id  id role type'
+        )) as IUser;
+        resolve(result);
+      } catch (error: unknown) {
+        reject(handleMongoError(error));
+      }
+    });
+  }
+  public static async saveUser(user: IUserRegister) {
+    return new Promise(async function (resolve, reject) {
+      console.log(user);
+      try {
+        const result = await User.create(user);
+        result.password = undefined;
+        resolve(result);
+      } catch (error: unknown) {
+        reject(handleMongoError(error));
+      }
+    });
+  }
+  public static async updateUser(userId: string, user: IUserRegister) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const result = await User.findByIdAndUpdate(
+          { _id: userId },
+          { $set: user },
+          { new: false }
+        );
+        resolve(result);
+      } catch (error: unknown) {
+        reject(handleMongoError(error));
+      }
+    });
+  }
+
+  public static async deleteUser(userId: string) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const result = await User.findByIdAndDelete(userId);
+        resolve(result);
+      } catch (error: unknown) {
+        reject(handleMongoError(error));
+      }
+    });
+  }
+}

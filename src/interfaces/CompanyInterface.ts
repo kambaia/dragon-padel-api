@@ -1,17 +1,17 @@
-export interface ICompany extends Document {
+export interface ICompany {
   _id: string;
-  icon: {
-    thumbnail: string;
-    name: string;
-  };
+  thumbnail: string;
   companyName: string;
   active: boolean;
   isAvailable: string;
 }
 
-export interface Idepartment extends Document {
+export interface IDepartment extends Document {
   _id: string;
   departmentName: string;
   active: boolean;
   isAvailable: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  company: ICompany;
 }

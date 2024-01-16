@@ -5,10 +5,7 @@ import { ICompany } from '../../interfaces/CompanyInterface';
 
 const companySchema: Schema = new Schema(
   {
-    icon: {
-      thumbnail: String,
-      name: String,
-    },
+    thumbnail: String,
     companyName: {
       type: String,
       required: true,

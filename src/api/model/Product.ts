@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import mongoose, { Model, Schema } from 'mongoose';
-import { IProdut } from '../../interfaces/ProdutosInterface';
+import { IProduct } from '../../interfaces/ProdutosInterface';
 
 const productSchema = new mongoose.Schema({
   name: {
@@ -26,5 +26,5 @@ const productSchema = new mongoose.Schema({
 });
 
 // Export the model and return your IUser interface
-export const Produt: Model<IProdut> =
-  mongoose.models.Produt || mongoose.model('Produt', productSchema);
+export const Product: Model<IProduct> =
+  mongoose.models.Product || mongoose.model('Product', productSchema);

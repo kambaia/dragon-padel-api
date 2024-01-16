@@ -1,4 +1,3 @@
-
 import { Router } from 'express';
 import rolesController from '../api/controllers/rolesControllers';
 export const roleRouter = Router();

@@ -21,7 +21,7 @@ const userSchema: Schema = new Schema(
     banned: { type: Boolean },
     active: { type: Boolean },
     permission: { type: mongoose.Schema.Types.ObjectId, ref: 'Roles' },
-    departament: { type: mongoose.Schema.Types.ObjectId, ref: 'Departament' },
+    department: { type: mongoose.Schema.Types.ObjectId, ref: 'Department' },
   },
   { timestamps: true }
 );

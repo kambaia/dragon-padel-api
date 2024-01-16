@@ -1,57 +1,66 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import bcrypt from 'bcrypt';
-import { User } from '../model/User';
+import { Product } from '../model/Product';
 import { IUser, IUserRegister } from '../../interfaces/UserInterface';
 import { handleMongoError } from '../../util/errors/api-error';
 import { ISearch } from '../../interfaces/app/search';
+import { IProduct } from '../../interfaces/ProdutosInterface';
 export default class AuthService {
-  public static async findAllUser({ limit, page }: ISearch) {
+  public static async findAllProduct({ limit, page }: ISearch) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await User.find({})
+        const result = await Product.find({})
           .limit(Number(limit))
           .skip(Number(page))
-          .populate('permission', '_id  id role type')
-          .populate({
-            path: 'department',
-            populate: { path: 'company' },
-          });
+          .populate('category', 'categoryName');
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));
       }
     });
   }
-  public static async findOneUser(userId: string) {
+  public static async findOneProduct(userId: string) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = (await User.findById(userId).populate(
-          'permission',
-          '_id  id role type'
-        )) as IUser;
+        const result = (await Product.findById(userId).populate(
+          'category',
+          '_id  categoryName'
+        )) as IProduct;
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));
       }
     });
   }
-  public static async saveUser(user: IUserRegister) {
+  public static async verifyProduct(produtName: string) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await User.create(user);
-        result.password = undefined;
+        const result = (await Product.findOne({
+          produtName: produtName,
+        }).populate('category', '_id  categoryName')) as IProduct;
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));
       }
     });
   }
-  public static async updateUser(userId: string, user: IUserRegister) {
+
+  public static async saveProduct(product: IProduct) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await User.findByIdAndUpdate(
-          { _id: userId },
-          { $set: user },
+        const result = await Product.create(product);
+        resolve(result);
+      } catch (error: unknown) {
+        reject(handleMongoError(error));
+      }
+    });
+  }
+  public static async updateProduct(productId: string, product: IProduct) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const result = await Product.findByIdAndUpdate(
+          { _id: productId },
+          { $set: product },
           { new: false }
         );
         resolve(result);
@@ -61,10 +70,10 @@ export default class AuthService {
     });
   }
 
-  public static async deleteUser(userId: string) {
+  public static async deleteProduct(userId: string) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await User.findByIdAndDelete(userId);
+        const result = await Product.findByIdAndDelete(userId);
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

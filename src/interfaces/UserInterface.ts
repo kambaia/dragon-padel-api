@@ -1,3 +1,5 @@
+import { IDepartment } from './CompanyInterface';
+
 export interface IUser extends Document {
   [x: string]: any;
   _id: string;
@@ -16,6 +18,7 @@ export interface IUser extends Document {
   createdAt: Date;
   updatedAt: Date;
   permission: Permission['_id'];
+  department: IDepartment;
 }
 
 export interface IUserRegister {

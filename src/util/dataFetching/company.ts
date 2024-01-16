@@ -1,15 +1,14 @@
 import { ICompany } from '../../interfaces/CompanyInterface';
 
-export const fetchAllDataAConpany = async (company: any[]) => {
+export const fetchAllDataAConpany = async (company: ICompany[]) => {
   let companyResultado: ICompany[] = [];
   for (let index in company) {
-    company.push({
-      id: company[index]._id,
-      responseDataCompany: company[index].companyName,
-      activeis_active: company[index].active ? 1 : 0,
-      banned: company[index].active ? 1 : 0,
-      updatedAt: company[index].updatedAt,
-      createdAt: company[index].createdAt,
+    companyResultado.push({
+      _id: company[index]._id,
+      thumbnail: company[index].thumbnail,
+      companyName: company[index].companyName,
+      active: company[index].active,
+      isAvailable: company[index].isAvailable,
     });
   }
   return companyResultado;
@@ -17,7 +16,7 @@ export const fetchAllDataAConpany = async (company: any[]) => {
 
 export const responseDataCompany = (data: any, page: number) => {
   return {
-    artists: data,
+    companys: data,
     currentPage: Number(page),
     hasMorePages: true,
     lastPage: Number(page),

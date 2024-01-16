@@ -1,24 +1,23 @@
 import { Request, Response } from 'express';
-import { fetchAllDataRole, responseDataRole } from '../../util/dataFetching/role';
-import { Role } from '../model/Access_Level';
+import {
+  fetchAllDataRole,
+  responseDataRole,
+} from '../../util/dataFetching/role';
+import { Role } from '../model/Permission';
 class UserController {
-
-
   public async listRoles(req: Request, res: Response): Promise<void> {
     const { limit, page } = req.query;
     try {
-      const users = await Role.find({})
-        .limit(Number(limit))
-        .skip(Number(page));
-	  if (!limit || !page) {
-	  const allDataUser = await fetchAllDataRole(users);
-	  const responseData = responseDataRole(allDataUser, Number(page));
-	  res.status(200).send(responseData);
-	  } else {
+      const users = await Role.find({}).limit(Number(limit)).skip(Number(page));
+      if (!limit || !page) {
+        const allDataUser = await fetchAllDataRole(users);
+        const responseData = responseDataRole(allDataUser, Number(page));
+        res.status(200).send(responseData);
+      } else {
         const allDataUser = await fetchAllDataRole(users);
         const responseData = responseDataRole(allDataUser, Number(0));
         res.status(200).send(responseData);
-	  }
+      }
     } catch (error) {
       res.status(404).send(error);
     }
@@ -40,18 +39,19 @@ class UserController {
     }
   }
 
-
   public async saveRoles(req: Request, res: Response): Promise<Response> {
     try {
-		     const { level,  role } = req.body;
-      const resultRole = await Role.find({ level:level,  role: role });
+      const { level, role } = req.body;
+      const resultRole = await Role.find({ level: level, role: role });
       if (resultRole.length > 0) {
         return res.status(409).json({ message: 'O nivel de acesso já existe' });
       }
       const roles = await Role.create(req.body);
       return res.send(roles);
     } catch (error) {
-      return res.status(200).json({ message: 'Aconteceu um erro ao cadastrar', error });
+      return res
+        .status(200)
+        .json({ message: 'Aconteceu um erro ao cadastrar', error });
     }
   }
 
@@ -62,7 +62,7 @@ class UserController {
       const user = await Role.findByIdAndUpdate(
         { _id: roleId },
         { $set: data },
-        { new: false },
+        { new: false }
       );
       res.status(204).json({
         message: 'Informações actualizada com sucesso',
@@ -75,7 +75,6 @@ class UserController {
     }
   }
 
-  
   public async deleteRole(req: Request, res: Response): Promise<Response> {
     try {
       const { userId } = req.params;
@@ -89,7 +88,5 @@ class UserController {
     }
   }
 }
-
-
 
 export default new UserController();

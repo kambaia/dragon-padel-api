@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import mongoose, { Model, Schema } from 'mongoose';
-import { Idepartment } from '../../interfaces/CompanyInterface';
+import { IDepartment } from '../../interfaces/CompanyInterface';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 
 const departmentSchema: Schema = new Schema(
@@ -15,5 +15,5 @@ const departmentSchema: Schema = new Schema(
   },
   { timestamps: true }
 );
-export const Department: Model<Idepartment> =
+export const Department: Model<IDepartment> =
   mongoose.models.Department || mongoose.model('Department', departmentSchema);

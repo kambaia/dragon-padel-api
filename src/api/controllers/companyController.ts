@@ -12,9 +12,9 @@ class CompanyController {
       const company = await Company.find({})
         .limit(Number(limit))
         .skip(Number(page));
-
-      const allDataUser = await fetchAllDataAConpany(company);
-      const responseData = responseDataCompany(allDataUser, Number(0));
+      const allDataCompany = await fetchAllDataAConpany(company);
+      console.log(allDataCompany);
+      const responseData = responseDataCompany(allDataCompany, Number(0));
       res.status(200).send(responseData);
     } catch (error) {
       res.status(404).send(error);
@@ -23,8 +23,8 @@ class CompanyController {
 
   public async listOneCompany(req: Request, res: Response): Promise<void> {
     try {
-      const { CompanyId } = req.params;
-      const company = (await Company.findById(CompanyId)) as ICompany;
+      const { companyId } = req.params;
+      const company = (await Company.findById(companyId)) as ICompany;
       if (company) {
         res.status(200).send(Company);
       } else {
@@ -39,18 +39,24 @@ class CompanyController {
 
   public async saveCompany(req: Request, res: Response): Promise<void> {
     try {
+      const inputs = {
+        companyName: req.body.companyName,
+        active: true,
+        isAvailable: true,
+        thumbnail: req.file?.filename,
+      };
       const company = await Company.find({
-        $or: [{ CompanyName: req.body.CompanyName }],
+        $or: [{ companyName: req.body.companyName }],
       });
-      if (Company.length > 0) {
+      if (company.length > 0) {
         res
           .status(409)
-          .json({ error: 'Esse nome de usuário já existe. Experimente outro' });
+          .json({ error: 'Esse nome de empresa já existe. Experimente outro' });
       } else {
-        const data = await Company.create(req.body);
+        const data = await Company.create(inputs);
 
         const companydata = {
-          profile: data.icon,
+          profile: data.thumbnail,
           CompanyName: data.companyName,
           id: data._id,
         };
@@ -66,9 +72,9 @@ class CompanyController {
   public async updateCompany(req: Request, res: Response): Promise<void> {
     try {
       const data = req.body;
-      const { CompanyId } = req.params;
+      const { companyId } = req.params;
       const company = await Company.findByIdAndUpdate(
-        { _id: CompanyId },
+        { _id: companyId },
         { $set: data },
         { new: false }
       );
@@ -85,8 +91,8 @@ class CompanyController {
 
   public async deleteCompany(req: Request, res: Response): Promise<Response> {
     try {
-      const { CompanyId } = req.params;
-      const company = await Company.findByIdAndDelete(CompanyId);
+      const { companyId } = req.params;
+      const company = await Company.findByIdAndDelete(companyId);
       if (company) {
         return res.status(204).send('Deletado com sucesso');
       }

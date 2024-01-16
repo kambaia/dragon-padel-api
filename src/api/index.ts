@@ -2,7 +2,10 @@ import express from 'express';
 import { roleRouter } from './roles';
 import { userRouter } from './user';
 import { sessionRouter } from './session';
-
+import { categoryRouter } from './category';
+import { companyRouter } from './company';
+import { productRouter } from './product';
+import { departmentRouter } from './department';
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -17,4 +20,9 @@ router.get('/', (req, res) => {
 router.use(sessionRouter);
 router.use(userRouter);
 router.use(roleRouter);
+roleRouter.use(categoryRouter);
+roleRouter.use(companyRouter);
+roleRouter.use(productRouter);
+roleRouter.use(departmentRouter);
+
 export default router;

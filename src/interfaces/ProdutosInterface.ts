@@ -1,4 +1,3 @@
-import { IArtists } from './ArtistsInterface';
 import { IUser } from './UserInterface';
 export interface IProdutoCategory {
   _id: string;
@@ -7,7 +6,7 @@ export interface IProdutoCategory {
   active: Boolean;
   isAvailable: Boolean;
 }
-export interface IProdut extends Document {
+export interface IProduct extends Document {
   _id: string;
   produtName: string;
   brand: string;
@@ -30,7 +29,7 @@ export interface IDelivery {
   _id: string;
   receivedBy: IUser['_id'];
   beneficiary: IUser['_id'];
-  product: IProdut['_id'];
+  product: IProduct['_id'];
   deliveryDate: Date;
   deliveryQuantity: number;
   additionalAccessorie: IAdditionalAccessorie[];

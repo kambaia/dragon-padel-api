@@ -17,6 +17,7 @@ class UserController {
     const { limit = 25, page = 0 } = req.query as unknown as ISearch;
     try {
       const user = (await UserService.findAllUser({ limit, page })) as any;
+      console.log(user);
       const allDataUser = await fetchAllDataUser(user);
       const responseData = responseDataUser(allDataUser, Number(0));
       res.status(200).send(responseData);

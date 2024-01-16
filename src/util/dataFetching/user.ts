@@ -1,17 +1,20 @@
-export const fetchAllDataUser = async (users: any[]) => {
+import { IUser } from '../../interfaces/UserInterface';
+
+export const fetchAllDataUser = async (users: IUser[]) => {
   let user = [];
   for (let index in users) {
     user.push({
+      id: users[index]._id,
       firstName: users[index].firstName,
       surname: users[index].surname,
       fullName: users[index].fullName,
       userName: users[index].userName,
       createdAt: users[index].createdAt,
       email: users[index].email,
-      id: users[index]._id,
-      is_active: users[index].active ? 1 : 0,
+      is_active: users[index].active,
       phoneNumber: users[index].phoneNumber,
       permission: users[index].permission,
+      department: users[index].department,
       profile: users[index].profile,
       updatedAt: users[index].updatedAt,
     });

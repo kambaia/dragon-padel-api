@@ -4,8 +4,8 @@ export interface IUser extends Document {
   [x: string]: any;
   _id: string;
   profile: {
-    thumbnail: { type: String };
-    name: { type: String };
+    thumbnail: string;
+    name: string;
   };
   firstName: string;
   surName: string;

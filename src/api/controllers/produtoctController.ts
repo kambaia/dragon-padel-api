@@ -58,7 +58,11 @@ class ProductController {
           .status(409)
           .json({ error: 'Esse produto já existe. Experimente outro' });
       } else {
-        const data = (await ProductService.saveProduct(req.body)) as IProduct;
+        const inputs = {
+          productCover: req.file?.filename,
+          ...req.body,
+        };
+        const data = (await ProductService.saveProduct(inputs)) as IProduct;
 
         const dataProduct = {
           productName: data.produtName,

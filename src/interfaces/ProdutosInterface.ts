@@ -10,26 +10,28 @@ export interface IProduct extends Document {
   _id: string;
   produtName: string;
   brand: string;
-  image: string;
+  productCover: string;
   model: string;
   specification: string;
   technicalDescription: string;
   description: string;
   condition: string;
   sourceOfPurchase: string;
-  purchaseDate: Date;
+  purchaseDate: string;
   invoice: string;
   status: string;
-  categoryId: string;
+  category: string;
   active: boolean;
   isAvailable: string;
+  registerby: IUser;
 }
 
 export interface IDelivery {
   _id: string;
+  deliveredBy: IUser['_id'];
   receivedBy: IUser['_id'];
   beneficiary: IUser['_id'];
-  product: IProduct['_id'];
+  product: IProduct;
   deliveryDate: Date;
   deliveryQuantity: number;
   additionalAccessorie: IAdditionalAccessorie[];

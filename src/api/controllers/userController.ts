@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { IUser } from '../../interfaces/UserInterface';
+import { IUser, IUserRegister } from '../../interfaces/UserInterface';
 import {
   fetchAllDataUser,
   responseDataUser,
@@ -17,7 +17,7 @@ class UserController {
     const { limit = 25, page = 0 } = req.query as unknown as ISearch;
     try {
       const user = (await UserService.findAllUser({ limit, page })) as any;
-      console.log(user);
+
       const allDataUser = await fetchAllDataUser(user);
       const responseData = responseDataUser(allDataUser, Number(0));
       res.status(200).send(responseData);
@@ -54,7 +54,14 @@ class UserController {
       } else {
         const newpassword = await hash(req.body.password, 8);
         req.body.password = newpassword;
-        const data = (await UserService.saveUser(req.body)) as any;
+        const inputs = {
+          profile: {
+            thumbnail: req.file?.filename,
+            name: req.file?.originalname,
+          },
+          ...req.body,
+        };
+        const data = (await UserService.saveUser(inputs)) as any;
         const userdata = {
           profile: data.profile,
           fullName: data.fullName,

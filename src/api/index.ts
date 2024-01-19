@@ -6,6 +6,7 @@ import { categoryRouter } from './category';
 import { companyRouter } from './company';
 import { productRouter } from './product';
 import { departmentRouter } from './department';
+import { deliveryRouter } from './delivery';
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -24,5 +25,6 @@ roleRouter.use(categoryRouter);
 roleRouter.use(companyRouter);
 roleRouter.use(productRouter);
 roleRouter.use(departmentRouter);
+roleRouter.use(deliveryRouter);
 
 export default router;

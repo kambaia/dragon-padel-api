@@ -15,12 +15,12 @@ const deliverySchema: Schema = new Schema(
       ref: 'User', // Assuming User model for the one who received
       required: true,
     },
-    beneficiaryId: {
+    beneficiary: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User', // Assuming User model for the beneficiary
       required: true,
     },
-    productId: {
+    product: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Product', // Assuming Product model for the delivered product
       required: true,

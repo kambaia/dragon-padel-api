@@ -5,6 +5,7 @@ export const fetchAllDataUser = async (users: IUser[]) => {
   for (let index in users) {
     user.push({
       id: users[index]._id,
+      profile: users[index].profile,
       firstName: users[index].firstName,
       surname: users[index].surname,
       fullName: users[index].fullName,
@@ -14,8 +15,12 @@ export const fetchAllDataUser = async (users: IUser[]) => {
       is_active: users[index].active,
       phoneNumber: users[index].phoneNumber,
       permission: users[index].permission,
-      department: users[index].department,
-      profile: users[index].profile,
+      department: {
+        departmentName: users[index]?.department?.departmentName,
+        companyName: users[index]?.department?.company.companyName,
+        companyIcon: users[index]?.department?.company.thumbnail,
+      },
+
       updatedAt: users[index].updatedAt,
     });
   }

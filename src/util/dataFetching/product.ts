@@ -6,7 +6,22 @@ export const fetchAllDataProduct = async (product: IProduct[]) => {
   for (let index in product) {
     productResult.push({
       _id: product[index]._id,
-      active: product[index].active ? true : false,
+      image: product[index].productCover,
+      model: product[index].model,
+      brand: product[index].brand,
+      specification: product[index].specification,
+      technicalDescription: product[index].technicalDescription,
+      description: product[index].description,
+      condition: product[index].condition,
+      sourceOfPurchase: product[index].sourceOfPurchase,
+      purchaseDate: product[index].purchaseDate,
+      invoice: product[index].invoice,
+      active: product[index].active,
+      isAvailable: product[index].isAvailable,
+      registerbay: {
+        userName: product[index]?.registerby.fullName,
+        userProfile: product[index]?.registerby.profile,
+      },
     });
   }
   return productResult;

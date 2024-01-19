@@ -3,26 +3,30 @@ import mongoose, { Model, Schema } from 'mongoose';
 import { IProduct } from '../../interfaces/ProdutosInterface';
 
 const productSchema = new mongoose.Schema({
-  name: {
+  productName: {
     type: String,
     required: true,
   },
-  image: String,
-  categoryId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category', // Make sure you have a model for Category
-  },
+  productCover: String,
   model: String,
   brand: String,
   specification: String,
-  TechnicalDescription: String,
+  technicalDescription: String,
   description: String,
   condition: String,
   sourceOfPurchase: String,
-  purchaseDate: Date,
+  purchaseDate: String,
   invoice: String,
   active: Boolean,
   isAvailable: Boolean,
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'ProdutoCategory', // Make sure you have a model for Category
+  },
+  registerby: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User', // Make sure you have a model for user
+  },
 });
 
 // Export the model and return your IUser interface

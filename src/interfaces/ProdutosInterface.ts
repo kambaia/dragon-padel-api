@@ -5,6 +5,8 @@ export interface IProdutoCategory {
   description: string;
   active: Boolean;
   isAvailable: Boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 export interface IProduct extends Document {
   _id: string;

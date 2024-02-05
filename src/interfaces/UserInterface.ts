@@ -17,7 +17,7 @@ export interface IUser extends Document {
   active: boolean;
   createdAt: Date;
   updatedAt: Date;
-  permission: Permission['_id'];
+  permission: Permission;
   department: IDepartment;
 }
 
@@ -52,7 +52,7 @@ export interface Contact {
 
 export interface Permission extends Document {
   _id: string;
-  livel: number;
+  level: number;
   role: string;
   type: string;
   createdAt: Date;

@@ -6,15 +6,26 @@ import { Request, Response } from 'express';
  */
 import { ProdutoCategory as Category } from '../model/ProdutoCategorySchema';
 import { ICompany } from '../../interfaces/CompanyInterface';
+import {
+  fetchAllDataUser,
+  responseDataUser,
+} from '../../util/dataFetching/user';
+import {
+  fetchAllDataCategory,
+  responseDataCategory,
+} from '../../util/dataFetching/category';
 
 class ProdutoCategoryController {
   public async listAllCategory(req: Request, res: Response): Promise<void> {
     const { limit = 25, page } = req.query;
     try {
-      const company = await Category.find({})
+      const category = await Category.find({})
         .limit(Number(limit))
         .skip(Number(page));
-      res.status(200).send(company);
+      const allDataUser = await fetchAllDataCategory(category);
+      const responseData = responseDataCategory(allDataUser, Number(0));
+      console.log(responseData);
+      res.status(200).send(responseData);
     } catch (error) {
       res.status(404).send(error);
     }

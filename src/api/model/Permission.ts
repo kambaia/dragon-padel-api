@@ -4,8 +4,9 @@ import mongoose, { Model, Schema } from 'mongoose';
 import { Permission } from '../../interfaces/UserInterface';
 const Access_LevelSchema: Schema = new Schema(
   {
+    level: { type: Number, required: true },
     role: {
-      type: Number,
+      type: String,
       required: true,
     },
     type: {

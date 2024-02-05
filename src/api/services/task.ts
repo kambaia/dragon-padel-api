@@ -39,35 +39,28 @@ export default class AuthService {
     });
   }
   public static async createTaskAndAssociateAssignment(
-    task: IAssignment,
+    assignmentInputs: IAssignment,
     taskId: string
   ) {
     return new Promise(async function (resolve, reject) {
       const createTaskAndAssociateAssignment = async () => {
         try {
-          const task = await Task.create({
-            description: 'Complete Report',
-            priority: 'High',
-            statusTask: false,
-          });
-
-          const assignment = await Assignment.create({
-            assignee: 'John',
-            startDate: new Date('2024-01-21'),
-            endDate: new Date('2024-01-22'),
-            progress: true,
-            completed: false,
-            started: true,
-            priority: 'High',
-            description: 'Report assignment',
-          });
-
+          const task = await Task.findById(taskId);
           // Associate assignment with the task
-
-          task.assignments.push(assignment);
-          await task.save();
-
-          resolve(task);
+          if (task) {
+            const assignment = await Assignment.create(assignmentInputs);
+            task.assignments.push(assignment);
+            const result = await User.findByIdAndUpdate(
+              { _id: taskId },
+              { $set: task },
+              { new: false }
+            );
+            resolve(result);
+          } else {
+            reject({
+              message: `Não foi encontrada nenhuma tarefa com este id=>${taskId}`,
+            });
+          }
         } catch (error: unknown) {
           reject(handleMongoError(error));
         }

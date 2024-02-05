@@ -1,4 +1,5 @@
 import { IUser } from '../../interfaces/UserInterface';
+import { formatDate } from '../time';
 
 export const fetchAllDataUser = async (users: IUser[]) => {
   let user = [];
@@ -9,19 +10,15 @@ export const fetchAllDataUser = async (users: IUser[]) => {
       firstName: users[index].firstName,
       surname: users[index].surname,
       fullName: users[index].fullName,
-      userName: users[index].userName,
-      createdAt: users[index].createdAt,
       email: users[index].email,
       is_active: users[index].active,
       phoneNumber: users[index].phoneNumber,
-      permission: users[index].permission,
-      department: {
-        departmentName: users[index]?.department?.departmentName,
-        companyName: users[index]?.department?.company.companyName,
-        companyIcon: users[index]?.department?.company.thumbnail,
-      },
-
+      type: users[index].permission?.type,
+      departmentName: users[index]?.department?.departmentName,
+      companyName: users[index]?.department?.company.companyName,
       updatedAt: users[index].updatedAt,
+      banned: users[index].banned,
+      createdAt: formatDate(users[index].createdAt),
     });
   }
   return user;

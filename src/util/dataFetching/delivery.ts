@@ -2,21 +2,22 @@ import { IDelivery } from '../../interfaces/ProdutosInterface';
 
 export const fetchAllDatadelivery = async (product: IDelivery[]) => {
   let productResult = [];
-  for (let index in product) {
+  for (const [index, pd] of product.entries()) {
     productResult.push({
-      _id: product[index]._id,
-      deliveredBy: product[index].deliveredBy,
-      receivedBy: product[index].receivedBy,
-      beneficiary: product[index].beneficiary,
-      deliveryQuantity: product[index].deliveryQuantity,
-      deliveryDate: product[index].deliveryDate,
+      id: index + 1,
+      _id: pd._id,
+      deliveredBy: pd.deliveredBy,
+      receivedBy: pd.receivedBy,
+      beneficiary: pd.beneficiary,
+      deliveryQuantity: pd.deliveryQuantity,
+      deliveryDate: pd.deliveryDate,
       product: {
-        productName: product[index]?.product.produtName,
-        productCover: product[index]?.product.productCover,
-        productId: product[index].product._id,
+        productName: pd?.product.produtName,
+        productCover: pd?.product.productCover,
+        productId: pd.product._id,
       },
-      active: product[index].active,
-      isAvailable: product[index].isAvailable,
+      active: pd.active,
+      isAvailable: pd.isAvailable,
     });
   }
   return productResult;

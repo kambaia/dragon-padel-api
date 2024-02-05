@@ -2,26 +2,27 @@ import { IUser } from '../../interfaces/UserInterface';
 import { formatDate } from '../time';
 
 export const fetchAllDataUser = async (users: IUser[]) => {
-  let user = [];
-  for (let index in users) {
-    user.push({
-      id: users[index]._id,
-      profile: users[index].profile,
-      firstName: users[index].firstName,
-      surname: users[index].surname,
-      fullName: users[index].fullName,
-      email: users[index].email,
-      is_active: users[index].active,
-      phoneNumber: users[index].phoneNumber,
-      type: users[index].permission?.type,
-      departmentName: users[index]?.department?.departmentName,
-      companyName: users[index]?.department?.company.companyName,
-      updatedAt: users[index].updatedAt,
-      banned: users[index].banned,
-      createdAt: formatDate(users[index].createdAt),
+  let userArray = [];
+  for (const [index, user] of users.entries()) {
+    userArray.push({
+      id: index + 1,
+      _id: user._id,
+      profile: user.profile,
+      firstName: user.firstName,
+      surname: user.surname,
+      fullName: `${user.firstName} ${user?.surname}`,
+      email: user.email,
+      is_active: user.active,
+      phoneNumber: user.phoneNumber,
+      type: user.permission?.type,
+      departmentName: user?.department?.departmentName,
+      companyName: user?.department?.company.companyName,
+      updatedAt: user.updatedAt,
+      banned: user.banned,
+      createdAt: formatDate(user.createdAt),
     });
   }
-  return user;
+  return userArray;
 };
 
 export const responseDataUser = (data: any, page: number) => {

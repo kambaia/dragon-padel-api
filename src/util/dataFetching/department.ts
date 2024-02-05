@@ -2,14 +2,15 @@ import { ICompany, IDepartment } from '../../interfaces/CompanyInterface';
 
 export const fetchAllDataDepartment = async (department: IDepartment[]) => {
   let departmentResult = [];
-  for (let index in department) {
+  for (const [index, dp] of department.entries()) {
     departmentResult.push({
-      _id: department[index]._id,
-      IconCompany: department[index].company.thumbnail,
-      companyName: department[index].company.companyName,
-      departmentName: department[index].departmentName,
-      active: department[index].active,
-      isAvailable: department[index].isAvailable,
+      id: index + 1,
+      _id: dp._id,
+      IconCompany: dp.company.thumbnail,
+      companyName: dp.company.companyName,
+      departmentName: dp.departmentName,
+      active: dp.active,
+      isAvailable: dp.isAvailable,
     });
   }
   return departmentResult;

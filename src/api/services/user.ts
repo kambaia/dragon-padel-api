@@ -15,7 +15,8 @@ export default class AuthService {
           .populate({
             path: 'department',
             populate: { path: 'company' },
-          });
+          })
+          .sort({ createdAt: -1 });
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

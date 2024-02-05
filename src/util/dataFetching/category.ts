@@ -3,14 +3,15 @@ import { formatDate } from '../time';
 
 export const fetchAllDataCategory = async (category: IProdutoCategory[]) => {
   let categoryResult = [];
-  for (let index in category) {
+  for (const [index, ct] of category.entries()) {
     categoryResult.push({
-      id: category[index]._id,
-      categoryName: category[index]?.categoryName,
-      active: category[index].active,
-      isAvailable: category[index].isAvailable,
-      updatedAt: category[index].updatedAt,
-      createdAt: formatDate(category[index].createdAt),
+      index: index + 1,
+      id: ct._id,
+      categoryName: ct?.categoryName,
+      active: ct.active,
+      isAvailable: ct.isAvailable,
+      updatedAt: ct.updatedAt,
+      createdAt: formatDate(ct.createdAt),
     });
   }
   return categoryResult;

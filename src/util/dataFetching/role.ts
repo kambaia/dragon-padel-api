@@ -1,21 +1,20 @@
-
-export const fetchAllDataRole = async (roles: any[]) =>{
+export const fetchAllDataRole = async (roles: any[]) => {
   let user = [];
-  for (let index in roles) {
+  for (const [index, rol] of roles.entries()) {
     user.push({
-      id: roles[index]._id,
-      level: roles[index].level,
-      role: roles[index].role,
-      type: roles[index].type,
-      updatedAt: roles[index].updatedAt,
-      createdAt: roles[index].createdAt,
+      id: index + 1,
+      _id: rol._id,
+      level: rol.level,
+      role: rol.role,
+      type: rol.type,
+      updatedAt: rol.updatedAt,
+      createdAt: rol.createdAt,
     });
   }
   return user;
 };
 
-
-export const responseDataRole = (data: any, page: number)=>{
+export const responseDataRole = (data: any, page: number) => {
   return {
     roles: data,
     currentPage: Number(page),
@@ -26,4 +25,3 @@ export const responseDataRole = (data: any, page: number)=>{
     total: data.length,
   };
 };
-

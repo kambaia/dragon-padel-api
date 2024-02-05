@@ -3,24 +3,25 @@ import { IProduct } from '../../interfaces/ProdutosInterface';
 
 export const fetchAllDataProduct = async (product: IProduct[]) => {
   let productResult = [];
-  for (let index in product) {
+  for (const [index, pd] of product.entries()) {
     productResult.push({
-      _id: product[index]._id,
-      image: product[index].productCover,
-      model: product[index].model,
-      brand: product[index].brand,
-      specification: product[index].specification,
-      technicalDescription: product[index].technicalDescription,
-      description: product[index].description,
-      condition: product[index].condition,
-      sourceOfPurchase: product[index].sourceOfPurchase,
-      purchaseDate: product[index].purchaseDate,
-      invoice: product[index].invoice,
-      active: product[index].active,
-      isAvailable: product[index].isAvailable,
+      id: index + 1,
+      _id: pd._id,
+      image: pd.productCover,
+      model: pd.model,
+      brand: pd.brand,
+      specification: pd.specification,
+      technicalDescription: pd.technicalDescription,
+      description: pd.description,
+      condition: pd.condition,
+      sourceOfPurchase: pd.sourceOfPurchase,
+      purchaseDate: pd.purchaseDate,
+      invoice: pd.invoice,
+      active: pd.active,
+      isAvailable: pd.isAvailable,
       registerbay: {
-        userName: product[index]?.registerby.fullName,
-        userProfile: product[index]?.registerby.profile,
+        userName: pd?.registerby.fullName,
+        userProfile: pd?.registerby.profile,
       },
     });
   }

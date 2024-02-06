@@ -1,4 +1,5 @@
 import { ICompany, IDepartment } from '../../interfaces/CompanyInterface';
+import { formatDate } from '../time';
 
 export const fetchAllDataDepartment = async (department: IDepartment[]) => {
   let departmentResult = [];
@@ -11,6 +12,7 @@ export const fetchAllDataDepartment = async (department: IDepartment[]) => {
       departmentName: dp.departmentName,
       active: dp.active,
       isAvailable: dp.isAvailable,
+      createdAt: formatDate(dp.createdAt),
     });
   }
   return departmentResult;

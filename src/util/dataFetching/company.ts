@@ -1,4 +1,5 @@
 import { ICompany } from '../../interfaces/CompanyInterface';
+import { formatDate } from '../time';
 
 export const fetchAllDataAConpany = async (company: ICompany[]) => {
   let companyResultado = [];
@@ -10,6 +11,7 @@ export const fetchAllDataAConpany = async (company: ICompany[]) => {
       companyName: cn.companyName,
       active: cn.active,
       isAvailable: cn.isAvailable,
+      createdAt: formatDate(cn.createdAt),
     });
   }
   return companyResultado;

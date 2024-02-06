@@ -65,7 +65,7 @@ class ProductController {
         const data = (await ProductService.saveProduct(inputs)) as IProduct;
 
         const dataProduct = {
-          productName: data.produtName,
+          productName: data.productName,
           id: data._id,
         };
         res

@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.URL_MONGODB_LOCAL!);
+    await mongoose.connect('mongodb://127.0.0.1:27017/ti_system', { ssl: false });
     console.log('Conexão com o banco de dados estabelecida!');
   } catch (error) {
     console.error('Erro ao conectar ao banco de dados:', error);

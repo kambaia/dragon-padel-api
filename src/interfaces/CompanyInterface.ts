@@ -4,6 +4,8 @@ export interface ICompany {
   companyName: string;
   active: boolean;
   isAvailable: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface IDepartment extends Document {
@@ -11,7 +13,7 @@ export interface IDepartment extends Document {
   departmentName: string;
   active: boolean;
   isAvailable: boolean;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: Date;
+  updatedAt: Date;
   company: ICompany;
 }

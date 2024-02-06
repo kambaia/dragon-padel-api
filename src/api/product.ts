@@ -8,7 +8,7 @@ const upload = multer({ storage: storage });
 
 export const productRouter = Router();
 productRouter.get('/product', productController.listAllproduct);
-productRouter.get('/product/:productId', productController.listOneproduct);
+productRouter.get('/product/:productId', productController.listOneproduct); 
 productRouter.post(
   '/product',
   upload.single('productCover'),

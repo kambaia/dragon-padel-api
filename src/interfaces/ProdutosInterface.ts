@@ -10,7 +10,7 @@ export interface IProdutoCategory {
 }
 export interface IProduct extends Document {
   _id: string;
-  produtName: string;
+  productName: string;
   brand: string;
   productCover: string;
   model: string;

@@ -12,7 +12,7 @@ export const fetchAllDatadelivery = async (product: IDelivery[]) => {
       deliveryQuantity: pd.deliveryQuantity,
       deliveryDate: pd.deliveryDate,
       product: {
-        productName: pd?.product.produtName,
+        productName: pd?.product.productName,
         productCover: pd?.product.productCover,
         productId: pd.product._id,
       },

@@ -7,6 +7,7 @@ import db from './db/db';
 import api from './api';
 import MessageResponse from './interfaces/MessageResponse';
 import * as middlewares from './middlewares';
+import path from 'path';
 
 require('dotenv').config();
 
@@ -15,6 +16,10 @@ db();
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(cors());
+app.use(
+  '/files/user',
+  express.static(path.resolve(__dirname, '../public/img/user'))
+);
 app.use(express.json());
 
 app.get<{}, MessageResponse>('/', (req, res) => {

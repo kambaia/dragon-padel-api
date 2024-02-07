@@ -11,7 +11,8 @@ class CompanyController {
     try {
       const company = await Company.find({})
         .limit(Number(limit))
-        .skip(Number(page));
+        .skip(Number(page))
+        .sort({ createdAt: -1 });
       const allDataCompany = await fetchAllDataAConpany(company);
       console.log(allDataCompany);
       const responseData = responseDataCompany(allDataCompany, Number(0));

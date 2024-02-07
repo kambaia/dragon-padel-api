@@ -23,8 +23,16 @@ const userSchema: Schema = new Schema(
     permission: { type: mongoose.Schema.Types.ObjectId, ref: 'Roles' },
     department: { type: mongoose.Schema.Types.ObjectId, ref: 'Department' },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
+  }
 );
+userSchema.virtual('profile_url').get(function () {
+  return `http://localhost:5000/files/user/${this.profile?.thumbnail}`;
+});
 
 export const User: Model<IUser> =
   mongoose.models.User || mongoose.model('User', userSchema);

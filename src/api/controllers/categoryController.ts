@@ -21,7 +21,8 @@ class ProdutoCategoryController {
     try {
       const category = await Category.find({})
         .limit(Number(limit))
-        .skip(Number(page));
+        .skip(Number(page))
+        .sort({ createdAt: -1 });
       const allDataUser = await fetchAllDataCategory(category);
       const responseData = responseDataCategory(allDataUser, Number(0));
       console.log(responseData);

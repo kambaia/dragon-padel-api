@@ -51,27 +51,20 @@ class ProductController {
   }
 
   public async saveProduct(req: Request, res: Response): Promise<void> {
+    console.log(req.body);
+    console.log('', req.file);
     try {
-      const product = await ProductService.verifyProduct(req.body.productName);
-      if (product) {
-        res
-          .status(409)
-          .json({ error: 'Esse produto já existe. Experimente outro' });
-      } else {
-        const inputs = {
-          productCover: req.file?.filename,
-          ...req.body,
-        };
-        const data = (await ProductService.saveProduct(inputs)) as IProduct;
-
-        const dataProduct = {
-          productName: data.productName,
-          id: data._id,
-        };
-        res
-          .status(201)
-          .json({ success: 'Cadastro feito  com sucesso', ...dataProduct });
-      }
+      const inputs = {
+        productCover: req.file?.filename,
+        ...req.body,
+      };
+      const data = (await ProductService.saveProduct(inputs)) as IProduct;
+      const dataProduct = {
+        id: data._id,
+      };
+      res
+        .status(201)
+        .json({ success: 'Cadastro feito  com sucesso', ...dataProduct });
     } catch (error) {
       res.status(500).send({ message: error });
     }

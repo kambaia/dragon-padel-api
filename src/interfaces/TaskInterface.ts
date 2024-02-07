@@ -4,6 +4,8 @@ export interface ITask extends Document {
   priority: string;
   statusTask: boolean;
   creationDate: Date;
+  createdAt: Date;
+  updatedAt: Date;
   assignments: IAssignment[];
 }
 
@@ -18,4 +20,6 @@ export interface IAssignment extends Document {
   started: boolean;
   priority: string;
   description: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

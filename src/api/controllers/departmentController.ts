@@ -7,13 +7,14 @@ import { Department } from '../model/Departament';
 import { IDepartment } from '../../interfaces/CompanyInterface';
 class DepartmentController {
   public async listAllDepartament(req: Request, res: Response): Promise<void> {
-    const { limit = 25, page } = req.query;
+    const { limit = 10, page } = req.query;
     try {
       const department = await Department.find({})
         .populate('company', '_id companyName thumbnail')
         .limit(Number(limit))
-        .skip(Number(page));
-      console.log(department);
+        .skip(Number(page))
+        .sort({ createdAt: -1 });
+
       const allDataDepartament = await fetchAllDataDepartment(department);
       const responseData = responseDataDepartment(
         allDataDepartament,
@@ -45,6 +46,7 @@ class DepartmentController {
 
   public async saveDepartment(req: Request, res: Response): Promise<void> {
     try {
+      console.log(req.body);
       const inputs = {
         departmentName: req.body.departmentName,
         active: true,

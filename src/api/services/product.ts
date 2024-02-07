@@ -9,12 +9,12 @@ export default class AuthService {
   public static async findAllProduct({ limit, page }: ISearch) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = (await Product.find({})
+        const result = await Product.find({})
           .limit(Number(limit))
           .skip(Number(page))
-          .populate('registerby', 'fullName profile')
-          .populate('category', 'categoryName')) as IProduct[];
-        console.log(result);
+          .populate('registerby', 'profile')
+          .populate('category', 'categoryName')
+          .sort({ createdAt: -1 });
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

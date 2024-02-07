@@ -26,6 +26,8 @@ export interface IProduct extends Document {
   active: boolean;
   isAvailable: string;
   registerby: IUser;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface IDelivery {
@@ -39,6 +41,8 @@ export interface IDelivery {
   additionalAccessorie: IAdditionalAccessorie[];
   active: boolean;
   isAvailable: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 export interface IAdditionalAccessorie {
   name: string;

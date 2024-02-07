@@ -17,7 +17,6 @@ class UserController {
     const { limit = 25, page = 0 } = req.query as unknown as ISearch;
     try {
       const user = (await UserService.findAllUser({ limit, page })) as any;
-
       const allDataUser = await fetchAllDataUser(user);
       const responseData = responseDataUser(allDataUser, Number(0));
       res.status(200).send(responseData);
@@ -46,8 +45,8 @@ class UserController {
 
   public async saveUser(req: Request, res: Response): Promise<void> {
     try {
-      console.log(req.body);
       const user = (await AuthService.authLogin(req.body.email)) as any;
+
       if (user) {
         res
           .status(409)

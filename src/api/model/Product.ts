@@ -2,32 +2,32 @@
 import mongoose, { Model, Schema } from 'mongoose';
 import { IProduct } from '../../interfaces/ProdutosInterface';
 
-const productSchema = new mongoose.Schema({
-  productName: {
-    type: String,
-    required: true,
+const productSchema = new mongoose.Schema(
+  {
+    serialNumber: String,
+    productCover: String,
+    model: String,
+    brand: String,
+    specification: String,
+    technicalDescription: String,
+    description: String,
+    condition: String,
+    sourceOfPurchase: String,
+    purchaseDate: String,
+    invoice: String,
+    active: Boolean,
+    isAvailable: Boolean,
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'ProdutoCategory', // Make sure you have a model for Category
+    },
+    registerby: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User', // Make sure you have a model for user
+    },
   },
-  productCover: String,
-  model: String,
-  brand: String,
-  specification: String,
-  technicalDescription: String,
-  description: String,
-  condition: String,
-  sourceOfPurchase: String,
-  purchaseDate: String,
-  invoice: String,
-  active: Boolean,
-  isAvailable: Boolean,
-  category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'ProdutoCategory', // Make sure you have a model for Category
-  },
-  registerby: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Make sure you have a model for user
-  },
-});
+  { timestamps: true }
+);
 
 // Export the model and return your IUser interface
 export const Product: Model<IProduct> =

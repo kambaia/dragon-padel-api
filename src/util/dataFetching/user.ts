@@ -7,7 +7,7 @@ export const fetchAllDataUser = async (users: IUser[]) => {
     userArray.push({
       id: index + 1,
       _id: user._id,
-      profile: user.profile,
+      profile: user.profile_url,
       firstName: user.firstName,
       surname: user.surname,
       fullName: `${user.firstName} ${user?.surname}`,

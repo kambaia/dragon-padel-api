@@ -7,7 +7,7 @@ export const fetchAllDataAConpany = async (company: ICompany[]) => {
     companyResultado.push({
       id: index + 1,
       _id: cn._id,
-      thumbnail: cn.thumbnail,
+      logo: cn.logo_url,
       companyName: cn.companyName,
       active: cn.active,
       isAvailable: cn.isAvailable,

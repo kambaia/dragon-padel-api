@@ -12,9 +12,10 @@ export default class AuthService {
         const result = await Product.find({})
           .limit(Number(limit))
           .skip(Number(page))
-          .populate('registerby', 'profile')
+          .populate('registerby', 'profile firstName surname')
           .populate('category', 'categoryName')
           .sort({ createdAt: -1 });
+        console.log(result);
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

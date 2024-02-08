@@ -7,8 +7,8 @@ export const fetchAllDataProduct = async (product: IProduct[]) => {
     productResult.push({
       id: index + 1,
       _id: pd._id,
-      productName: pd.productName,
-      image: pd.productCover,
+      productName: pd.category.categoryName,
+      image: pd.cover_url,
       model: pd.model,
       brand: pd.brand,
       specification: pd.specification,
@@ -20,10 +20,7 @@ export const fetchAllDataProduct = async (product: IProduct[]) => {
       invoice: pd.invoice,
       active: pd.active,
       isAvailable: pd.isAvailable,
-      registerbay: {
-        userName: pd?.registerby.fullName,
-        userProfile: pd?.registerby.profile,
-      },
+      userName: `${pd?.registerby?.firstName} ${pd?.registerby?.surName}`,
     });
   }
   return productResult;

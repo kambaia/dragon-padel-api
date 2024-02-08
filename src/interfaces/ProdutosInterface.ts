@@ -10,6 +10,7 @@ export interface IProdutoCategory {
 }
 export interface IProduct extends Document {
   _id: string;
+  cover_url?: string;
   productName: string;
   brand: string;
   productCover: string;
@@ -22,7 +23,7 @@ export interface IProduct extends Document {
   purchaseDate: string;
   invoice: string;
   status: string;
-  category: string;
+  category: IProdutoCategory;
   active: boolean;
   isAvailable: string;
   registerby: IUser;

@@ -23,6 +23,7 @@ class ProductController {
         limit,
         page,
       })) as IProduct[];
+
       const allDataUser = await fetchAllDataProduct(product);
       const responseData = responseDataProduct(allDataUser, Number(0));
 

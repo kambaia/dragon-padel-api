@@ -26,8 +26,16 @@ const productSchema = new mongoose.Schema(
       ref: 'User', // Make sure you have a model for user
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
+  }
 );
+productSchema.virtual('cover_url').get(function () {
+  return `http://localhost:5000/files/product/${this.productCover}`;
+});
 
 // Export the model and return your IUser interface
 export const Product: Model<IProduct> =

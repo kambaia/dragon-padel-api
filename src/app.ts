@@ -1,6 +1,5 @@
 import cors from 'cors';
 import express from 'express';
-import helmet from 'helmet';
 import morgan from 'morgan';
 import db from './db/db';
 
@@ -14,12 +13,20 @@ require('dotenv').config();
 const app = express();
 db();
 app.use(morgan('dev'));
-app.use(helmet());
 app.use(cors());
 app.use(
   '/files/user',
-  express.static(path.resolve(__dirname, '../public/img/user'))
+  express.static(path.resolve(__dirname, '..', 'public', 'img', 'user'))
 );
+app.use(
+  '/files/company',
+  express.static(path.resolve(__dirname, '..', 'public', 'img', 'companys'))
+);
+app.use(
+  '/files/product',
+  express.static(path.resolve(__dirname, '..', 'public', 'img', 'product'))
+);
+
 app.use(express.json());
 
 app.get<{}, MessageResponse>('/', (req, res) => {

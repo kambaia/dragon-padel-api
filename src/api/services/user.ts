@@ -17,6 +17,7 @@ export default class AuthService {
             populate: { path: 'company' },
           })
           .sort({ createdAt: -1 });
+        console.log(result);
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));
@@ -26,10 +27,16 @@ export default class AuthService {
   public static async findOneUser(userId: string) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = (await User.findById(userId).populate(
-          'permission',
-          '_id  id role type'
-        )) as IUser;
+        const result = (await User.findById(userId)
+          .populate('permission', '_id  id role type')
+          .populate({
+            path: 'department',
+            select: 'departmentName', // Seleciona apenas o campo 'name' do departamento
+            populate: {
+              path: 'company',
+              select: 'thumbnail logo_url companyName', // Seleciona apenas os campos 'logo' e 'name' da empresa
+            },
+          })) as IUser;
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

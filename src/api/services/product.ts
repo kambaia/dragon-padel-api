@@ -15,7 +15,6 @@ export default class AuthService {
           .populate('registerby', 'profile firstName surname')
           .populate('category', 'categoryName')
           .sort({ createdAt: -1 });
-        console.log(result);
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

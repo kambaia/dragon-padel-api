@@ -45,19 +45,15 @@ class deliveryController {
 
   public async saveDelivery(req: Request, res: Response): Promise<void> {
     try {
-      const delivery = await deliveryService.verifyDelivery(
-        req.body.deliveryName
-      );
+      const delivery = await deliveryService.verifyDelivery(req.body.product);
       if (delivery) {
         res
           .status(409)
           .json({ error: 'Esse pedido já foi feito. Experimente outro' });
       } else {
-        const inputs = {
-          deliveryCover: req.file?.filename,
-          ...req.body,
-        };
-        const data = (await deliveryService.saveDelivery(inputs)) as IDelivery;
+        const data = (await deliveryService.saveDelivery(
+          req.body
+        )) as IDelivery;
 
         const datadelivery = {
           deliveryName: data.product,

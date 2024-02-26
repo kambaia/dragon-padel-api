@@ -25,7 +25,7 @@ class ProdutoCategoryController {
         .sort({ createdAt: -1 });
       const allDataUser = await fetchAllDataCategory(category);
       const responseData = responseDataCategory(allDataUser, Number(0));
-      console.log(responseData);
+
       res.status(200).send(responseData);
     } catch (error) {
       res.status(404).send(error);

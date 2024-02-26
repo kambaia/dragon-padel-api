@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { User } from '../model/User';
 import { authToke } from '../../util/auth';
 import AuthService from '../services/auth';
+import { fetchAllDataUser } from '../../util/dataFetching/user-access';
 
 class authUsersController {
   public async auth(req: Request, res: Response): Promise<Response> {
@@ -20,8 +21,9 @@ class authUsersController {
           .json({ message: 'E-mail ou  palavra pass incorreta' });
       } else {
         user.password = undefined;
+        const acess = await fetchAllDataUser(user);
         const token = authToke(user._id.toString());
-        return res.json({ user, token });
+        return res.json({ acess, token });
       }
     } catch (error) {
       return res

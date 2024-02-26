@@ -40,19 +40,16 @@ class UserController {
   }
 
   public async saveRoles(req: Request, res: Response): Promise<Response> {
-    try {
-      const { level, role } = req.body;
-      const resultRole = await Role.find({ level: level, role: role });
-      if (resultRole.length > 0) {
-        return res.status(409).json({ message: 'O nivel de acesso já existe' });
-      }
-      const roles = await Role.create(req.body);
-      return res.send(roles);
-    } catch (error) {
-      return res
-        .status(200)
-        .json({ message: 'Aconteceu um erro ao cadastrar', error });
+    const { level, type } = req.body;
+    const roles: string = req.body.role; // Tipagem da variável roles como string
+    const allroles = roles.split(',').map((role) => role.trim()); // Divisão da string e remoção de espaços em branco
+    console.log(allroles);
+    const resultRole = await Role.find({ level: level, type });
+    if (resultRole.length > 0) {
+      return res.status(409).json({ message: 'O nivel de acesso já existe' });
     }
+    const rolesAdd = await Role.create({ roles: allroles, type, level });
+    return res.send(rolesAdd);
   }
 
   public async updateRole(req: Request, res: Response): Promise<void> {

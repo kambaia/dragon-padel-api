@@ -10,6 +10,7 @@ export interface IProdutoCategory {
 }
 export interface IProduct extends Document {
   _id: string;
+  serialNumber: string;
   cover_url?: string;
   productName: string;
   brand: string;
@@ -33,9 +34,9 @@ export interface IProduct extends Document {
 
 export interface IDelivery {
   _id: string;
-  deliveredBy: IUser['_id'];
-  receivedBy: IUser['_id'];
-  beneficiary: IUser['_id'];
+  deliveredBy: IUser;
+  receivedBy: IUser;
+  beneficiary: IUser;
   product: IProduct;
   deliveryDate: Date;
   deliveryQuantity: number;

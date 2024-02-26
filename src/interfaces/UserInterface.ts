@@ -53,7 +53,7 @@ export interface Contact {
 export interface Permission extends Document {
   _id: string;
   level: number;
-  role: string;
+  roles: [string];
   type: string;
   createdAt: Date;
   updatedAt: Date;

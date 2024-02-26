@@ -5,7 +5,7 @@ export const fetchAllDataRole = async (roles: any[]) => {
       id: index + 1,
       _id: rol._id,
       level: rol.level,
-      role: rol.role,
+      role: rol.roles,
       type: rol.type,
       updatedAt: rol.updatedAt,
       createdAt: rol.createdAt,

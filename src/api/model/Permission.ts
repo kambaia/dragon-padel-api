@@ -5,10 +5,7 @@ import { Permission } from '../../interfaces/UserInterface';
 const Access_LevelSchema: Schema = new Schema(
   {
     level: { type: Number, required: true },
-    role: {
-      type: String,
-      required: true,
-    },
+    roles: [String],
     type: {
       type: String,
       required: true,

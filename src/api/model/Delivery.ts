@@ -8,25 +8,21 @@ const deliverySchema: Schema = new Schema(
     deliveredBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User', // Assuming User model for the one who delivered
-      required: true,
     },
     receivedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User', // Assuming User model for the one who received
-      required: true,
     },
     beneficiary: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User', // Assuming User model for the beneficiary
-      required: true,
     },
     product: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Product', // Assuming Product model for the delivered product
-      required: true,
     },
     deliveryDate: {
-      type: Date,
+      type: String,
       required: true,
     },
     deliveryQuantity: {

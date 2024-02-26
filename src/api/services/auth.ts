@@ -22,9 +22,17 @@ export default class AuthService {
   public static async authLogin(email: string) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = (await User.findOne({ email })
+        const result = await User.findOne({ email })
           .select('+password')
-          .populate('permission', 'level type role')) as any;
+          .populate('permission', 'roles')
+          .populate({
+            path: 'department',
+            select: '-_id departmentName',
+            populate: {
+              path: 'company',
+              select: '-_id thumbnail logo_url companyName', // Seleciona apenas os campos 'logo' e 'name' da empresa
+            },
+          });
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

@@ -4,7 +4,6 @@ import {
   fetchAllDataUser,
   responseDataUser,
 } from '../../util/dataFetching/user';
-import { User } from '../model/User';
 import AuthService from '../services/auth';
 
 import UserService from '../services/user';

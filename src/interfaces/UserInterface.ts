@@ -12,7 +12,7 @@ export interface IUser extends Document {
   email: string;
   fullName: string;
   phoneNumber?: string;
-  password: string;
+  password?: string;
   banned: boolean;
   active: boolean;
   createdAt: Date;

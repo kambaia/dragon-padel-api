@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import { User } from '../model/User';
 import { authToke } from '../../util/auth';
 import AuthService from '../services/auth';
 import { fetchAllDataUser } from '../../util/dataFetching/user-access';
@@ -20,7 +19,7 @@ class authUsersController {
           .status(400)
           .json({ message: 'E-mail ou  palavra pass incorreta' });
       } else {
-        user.password = undefined;
+        user.password! = undefined;
         const acess = await fetchAllDataUser(user);
         const token = authToke(user._id.toString());
         return res.json({ acess, token });

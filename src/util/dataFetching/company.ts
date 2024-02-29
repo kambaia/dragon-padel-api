@@ -11,7 +11,7 @@ export const fetchAllDataAConpany = async (company: ICompany[]) => {
       companyName: cn.companyName,
       active: cn.active,
       isAvailable: cn.isAvailable,
-      createdAt: formatDate(cn.createdAt),
+      createdAt: formatDate(cn.createdAt!),
     });
   }
   return companyResultado;

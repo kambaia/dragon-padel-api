@@ -5,8 +5,8 @@ export interface ICompany {
   companyName: string;
   active: boolean;
   isAvailable: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface IDepartment extends Document {

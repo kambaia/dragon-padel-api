@@ -14,4 +14,5 @@ companyRouter.post(
   companyController.saveCompany
 );
 companyRouter.put('/company/:companyId', companyController.updateCompany);
+companyRouter.put("/company-with-file/:companyId", upload.single('thumbnail'), companyController.updateCompanyWithProfile);
 companyRouter.delete('/company/:companyId', companyController.deleteCompany);

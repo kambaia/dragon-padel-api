@@ -10,6 +10,7 @@ import UserService from '../services/user';
 import { hash } from 'bcrypt';
 import { ISearch } from '../../interfaces/app/search';
 import { deleteFileInDataBase } from '../../util/deleteFile';
+import { IUser } from '../../interfaces/UserInterface';
 
 class UserController {
   public async listAllUser(req: Request, res: Response): Promise<void> {

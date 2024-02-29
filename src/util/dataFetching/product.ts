@@ -8,6 +8,7 @@ export const fetchAllDataProduct = async (product: IProduct[]) => {
       id: index + 1,
       _id: pd._id,
       productName: pd.category.categoryName,
+      categoryId: pd.category._id,
       image: pd.cover_url,
       model: pd.model,
       brand: pd.brand,

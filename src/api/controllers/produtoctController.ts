@@ -1,9 +1,5 @@
 import { Request, Response } from 'express';
-/* import {
-  fetchAllDataAConpany,
-  responseDataCompany,
-} from '../../util/dataFetching/company';
- */
+
 import { Product } from '../model/Product';
 import { IProduct } from '../../interfaces/ProdutosInterface';
 import {
@@ -14,6 +10,8 @@ import {
 import ProductService from '../services/product';
 
 import { ISearch } from '../../interfaces/app/search';
+import { deleteFileInDataBase } from '../../util/deleteFile';
+import { promises } from 'dns';
 
 class ProductController {
   public async listAllproduct(req: Request, res: Response): Promise<void> {
@@ -51,7 +49,7 @@ class ProductController {
     }
   }
 
-  public async saveProduct(req: Request, res: Response): Promise<void> {
+  public async saveProduct(req: Request, res: Response): Promise<Response> {
     console.log(req.body);
     console.log('', req.file);
     try {
@@ -63,29 +61,63 @@ class ProductController {
       const dataProduct = {
         id: data._id,
       };
-      res
+     return res
         .status(201)
         .json({ success: 'Cadastro feito  com sucesso', ...dataProduct });
     } catch (error) {
-      res.status(500).send({ message: error });
+      return res.status(500).send({ message: error });
     }
   }
 
-  public async updateProduct(req: Request, res: Response): Promise<void> {
+  public async updateProduct(req: Request, res: Response): Promise<Response> {
     try {
-      const data = req.body;
       const { productId } = req.params;
-      const product = await Product.findByIdAndUpdate(
-        { _id: productId },
-        { $set: data },
-        { new: false }
-      );
-      res.status(204).json({
+      const product = (await ProductService.updateProduct(productId, req.body)) as any;
+      return res.status(204).json({
         message: 'As suas informações foram actualizadas com sucesso',
         product,
       });
     } catch (error) {
-      res
+     return res
+        .status(500)
+        .json({ message: 'Aconteceu um erro ao atualizada', error });
+    }
+  }
+
+
+  public async updateProductWithProfile(req: Request, res: Response): Promise<Response> {
+    try {
+
+      const { productId } = req.params;
+      const inputs = {
+        profile: {
+          productCover: req.file?.filename,
+        },
+        ...req.body,
+      };
+
+      const userFinded = (await ProductService.findOneProduct(productId)) as IProduct;
+
+      if (userFinded) {
+        const resultDelete = await deleteFileInDataBase('user', userFinded?.productCover);
+        if (resultDelete) {
+          const product = (await ProductService.updateProduct(productId, inputs)) as any;
+          return res.status(204).json({
+            message: 'As suas informações foram actualizadas com sucesso',
+            product,
+          });
+
+        }
+      }
+
+
+      return res
+        .status(500)
+        .json({ message: 'Aconteceu um erro ao atualizada' });
+
+
+    } catch (error) {
+     return res
         .status(500)
         .json({ message: 'Aconteceu um erro ao atualizada', error });
     }
@@ -94,11 +126,21 @@ class ProductController {
   public async deleteProduct(req: Request, res: Response): Promise<Response> {
     try {
       const { productId } = req.params;
-      const product = await Product.findByIdAndDelete(productId);
-      if (product) {
-        return res.status(204).send('Deletado com sucesso');
+      const userFinded = (await ProductService.findOneProduct(productId)) as IProduct;
+      if (userFinded) {
+        const resultDelete = await deleteFileInDataBase('user', userFinded?.productCover);
+        if (resultDelete) {
+          const product = await Product.findByIdAndDelete(productId);
+          return res.status(204).json({
+            message: 'As suas informações foram actualizadas com sucesso',
+            product,
+          });
+        }
       }
-      return res.status(404).send(product);
+      return res
+        .status(500)
+        .json({ message: 'Aconteceu um erro ao atualizada' });
+
     } catch (error) {
       return res.status(404).send(error);
     }

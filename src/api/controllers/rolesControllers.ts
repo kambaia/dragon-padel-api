@@ -38,12 +38,13 @@ class UserController {
       res.status(404).send(error);
     }
   }
-
+  
   public async saveRoles(req: Request, res: Response): Promise<Response> {
+    console.log(req.body);
     const { level, type } = req.body;
     const roles: string = req.body.role; // Tipagem da variável roles como string
-    const allroles = roles.split(',').map((role) => role.trim()); // Divisão da string e remoção de espaços em branco
-    console.log(allroles);
+    const allroles = roles.split(',')?.map((role) => role.trim()); // Divisão da string e remoção de espaços em branco
+  
     const resultRole = await Role.find({ level: level, type });
     if (resultRole.length > 0) {
       return res.status(409).json({ message: 'O nivel de acesso já existe' });

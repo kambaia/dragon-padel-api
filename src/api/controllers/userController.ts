@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { IUser, IUserRegister } from '../../interfaces/UserInterface';
 import {
   fetchAllDataUser,
   responseDataUser,
@@ -10,6 +9,8 @@ import UserService from '../services/user';
 
 import { hash } from 'bcrypt';
 import { ISearch } from '../../interfaces/app/search';
+import { deleteFileInDataBase } from '../../util/deleteFile';
+import { IUser } from '../../interfaces/UserInterface';
 
 class UserController {
   public async listAllUser(req: Request, res: Response): Promise<void> {
@@ -91,14 +92,60 @@ class UserController {
     }
   }
 
+  public async updateUserWithProfile(req: Request, res: Response): Promise<Response> {
+    try {
+      const { userId } = req.params;
+
+      const inputs = {
+        profile: {
+          thumbnail: req.file?.filename,
+          name: req.file?.originalname,
+        },
+        ...req.body,
+      };
+      const userFinded = (await UserService.findOneUser(userId)) as IUser;
+
+      if (userFinded) {
+        const resultDelete = await deleteFileInDataBase('user', userFinded?.profile.thumbnail);
+        if (resultDelete) {
+          const user = (await UserService.updateUser(userId, inputs)) as any;
+          return res.status(204).json({
+            message: 'As suas informações foram actualizadas com sucesso',
+            user,
+          });
+        }
+      }
+      return res
+        .status(500)
+        .json({ message: 'Aconteceu um erro ao atualizada' });
+
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: 'Aconteceu um erro ao atualizada', error });
+    }
+
+  }
+
   public async deleteUser(req: Request, res: Response): Promise<Response> {
     try {
       const { userId } = req.params;
-      const user = (await UserService.deleteUser(userId)) as any;
-      if (user) {
-        return res.status(204).send('Deletado com sucesso');
+
+      const userFinded = (await UserService.findOneUser(userId)) as IUser;
+
+      if (userFinded) {
+        const resultDelete = await deleteFileInDataBase('user', userFinded?.profile.thumbnail);
+        if (resultDelete) {
+          const user = (await UserService.deleteUser(userId)) as any;
+          return res.status(204).json({
+            message: 'As suas informações foram deleter com sucesso',
+            user,
+          });
+        }
       }
-      return res.status(404).send(user);
+      return res
+        .status(500)
+        .json({ message: 'Aconteceu um erro ao deleter o usuário' });
     } catch (error) {
       return res.status(404).send(error);
     }

@@ -8,6 +8,7 @@ export const fetchAllDataProduct = async (product: IProduct[]) => {
       id: index + 1,
       _id: pd._id,
       productName: pd.category.categoryName,
+      categoryId: pd.category._id,
       image: pd.cover_url,
       model: pd.model,
       brand: pd.brand,
@@ -20,7 +21,8 @@ export const fetchAllDataProduct = async (product: IProduct[]) => {
       invoice: pd.invoice,
       active: pd.active,
       isAvailable: pd.isAvailable,
-      userName: `${pd?.registerby?.firstName} ${pd?.registerby?.surName}`,
+      serialNumber: pd.serialNumber,
+      userName: `${pd?.registerby?.firstName} ${pd?.registerby?.surname}`,
     });
   }
   return productResult;

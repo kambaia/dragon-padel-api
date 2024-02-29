@@ -3,17 +3,16 @@ import {
   fetchAllDataAConpany,
   responseDataCompany,
 } from '../../util/dataFetching/company';
+import CompanyService from '../services/company';
+import { ISearch } from '../../interfaces/app/search';
 import { Company } from '../model/Company';
 import { ICompany } from '../../interfaces/CompanyInterface';
+import { deleteFileInDataBase } from '../../util/deleteFile';
 class CompanyController {
   public async listAllCompany(req: Request, res: Response): Promise<void> {
-    const { limit = 25, page } = req.query;
     try {
-      const company = await Company.find({})
-        .limit(Number(limit))
-        .skip(Number(page))
-        .sort({ createdAt: -1 });
-      const allDataCompany = await fetchAllDataAConpany(company);
+      const { limit = 25, page = 0 } = req.query as unknown as ISearch;
+      const allDataCompany = await CompanyService.findAllCompany({ limit, page});
       console.log(allDataCompany);
       const responseData = responseDataCompany(allDataCompany, Number(0));
       res.status(200).send(responseData);
@@ -21,12 +20,11 @@ class CompanyController {
       res.status(404).send(error);
     }
   }
-
   public async listOneCompany(req: Request, res: Response): Promise<void> {
     try {
       const { companyId } = req.params;
-      const company = (await Company.findById(companyId)) as ICompany;
-      if (company) {
+      const allDataCompany = await CompanyService.findOneCompany(companyId);
+      if (allDataCompany) {
         res.status(200).send(Company);
       } else {
         res
@@ -41,29 +39,22 @@ class CompanyController {
   public async saveCompany(req: Request, res: Response): Promise<void> {
     try {
       const inputs = {
-        companyName: req.body.companyName,
-        active: true,
-        isAvailable: true,
         thumbnail: req.file?.filename,
+        ...req.body,
       };
       const company = await Company.find({
         $or: [{ companyName: req.body.companyName }],
       });
+
       if (company.length > 0) {
         res
           .status(409)
           .json({ error: 'Esse nome de empresa já existe. Experimente outro' });
       } else {
-        const data = await Company.create(inputs);
-
-        const companydata = {
-          profile: data.thumbnail,
-          CompanyName: data.companyName,
-          id: data._id,
-        };
+          const allDataCompany = await CompanyService.saveCompany(inputs) as any;
         res
           .status(201)
-          .json({ success: 'Cadastro feito  com sucesso', ...companydata });
+          .json(allDataCompany);
       }
     } catch (error) {
       res.status(500).send({ message: error });
@@ -72,17 +63,44 @@ class CompanyController {
 
   public async updateCompany(req: Request, res: Response): Promise<void> {
     try {
-      const data = req.body;
       const { companyId } = req.params;
-      const company = await Company.findByIdAndUpdate(
-        { _id: companyId },
-        { $set: data },
-        { new: false }
-      );
+      const user = (await CompanyService.updateCompany(companyId, req.body));
       res.status(204).json({
         message: 'As suas informações foram actualizadas com sucesso',
-        company,
+        user,
       });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: 'Aconteceu um erro ao atualizada', error });
+    }
+  }
+
+  public async updateCompanyWithProfile(req: Request, res: Response): Promise<void> {
+    try {
+
+      const { companyId } = req.params;
+      const inputs = {
+          thumbnail: req.file?.filename,
+        ...req.body,
+      };
+
+      const userFinded = (await CompanyService.findOneCompany(companyId)) as ICompany;
+      if (userFinded) {
+        const resultDelete = await deleteFileInDataBase('user', userFinded?.thumbnail);
+        if (resultDelete) {
+          const user = (await CompanyService.updateCompany(companyId, inputs)) as any;
+          res.status(204).json({
+            message: 'As suas informações foram actualizadas com sucesso',
+            user,
+          });
+        }
+      }else{
+      res
+        .status(500)
+        .json({ message: 'Aconteceu um erro ao atualizada' });
+      }
+
     } catch (error) {
       res
         .status(500)

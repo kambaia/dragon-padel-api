@@ -12,4 +12,5 @@ userRouter.get('/user', userController.listAllUser);
 userRouter.get('/user/:userId', userController.listOneUser);
 userRouter.post('/user', upload.single('profile'), userController.saveUser);
 userRouter.put('/user/:userId', userController.updateUser);
+userRouter.put("/user-with-file/:userId", upload.single('profile'), userController.updateUserWithProfile);
 userRouter.delete('/user/:userId', userController.deleteUser);

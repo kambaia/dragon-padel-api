@@ -20,7 +20,8 @@ export const fetchAllDataProduct = async (product: IProduct[]) => {
       invoice: pd.invoice,
       active: pd.active,
       isAvailable: pd.isAvailable,
-      userName: `${pd?.registerby?.firstName} ${pd?.registerby?.surName}`,
+      serialNumber: pd.serialNumber,
+      userName: `${pd?.registerby?.firstName} ${pd?.registerby?.surname}`,
     });
   }
   return productResult;

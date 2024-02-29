@@ -8,6 +8,7 @@ export const fetchAllDataCategory = async (category: IProdutoCategory[]) => {
       index: index + 1,
       id: ct._id,
       categoryName: ct?.categoryName,
+      description: ct?.description,
       active: ct.active,
       isAvailable: ct.isAvailable,
       updatedAt: ct.updatedAt,

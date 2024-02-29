@@ -8,6 +8,7 @@ export const fetchAllDataDepartment = async (department: IDepartment[]) => {
       id: index + 1,
       _id: dp._id,
       IconCompany: dp.company.thumbnail,
+      companyId: dp.company._id,
       companyName: dp.company.companyName,
       departmentName: dp.departmentName,
       active: dp.active,

@@ -36,3 +36,4 @@ export const configureStorage = (customPath: string) => {
     },
   };
 };
+    

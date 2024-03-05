@@ -21,7 +21,7 @@ class ProductController {
         limit,
         page,
       })) as IProduct[];
-
+      
       const allDataUser = await fetchAllDataProduct(product);
       const responseData = responseDataProduct(allDataUser, Number(0));
 
@@ -98,7 +98,7 @@ class ProductController {
       const userFinded = (await ProductService.findOneProduct(productId)) as IProduct;
 
       if (userFinded) {
-        const resultDelete = await deleteFileInDataBase('user', userFinded?.productCover);
+        const resultDelete = await deleteFileInDataBase('product', userFinded?.productCover);
         if (resultDelete) {
           const product = (await ProductService.updateProduct(productId, inputs)) as any;
           return res.status(204).json({
@@ -127,7 +127,7 @@ class ProductController {
       const { productId } = req.params;
       const userFinded = (await ProductService.findOneProduct(productId)) as IProduct;
       if (userFinded) {
-        const resultDelete = await deleteFileInDataBase('user', userFinded?.productCover);
+        const resultDelete = await deleteFileInDataBase('product', userFinded?.productCover);
         if (resultDelete) {
           const product = await Product.findByIdAndDelete(productId);
           return res.status(204).json({

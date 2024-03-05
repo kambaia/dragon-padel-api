@@ -3,12 +3,16 @@ import productInStockService from '../services/productInStock';
 import { ISearch } from '../../interfaces/app/search';
 import { deleteFileInDataBase } from '../../util/deleteFile';
 import { IProductInStock } from '../../interfaces/ProdutosInterface';
+import { fetchAllDataProductStock, responseDataProductStock } from '../../util/dataFetching/productStock';
 
 class StockController {
   public async listAllProductInStock(req: Request, res: Response): Promise<void> {
     const { limit = 25, page = 0 } = req.query as unknown as ISearch;
     try {
-      const responseData = (await productInStockService.findAllProductStock({ limit, page })) as IProductInStock[];
+      const product = (await productInStockService.findAllProductStock({ limit, page })) as IProductInStock[];
+      const allDataUser = await fetchAllDataProductStock(product);
+      const responseData = responseDataProductStock(allDataUser, Number(0));
+    
       res.status(200).send(responseData);
     } catch (error) {
       res.status(404).send(error);

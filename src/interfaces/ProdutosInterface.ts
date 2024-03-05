@@ -9,6 +9,8 @@ export interface IProdutoCategory {
   updatedAt: Date;
 }
 export interface IProduct extends Document {
+  productQuantity: any;
+  productId: any;
   _id: string;
   serialNumber: string;
   cover_url?: string;
@@ -37,7 +39,8 @@ export interface IProductInStock extends Document {
   invoiceDocument: string;
   documentNumber: string;
   supplier: string;
-  product: IProduct & { productQuantity: number }; 
+  document_url?: string;
+  product: IProduct[] & { productQuantity: number }; 
   registerby:IUser
   createdAt: Date;
   updatedAt: Date;

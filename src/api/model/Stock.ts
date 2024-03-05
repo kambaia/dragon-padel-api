@@ -31,6 +31,10 @@ const productInStockSchema  = new mongoose.Schema(
   }
 );
 
+productInStockSchema.virtual('document_url').get(function () {
+  return `http://localhost:5000/files/product/doc/${this.invoiceDocument}`;
+});
+
 // Export the model and return your IUser interface
 export const ProductInStock: Model<IProductInStock> =
   mongoose.models.ProductInStock || mongoose.model('ProductInStock', productInStockSchema);

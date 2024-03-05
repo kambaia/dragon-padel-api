@@ -40,7 +40,7 @@ class StockController {
           ...req.body,
           invoiceDocument: req.file?.filename
         };
-
+        console.log("INPUTS: ",inputs)
         const data = (await productInStockService.saveProductStock(inputs)) as any;
         res
           .status(201)

@@ -17,6 +17,6 @@ productRouter.post(
 
 productRouter.put('/product/:productId', productController.updateProduct);
 
-productRouter.put("/product-with-file/:userId", upload.single('profile'), productController.updateProductWithProfile);
+productRouter.put("/product-with-file/:productId", upload.single('productCover'), productController.updateProductWithProfile);
 
 productRouter.delete('/product/:productId', productController.deleteProduct);

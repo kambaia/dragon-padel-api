@@ -3,7 +3,7 @@ import stockController from '../api/controllers/stockController';
 import { configureStorage } from '../util/uploads/services';
 import multer from 'multer';
 
-const { storage } = configureStorage('../../../public/img/stock');
+const { storage } = configureStorage('../../../public/documents/stock');
 const upload = multer({ storage: storage });
 
 export const productInStockRouter = Router();

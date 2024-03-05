@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Delivery } from '../model/Delivery';
-import { IDelivery } from '../../interfaces/ProdutosInterface';
+import { IDelivery, IProductInStock } from '../../interfaces/ProdutosInterface';
 import {
   responseDatadelivery,
   fetchAllDatadelivery,
@@ -9,6 +9,7 @@ import {
 import deliveryService from '../services/delivery';
 
 import { ISearch } from '../../interfaces/app/search';
+import { ProductInStock } from '../model/Stock';
 
 class deliveryController {
   public async listAllDelivery(req: Request, res: Response): Promise<void> {
@@ -43,28 +44,51 @@ class deliveryController {
     }
   }
 
+  
   public async saveDelivery(req: Request, res: Response): Promise<void> {
     try {
-      const delivery = await deliveryService.verifyDelivery(req.body.product);
-      if (delivery) {
+      const verifyDelivery = await deliveryService.verifyDelivery(req.body.product);
+      if (verifyDelivery) {
         res
           .status(409)
           .json({ error: 'Esse pedido já foi feito. Experimente outro' });
       } else {
-        const data = (await deliveryService.saveDelivery(
-          req.body
-        )) as IDelivery;
+        
+      const deliveryDetails = req.body;
+      
+      const delivery = (await deliveryService.saveDelivery(
+        deliveryDetails
+      )) as IDelivery;
 
+      await this.updateStock(deliveryDetails.products);
+  
         const datadelivery = {
-          deliveryName: data.product,
-          id: data._id,
+          deliveryName: delivery.product,
+          id: delivery._id,
         };
+
         res
           .status(201)
           .json({ success: 'Cadastro feito  com sucesso', ...datadelivery });
       }
     } catch (error) {
       res.status(500).send({ message: error });
+    }
+  }
+
+
+  public async updateStock(products: IDelivery[]) {
+    try {
+      for (const productuStock of products) {
+        const stockItem = await ProductInStock.findOne({ productId: productuStock.product._id });
+        if (!stockItem) {
+          throw new Error('Produto não encontrado no estoque.');
+        }
+        stockItem.product.productQuantity -= productuStock.product.deliveryQuantity;
+        await stockItem.save();
+      }
+    } catch (error) {
+      throw new Error('Erro ao atualizar estoque.');
     }
   }
 

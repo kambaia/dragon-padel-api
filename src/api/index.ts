@@ -6,6 +6,7 @@ import { categoryRouter } from './category';
 import { companyRouter } from './company';
 import { productRouter } from './product';
 import { departmentRouter } from './department';
+import { productInStockRouter } from './stock';
 import { deliveryRouter } from './delivery';
 const router = express.Router();
 
@@ -25,6 +26,7 @@ roleRouter.use(categoryRouter);
 roleRouter.use(companyRouter);
 roleRouter.use(productRouter);
 roleRouter.use(departmentRouter);
+roleRouter.use(productInStockRouter);
 roleRouter.use(deliveryRouter);
 
 export default router;

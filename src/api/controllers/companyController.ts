@@ -12,8 +12,8 @@ class CompanyController {
   public async listAllCompany(req: Request, res: Response): Promise<void> {
     try {
       const { limit = 25, page = 0 } = req.query as unknown as ISearch;
-      const allDataCompany = await CompanyService.findAllCompany({ limit, page});
-      console.log(allDataCompany);
+      const company = await CompanyService.findAllCompany({ limit, page});
+      const allDataCompany = await fetchAllDataAConpany(company);
       const responseData = responseDataCompany(allDataCompany, Number(0));
       res.status(200).send(responseData);
     } catch (error) {

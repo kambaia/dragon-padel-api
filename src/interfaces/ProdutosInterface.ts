@@ -32,14 +32,23 @@ export interface IProduct extends Document {
   updatedAt: Date;
 }
 
+export interface IProductInStock extends Document {
+  _id: string;
+  invoiceDocument: string;
+  documentNumber: string;
+  supplier: string;
+  product: IProduct & { productQuantity: number }; 
+  registerby:IUser
+  createdAt: Date;
+  updatedAt: Date;
+}
 export interface IDelivery {
   _id: string;
   deliveredBy: IUser;
   receivedBy: IUser;
   beneficiary: IUser;
-  product: IProduct;
+  product:  IProductInStock & { deliveryQuantity: number }; 
   deliveryDate: Date;
-  deliveryQuantity: number;
   additionalAccessorie: IAdditionalAccessorie[];
   active: boolean;
   isAvailable: string;

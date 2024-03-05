@@ -27,6 +27,11 @@ export const configureStorage = (customPath: string) => {
         'image/png',
         'image/gif',
         'image/svg',
+        'application/pdf', // PDF
+        'application/msword', // Word (.doc)
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // Word (.docx)
+        'application/vnd.ms-excel', // Excel (.xls)
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // Excel (.xlsx)
       ];
       if (formato.includes(file.mimetype)) {
         cb(null, true);

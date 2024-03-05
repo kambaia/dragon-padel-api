@@ -30,16 +30,9 @@ export const fetchAllDatadelivery = async (product: IDelivery[]) => {
           logo_url: pd.beneficiary?.department.company.logo_url,
         },
       },
-      deliveryQuantity: pd.deliveryQuantity,
+      deliveryQuantity: pd.product.deliveryQuantity,
       deliveryDate: pd.deliveryDate,
-      product: {
-        id: pd._id,
-        serialNumber: pd.product?.serialNumber,
-        model: pd.product?.model,
-        brand: pd.product?.brand,
-        category: pd.product?.category.categoryName,
-        cover_url: pd.product?.cover_url,
-      },
+      
       active: pd.active,
       isAvailable: pd.isAvailable,
     });

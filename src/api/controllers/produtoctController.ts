@@ -50,7 +50,6 @@ class ProductController {
   }
 
   public async saveProduct(req: Request, res: Response): Promise<Response> {
-    console.log(req.body);
     console.log('', req.file);
     try {
       const inputs = {

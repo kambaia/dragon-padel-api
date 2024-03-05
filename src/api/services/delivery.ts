@@ -66,14 +66,15 @@ export default class AuthService {
     });
   }
 
-  public static async verifyDelivery(product: string) {
+  public static async verifyDelivery(productId: string) {
     return new Promise(async function (resolve, reject) {
       try {
         const { ObjectId } = Types;
-        const produtId = new ObjectId(product);
+        const produtId = new ObjectId(productId);
         const result = (await Delivery.findOne({
           product: produtId,
         })) as IDelivery;
+        
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

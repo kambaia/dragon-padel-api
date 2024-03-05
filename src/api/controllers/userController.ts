@@ -44,6 +44,7 @@ class UserController {
   }
 
   public async saveUser(req: Request, res: Response): Promise<void> {
+    console.log(req.body)
     try {
       const user = (await AuthService.authLogin(req.body.email)) as any;
 

@@ -5,7 +5,7 @@ import { ICompany  } from '../../interfaces/CompanyInterface';
 import { handleMongoError } from '../../util/errors/api-error';
 import { ISearch } from '../../interfaces/app/search';
 export default class CompanyService {
-  public static async findAllCompany({ limit, page }: ISearch) {
+  public static async findAllCompany({ limit, page }: ISearch):Promise<ICompany[]> {
     return new Promise(async function (resolve, reject) {
       try {
         const company = await Company.find({})

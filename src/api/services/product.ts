@@ -70,11 +70,10 @@ export default class AuthService {
       }
     });
   }
-
-  public static async deleteProduct(userId: string) {
+  public static async deleteProduct(productId: string) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await Product.findByIdAndDelete(userId);
+        const result = await Product.findByIdAndDelete(productId);
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

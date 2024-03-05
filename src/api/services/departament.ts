@@ -4,24 +4,25 @@ import { Department } from '../model/Departament';
 import { IUser, IUserRegister } from '../../interfaces/UserInterface';
 import { handleMongoError } from '../../util/errors/api-error';
 import { ISearch } from '../../interfaces/app/search';
-export default class AuthService {
+import { IDepartment } from '../../interfaces/CompanyInterface';
+export default class DepartamentService {
   public static async findAllDepartament({ limit, page }: ISearch) {
     return new Promise(async function (resolve, reject) {
       try {
         const result = await Department.find({})
           .limit(Number(limit))
           .skip(Number(page))
-          .populate('permission', '_id  id role type');
+          .populate('company', '_id  companyName');
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));
       }
     });
   }
-  public static async findOneUser(userId: string) {
+  public static async findOneUser(departmentId: string) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = (await Department.findById(userId).populate(
+        const result = (await Department.findById(departmentId).populate(
           'permission',
           '_id  id role type'
         )) as IUser;
@@ -31,11 +32,10 @@ export default class AuthService {
       }
     });
   }
-  public static async saveUser(user: IUserRegister) {
+  public static async saveUser(department: IDepartment) {
     return new Promise(async function (resolve, reject) {
-      console.log(user);
       try {
-        const result = await Department.create(user);
+        const result = await Department.create(department);
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

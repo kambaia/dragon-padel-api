@@ -73,7 +73,7 @@ class ProdutoCategoryController {
     }
   }
 
-  public async updateCompany(req: Request, res: Response): Promise<void> {
+  public async updateCategory(req: Request, res: Response): Promise<void> {
     try {
       const data = req.body;
       const { categoryId } = req.params;

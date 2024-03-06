@@ -4,8 +4,7 @@ export const fetchAllDatadelivery = async (product: IDelivery[]) => {
   let productResult = [];
   for (const [index, pd] of product.entries()) {
     productResult.push({
-      id: index + 1,
-      _id: pd._id,
+      id: pd._id,
       deliveredBy: {
         fullName: `${pd.deliveredBy?.firstName} ${pd.deliveredBy?.surname}`,
         department: {

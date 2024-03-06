@@ -5,8 +5,7 @@ export const fetchAllDataProduct = async (product: IProduct[]) => {
   let productResult = [];
   for (const [index, pd] of product.entries()) {
     productResult.push({
-      id: index + 1,
-      _id: pd._id,
+      id: pd._id,
       productName: pd.category.categoryName,
       categoryId: pd.category._id,
       image: pd.cover_url,

@@ -2,8 +2,7 @@ export const fetchAllDataRole = async (roles: any[]) => {
   let user = [];
   for (const [index, rol] of roles.entries()) {
     user.push({
-      id: index + 1,
-      _id: rol._id,
+      id: rol._id,
       level: rol.level,
       role: rol.roles,
       type: rol.type,

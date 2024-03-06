@@ -5,8 +5,7 @@ export const fetchAllDataUser = async (users: IUser[]) => {
   let userArray = [];
   for (const [index, user] of users.entries()) {
     userArray.push({
-      id: index + 1,
-      _id: user._id,
+      id: user._id,
       profile: user.profile_url,
       firstName: user.firstName,
       surname: user.surname,

@@ -5,8 +5,7 @@ export const fetchAllDataAConpany = async (company: ICompany[]) => {
   let companyResultado = [];
   for (const [index, cn] of company.entries()) {
     companyResultado.push({
-      id: index + 1,
-      _id: cn._id,
+      id: cn._id,
       logo: cn.logo_url,
       companyName: cn.companyName,
       active: cn.active,

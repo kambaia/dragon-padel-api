@@ -3,7 +3,7 @@ import { formatDate } from '../time';
 
 export const fetchAllDataUser = async (user: IUser) => {
   return {
-    _id: user._id,
+    id: user._id,
     firstName: user.firstName,
     surname: user.surname,
     email: user.email,

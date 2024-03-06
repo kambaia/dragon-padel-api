@@ -5,8 +5,7 @@ export const fetchAllDataDepartment = async (department: IDepartment[]) => {
   let departmentResult = [];
   for (const [index, dp] of department.entries()) {
     departmentResult.push({
-      id: index + 1,
-      _id: dp._id,
+      id: dp._id,
       IconCompany: dp.company.thumbnail,
       companyId: dp.company._id,
       companyName: dp.company.companyName,

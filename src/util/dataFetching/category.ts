@@ -5,7 +5,6 @@ export const fetchAllDataCategory = async (category: IProdutoCategory[]) => {
   let categoryResult = [];
   for (const [index, ct] of category.entries()) {
     categoryResult.push({
-      index: index + 1,
       id: ct._id,
       categoryName: ct?.categoryName,
       description: ct?.description,

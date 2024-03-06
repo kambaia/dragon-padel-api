@@ -8,12 +8,14 @@ import { IDepartment } from '../../interfaces/CompanyInterface';
 class DepartmentController {
   public async listAllDepartament(req: Request, res: Response): Promise<void> {
     const { limit = 10, page } = req.query;
+    console.log(limit, page)
     try {
       const department = await Department.find({})
         .populate('company', '_id companyName thumbnail')
         .limit(Number(limit))
         .skip(Number(page))
         .sort({ createdAt: -1 });
+      console.log(department)
 
       const allDataDepartament = await fetchAllDataDepartment(department);
       const responseData = responseDataDepartment(
@@ -23,6 +25,7 @@ class DepartmentController {
       res.status(200).send(responseData);
     } catch (error) {
       res.status(404).send(error);
+
     }
   }
 

@@ -85,14 +85,14 @@ class CompanyController {
         ...req.body,
       };
 
-      const userFinded = (await CompanyService.findOneCompany(companyId)) as ICompany;
-      if (userFinded) {
-        const resultDelete = await deleteFileInDataBase('user', userFinded?.thumbnail);
+      const companyFinded = (await CompanyService.findOneCompany(companyId)) as ICompany;
+      if (companyFinded) {
+        const resultDelete = await deleteFileInDataBase('companys', companyFinded?.thumbnail);
         if (resultDelete) {
-          const user = (await CompanyService.updateCompany(companyId, inputs)) as any;
+          const company = (await CompanyService.updateCompany(companyId, inputs)) as any;
           res.status(204).json({
             message: 'As suas informações foram actualizadas com sucesso',
-            user,
+            company,
           });
         }
       }else{

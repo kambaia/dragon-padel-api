@@ -5,8 +5,7 @@ export const fetchAllDataProductStock = async (product: IProductInStock[]) => {
   let productResult = [];
   for (const [index, pd] of product.entries()) {
     productResult.push({
-      id: index + 1,
-      _id: pd._id,
+      id: pd._id,
        product: pd.product.map((prod) => {
         return {
             productId: prod.productId,

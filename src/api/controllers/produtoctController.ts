@@ -21,7 +21,7 @@ class ProductController {
         limit,
         page,
       })) as IProduct[];
-      
+
       const allDataUser = await fetchAllDataProduct(product);
       const responseData = responseDataProduct(allDataUser, Number(0));
 
@@ -60,7 +60,7 @@ class ProductController {
       const dataProduct = {
         id: data._id,
       };
-     return res
+      return res
         .status(201)
         .json({ success: 'Cadastro feito  com sucesso', ...dataProduct });
     } catch (error) {
@@ -71,13 +71,15 @@ class ProductController {
   public async updateProduct(req: Request, res: Response): Promise<Response> {
     try {
       const { productId } = req.params;
+      console.log(req.body)
+      
       const product = (await ProductService.updateProduct(productId, req.body)) as any;
       return res.status(204).json({
         message: 'As suas informações foram actualizadas com sucesso',
         product,
       });
     } catch (error) {
-     return res
+      return res
         .status(500)
         .json({ message: 'Aconteceu um erro ao atualizada', error });
     }
@@ -89,9 +91,7 @@ class ProductController {
 
       const { productId } = req.params;
       const inputs = {
-        profile: {
-          productCover: req.file?.filename,
-        },
+        productCover: req.file?.filename,
         ...req.body,
       };
 
@@ -109,14 +109,12 @@ class ProductController {
         }
       }
 
-
       return res
         .status(500)
         .json({ message: 'Aconteceu um erro ao atualizada' });
 
-
     } catch (error) {
-     return res
+      return res
         .status(500)
         .json({ message: 'Aconteceu um erro ao atualizada', error });
     }
@@ -138,7 +136,7 @@ class ProductController {
       }
       return res
         .status(500)
-        .json({ message: 'Aconteceu um erro ao atualizada' });
+        .json({ message: 'Aconteceu um erro ao atualizar' });
 
     } catch (error) {
       return res.status(404).send(error);

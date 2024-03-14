@@ -16,7 +16,7 @@ const RequestSchema: Schema = new Schema(
         equipmentType: { type: String, required: true },
         employee: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'ProdutoCategory', // Make sure you have a model for Category
+            ref: 'User', // Make sure you have a model for Category
           },
         quantity: { type: Number, required: true },
         observation: { type: String, required: false }

@@ -105,7 +105,6 @@ class UserController {
         ...req.body,
       };
       const userFinded = (await UserService.findOneUser(userId)) as IUser;
-
       if (userFinded) {
         const resultDelete = await deleteFileInDataBase('user', userFinded?.profile.thumbnail);
         if (resultDelete) {
@@ -131,9 +130,7 @@ class UserController {
   public async deleteUser(req: Request, res: Response): Promise<Response> {
     try {
       const { userId } = req.params;
-
       const userFinded = (await UserService.findOneUser(userId)) as IUser;
-
       if (userFinded) {
         const resultDelete = await deleteFileInDataBase('user', userFinded?.profile.thumbnail);
         if (resultDelete) {

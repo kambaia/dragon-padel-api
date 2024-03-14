@@ -44,7 +44,6 @@ class StockController {
           ...req.body,
           invoiceDocument: req.file?.filename
         };
-        console.log("INPUTS: ",inputs)
         const data = (await productInStockService.saveProductStock(inputs)) as any;
         res
           .status(201)
@@ -96,12 +95,12 @@ class StockController {
       }
       return res
         .status(500)
-        .json({ message: 'Aconteceu um erro ao atualizada' });
+        .json({ message: 'Ocorreu um erro ao atualizar os dados' });
 
     } catch (error) {
       return res
         .status(500)
-        .json({ message: 'Aconteceu um erro ao atualizada', error });
+        .json({ message: 'Ocorreu um erro ao atualizar os dados', error });
     }
 
   }
@@ -117,14 +116,14 @@ class StockController {
         if (resultDelete) {
           const ProductInStock = (await productInStockService.deleteProductStock(productId)) as IProductInStock;;
           return res.status(204).json({
-            message: 'As suas informações foram deleter com sucesso',
+            message: 'As suas informações foram deletadas com sucesso',
             ProductInStock,
           });
         }
       }
       return res
         .status(500)
-        .json({ message: 'Aconteceu um erro ao deleter o usuário' });
+        .json({ message: 'Aconteceu um erro ao deletar os dados do stock' });
     } catch (error) {
       return res.status(404).send(error);
     }

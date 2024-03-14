@@ -12,7 +12,14 @@ export default class RequestService {
         const result = await Request.find({})
           .limit(Number(limit))
           .skip(Number(page))
-          .populate('equipment', '_id');
+          .populate({
+            path: 'equipment',
+            select: 'serialNumber productCover cover_url model brand condition technicalDescription',
+            populate: {
+              path: 'category',
+              select: '-_id categoryName', // Seleciona apenas o campo 'name' do departamento
+            },
+          });
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

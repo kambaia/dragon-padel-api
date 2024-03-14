@@ -13,13 +13,16 @@ const RequestSchema: Schema = new Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product', // Assuming Product model for the delivered product
           },
-        equipmentType: { type: String, required: true },
+        equipmentType: { type: String, required: false },
         employee: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User', // Make sure you have a model for Category
           },
         quantity: { type: Number, required: true },
-        observation: { type: String, required: false }
+        observation: { type: String, required: false },
+        visible: { type: Boolean, required: false },
+        received: { type: Boolean, required: false },
+        processing: { type: Boolean, required: false }
     },
     { timestamps: true }
 );

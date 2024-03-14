@@ -45,6 +45,7 @@ export interface IProductInStock extends Document {
   createdAt: Date;
   updatedAt: Date;
 }
+
 export interface IDelivery {
   _id: string;
   deliveredBy: IUser;
@@ -60,4 +61,12 @@ export interface IDelivery {
 }
 export interface IAdditionalAccessorie {
   name: string;
+}
+
+export interface IRequest  {
+  equipment: string;
+  equipmentType:string;
+  employee: string;
+  quantity: number;
+  observation: string;
 }

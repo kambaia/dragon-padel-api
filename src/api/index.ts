@@ -8,6 +8,7 @@ import { productRouter } from './product';
 import { departmentRouter } from './department';
 import { productInStockRouter } from './stock';
 import { deliveryRouter } from './delivery';
+import { RequestRouter } from './request';
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -28,5 +29,5 @@ roleRouter.use(productRouter);
 roleRouter.use(departmentRouter);
 roleRouter.use(productInStockRouter);
 roleRouter.use(deliveryRouter);
-
+roleRouter.use(RequestRouter);
 export default router;

@@ -7,6 +7,7 @@ export interface IUser extends Document {
     thumbnail: string;
     name: string;
   };
+  
   firstName: string;
   surname: string;
   email: string;

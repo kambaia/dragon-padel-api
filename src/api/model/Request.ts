@@ -9,20 +9,24 @@ import {IRequest } from '../../interfaces/ProdutosInterface';
 
 const RequestSchema: Schema = new Schema(
     {
-        equipment: {
-            type: mongoose.Schema.Types.ObjectId,
+        equipment: { type: mongoose.Schema.Types.ObjectId,
             ref: 'Product', // Assuming Product model for the delivered product
           },
         equipmentType: { type: String, required: false },
+        requestedBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User', // Make sure you have a model for Category
+        },
         employee: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User', // Make sure you have a model for Category
           },
         quantity: { type: Number, required: true },
         observation: { type: String, required: false },
-        visible: { type: Boolean, required: false },
-        received: { type: Boolean, required: false },
-        processing: { type: Boolean, required: false }
+        active: { type: Boolean, default: true },
+        visible: { type: Boolean, default: true },
+        received: { type: Boolean, default: false},
+        processing: { type: Boolean, default: false}
     },
     { timestamps: true }
 );

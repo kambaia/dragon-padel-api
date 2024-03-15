@@ -2,16 +2,18 @@ import { Request, Response } from 'express';
 import RquestService from '../services/request';
 import { ISearch } from '../../interfaces/app/search';
 import { IRequest } from '../../interfaces/ProdutosInterface';
+import { fetchAllDataRequest, responseDataRequest } from '../../util/dataFetching/request';
 class RequestController {
   public async listAllRequestt(req: Request, res: Response): Promise<void> {
     const { limit = 10, page } = req.query;
     try {
       const { limit = 25, page } = req.query as unknown as ISearch;
-      const responseData = (await RquestService.findAllRequest({
+      const request = (await RquestService.findAllRequest({
         limit,
         page,
       })) as IRequest[];
-      
+      const allDatarequest = await fetchAllDataRequest(request);
+        const responseData = responseDataRequest(allDatarequest, Number(0));
       res.status(200).send(responseData);
     } catch (error) {
       res.status(404).send(error);

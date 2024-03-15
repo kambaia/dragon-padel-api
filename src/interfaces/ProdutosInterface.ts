@@ -71,6 +71,9 @@ export interface IRequest  {
   quantity: number;
   observation: string;
   active:string,
+  visible: boolean;
+  received:boolean;
+  processing:boolean;
   createdAt: Date;
   updatedAt: Date;
 }

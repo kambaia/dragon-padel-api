@@ -3,13 +3,19 @@ import { formatDate } from '../time';
 
 export const fetchAllDataRequest = async (Request: IRequest[]) => {
   let RequestResult = [];
-  for (const [index, ct] of Request.entries()) {
+  for (const [_, ct] of Request.entries()) {
     RequestResult.push({
       id: ct._id,
       requestedBy: ct?.requestedBy,
-      description: ct?.equipment,
-      equipmentType: ct?.employee.function,
+      equipmentName: ct?.equipment.brand,
+      equipmentCategory: ct?.equipment?.category?.categoryName,
+      cover_url: ct?.equipment.cover_url,
+      observation: ct?.observation,
+      equipmentType: ct?.employee?.function,
       active: ct.active,
+      visible: ct.visible,
+      received:ct.received,
+      processing:ct.processing,
       updatedAt: ct.updatedAt,
       createdAt: formatDate(ct.createdAt),
     });

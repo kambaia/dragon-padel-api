@@ -36,6 +36,18 @@ export interface IUserRegister {
   userName: string;
   status: boolean;
 }
+export interface IEmployee {
+  active: boolean;
+  banned: boolean;
+  firstName: string;
+  fullName: string;
+  profileName: string;
+  function:string;
+  surname: string;
+  urlProfile: string;
+  status: boolean;
+  address?: Address
+}
 
 export interface Address {
   street: string;

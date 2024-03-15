@@ -1,4 +1,4 @@
-import { IUser } from './UserInterface';
+import { IEmployee, IUser } from './UserInterface';
 export interface IProdutoCategory {
   _id: string;
   categoryName: string;
@@ -64,9 +64,13 @@ export interface IAdditionalAccessorie {
 }
 
 export interface IRequest  {
-  equipment: string;
-  equipmentType:string;
-  employee: string;
+  _id:string;
+  equipment: IProduct;
+  requestedBy: IUser;
+  employee: IEmployee;
   quantity: number;
   observation: string;
+  active:string,
+  createdAt: Date;
+  updatedAt: Date;
 }

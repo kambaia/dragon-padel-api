@@ -37,15 +37,20 @@ export interface IUserRegister {
   status: boolean;
 }
 export interface IEmployee {
+  _id:string;
   active: boolean;
   banned: boolean;
   firstName: string;
   fullName: string;
-  profileName: string;
   function:string;
+  phoneNumber:string;
+  gender:string;
   surname: string;
-  urlProfile: string;
   status: boolean;
+  user?:IUser;
+  department: IDepartment;
+  createdAt: Date;
+  updatedAt: Date;
   address?: Address
 }
 

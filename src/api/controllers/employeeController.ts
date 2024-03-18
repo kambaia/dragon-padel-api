@@ -1,21 +1,18 @@
 import { Request, Response } from 'express';
-/* import {
-  fetchAllDataEmployee,
-  responseDataEmployee,
-} from '../../util/dataFetching/Employee'; */
 import AuthService from '../services/auth';
 
 import EmployeeService from '../services/employee';
 import { ISearch } from '../../interfaces/app/search';
+import { fetchAllDataEmployee, responseDataEmployee } from '../../util/dataFetching/employee';
 
 class EmployeeController {
   public async listAllEmployee(req: Request, res: Response): Promise<void> {
     const { limit = 25, page = 0 } = req.query as unknown as ISearch;
     try {
       const employee = (await EmployeeService.findAllEmployee({ limit, page })) as any;
-    /*   const allDataEmp = await fetchAllDataEmployee(employee);
-      const responseData = responseDataEmployee(allDataEmp, Number(0)); */
-      res.status(200).send(employee);
+    const allDataEmp = await fetchAllDataEmployee(employee);
+      const responseData = responseDataEmployee(allDataEmp, Number(0));
+      res.status(200).send(responseData);
     } catch (error) {
       res.status(404).send(error);
     }
@@ -66,8 +63,8 @@ class EmployeeController {
 
   public async updateEmployee(req: Request, res: Response): Promise<void> {
     try {
-      const { EmployeeId } = req.params;
-      const employee = (await EmployeeService.updateEmployee(EmployeeId, req.body)) as any;
+      const { employeeId } = req.params;
+      const employee = (await EmployeeService.updateEmployee(employeeId, req.body)) as any;
       res.status(204).json({
         message: 'As suas informações foram actualizadas com sucesso',
         employee,

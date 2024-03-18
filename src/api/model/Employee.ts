@@ -4,14 +4,17 @@ import { IEmployee } from '../../interfaces/UserInterface';
 
 const EmployeeSchema: Schema = new Schema(
   {
+  
     firstName: { type: String, required: true },
     surname: { type: String, require: true },
     fullName: { type: String },
+    phoneNumber: { type: String, required: true, unique: true },
     gender:   { type: String },
     function:{ type: String },
     banned: { type: Boolean },
     active: { type: Boolean },
     department: { type: mongoose.Schema.Types.ObjectId, ref: 'Department' },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   },
   {
     timestamps: true,

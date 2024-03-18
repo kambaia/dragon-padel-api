@@ -15,8 +15,8 @@ export default class EmployeeService {
             path: 'department',
             populate: { path: 'company' },
           })
+          .populate('user', '_id  profile_url profile email')
           .sort({ createdAt: -1 });
-        console.log(result);
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));
@@ -51,6 +51,16 @@ export default class EmployeeService {
       }
     })
   }
+  public static async findOneExistenteEmployee({phoneNumber}:{phoneNumber: string}) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const result = await Employee.findById({phoneNumber: phoneNumber})
+        resolve(result);
+      } catch (error: unknown) {
+        reject(handleMongoError(error));
+      }
+    })
+  }
   public static async saveEmployee(employee: IEmployee) {
     return new Promise(async function (resolve, reject) {
       try {
@@ -63,11 +73,12 @@ export default class EmployeeService {
   }
   public static async updateEmployee(employeeId: string, employee: IEmployee) {
     return new Promise(async function (resolve, reject) {
+      console.log(employeeId, employee)
       try {
         const result = await Employee.findByIdAndUpdate(
           { _id: employeeId },
-          { $set: Employee },
-          { new: false }
+          { $set: employee },
+          { new: true }
         );
         resolve(result);
       } catch (error: unknown) {

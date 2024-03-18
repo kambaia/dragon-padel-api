@@ -30,6 +30,22 @@ class ProductController {
       res.status(404).send(error);
     }
   }
+  public async listAllDamagedProductst(req: Request, res: Response): Promise<void> {
+    const { limit = 25, page } = req.query as unknown as ISearch;
+    try {
+      const product = (await ProductService.findAllDamagedProducts({
+        limit,
+        page,
+      })) as IProduct[];
+
+      const allDataUser = await fetchAllDataProduct(product);
+      const responseData = responseDataProduct(allDataUser, Number(0));
+
+      res.status(200).send(responseData);
+    } catch (error) {
+      res.status(404).send(error);
+    }
+  }
 
   public async listOneproduct(req: Request, res: Response): Promise<void> {
     try {

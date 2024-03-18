@@ -19,7 +19,7 @@ const RequestSchema: Schema = new Schema(
         },
         employee: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User', // Make sure you have a model for Category
+            ref: 'Employee', // Make sure you have a model for Category
           },
         quantity: { type: Number, required: true },
         observation: { type: String, required: false },

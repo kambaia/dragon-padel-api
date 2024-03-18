@@ -21,6 +21,21 @@ export default class AuthService {
       }
     });
   }
+  public static async findAllDamagedProducts({ limit, page }: ISearch) {
+    return new Promise(async function (resolve, reject) {
+      try {
+        const result = await Product.find({ condition: 'Danificado'})
+          .limit(Number(limit))
+          .skip(Number(page))
+          .populate('registerby', 'profile firstName surname')
+          .populate('category', 'categoryName')
+          .sort({ createdAt: -1 });
+        resolve(result);
+      } catch (error: unknown) {
+        reject(handleMongoError(error));
+      }
+    });
+  }
   public static async findOneProduct(userId: string) {
     return new Promise(async function (resolve, reject) {
       try {

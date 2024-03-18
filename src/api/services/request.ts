@@ -12,6 +12,8 @@ export default class RequestService {
         const result = await Request.find({})
           .limit(Number(limit))
           .skip(Number(page))
+          .populate('requestedBy', 'profile firstName surname')
+          .populate('employee', 'firstName surname')
           .populate({
             path: 'equipment',
             select: 'serialNumber productCover cover_url model brand condition technicalDescription',

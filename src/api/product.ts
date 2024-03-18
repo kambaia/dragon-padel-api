@@ -8,6 +8,8 @@ const upload = multer({ storage: storage });
 
 export const productRouter = Router();
 productRouter.get('/product', productController.listAllproduct);
+productRouter.get('/product-damaged/', productController.listAllDamagedProductst); 
+
 productRouter.get('/product/:productId', productController.listOneproduct); 
 productRouter.post(
   '/product',

@@ -3,7 +3,8 @@ import AuthService from '../services/auth';
 
 import EmployeeService from '../services/employee';
 import { ISearch } from '../../interfaces/app/search';
-import { fetchAllDataEmployee, responseDataEmployee } from '../../util/dataFetching/employee';
+import { fetchAllDataEmployee, responseDataEmployee } from '../../util/dataFetching/Employee';
+
 
 class EmployeeController {
   public async listAllEmployee(req: Request, res: Response): Promise<void> {

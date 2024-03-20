@@ -17,10 +17,6 @@ const deliverySchema: Schema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User', // Assuming User model for the beneficiary
     },
-    productStock: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'ProductInStock', // Assuming Product model for the delivered product
-    },
     deliveryDate: {
       type: String,
       required: true,

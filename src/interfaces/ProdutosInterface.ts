@@ -47,7 +47,7 @@ export interface IProductInStock extends Document {
 }
 export interface IStockProduct{
   serialNumber: string;
-  productCover: string;
+  cover_url: string;
   model: string;
   brand: string;
   specification:string;

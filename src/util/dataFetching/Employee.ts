@@ -6,6 +6,8 @@ export const fetchAllDataEmployee = async (employee: IEmployee[]) => {
     for (const [_, emp] of employee.entries()) {
         employeeArray.push({
             id: emp._id,
+            firstName: emp.firstName,
+            surname: emp?.surname,
             fullName: `${emp.firstName} ${emp?.surname}`,
             phoneNumber: emp.phoneNumber,
             gender: emp.gender,

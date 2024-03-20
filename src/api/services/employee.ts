@@ -73,7 +73,6 @@ export default class EmployeeService {
   }
   public static async updateEmployee(employeeId: string, employee: IEmployee) {
     return new Promise(async function (resolve, reject) {
-      console.log(employeeId, employee)
       try {
         const result = await Employee.findByIdAndUpdate(
           { _id: employeeId },

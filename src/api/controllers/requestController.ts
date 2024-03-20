@@ -41,7 +41,6 @@ class RequestController {
 
   public async saveRequest(req: Request, res: Response): Promise<void> {
     try {
-      console.log(req.body)
       const requestData = (await RquestService.saveRequest(req.body)) as IRequest;
 
         res

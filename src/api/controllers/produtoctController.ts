@@ -66,7 +66,6 @@ class ProductController {
   }
 
   public async saveProduct(req: Request, res: Response): Promise<Response> {
-    console.log('', req.file);
     try {
       const inputs = {
         productCover: req.file?.filename,
@@ -87,8 +86,6 @@ class ProductController {
   public async updateProduct(req: Request, res: Response): Promise<Response> {
     try {
       const { productId } = req.params;
-      console.log(req.body)
-      
       const product = (await ProductService.updateProduct(productId, req.body)) as any;
       return res.status(204).json({
         message: 'As suas informações foram actualizadas com sucesso',

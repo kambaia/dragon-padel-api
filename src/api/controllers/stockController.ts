@@ -4,12 +4,14 @@ import { ISearch } from '../../interfaces/app/search';
 import { deleteFileInDataBase } from '../../util/deleteFile';
 import { IProductInStock } from '../../interfaces/ProdutosInterface';
 import { fetchAllDataProductStock, responseDataProductStock } from '../../util/dataFetching/productStock';
+import { fetchOrganizeProductData } from '../../util/functionshelp';
 
 class StockController {
   public async listAllProductInStock(req: Request, res: Response): Promise<void> {
     const { limit = 25, page = 0 } = req.query as unknown as ISearch;
     try {
       const product = (await productInStockService.findAllProductStock({ limit, page })) as IProductInStock[];
+     
       const allDataUser = await fetchAllDataProductStock(product);
       const responseData = responseDataProductStock(allDataUser, Number(0));
     

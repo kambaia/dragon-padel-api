@@ -40,7 +40,6 @@ class UserController {
   }
   
   public async saveRoles(req: Request, res: Response): Promise<Response> {
-    console.log(req.body);
     const { level, type } = req.body;
     const roles: string = req.body.role; // Tipagem da variável roles como string
     const allroles = roles.split(',')?.map((role) => role.trim()); // Divisão da string e remoção de espaços em branco

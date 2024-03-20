@@ -1,20 +1,17 @@
 import { ICompany } from '../../interfaces/CompanyInterface';
-import { IProductInStock } from '../../interfaces/ProdutosInterface';
+import { IProductInStock, IStockProduct } from '../../interfaces/ProdutosInterface';
+import { fetchOrganizeProductData } from '../functionshelp';
 
-export const fetchAllDataProductStock = async (product: IProductInStock[]) => {
+export const fetchAllDataProductStock = async (productInstok: IProductInStock[]) => {
   let productResult = [];
-  for (const [index, pd] of product.entries()) {
+  for (const [index, pd] of productInstok.entries()) {
     productResult.push({
       id: pd._id,
-       product: pd.product.map((prod) => {
-        return {
-            productId: prod.productId,
-            productQuantity: prod.productQuantity
-        }}),
       invoiceDocument:pd.invoiceDocument,
       documentNumber:pd.documentNumber,
       supplier:pd.supplier,
       document_url: pd.document_url,
+      product: await fetchOrganizeProductData(pd.product),
       userName: `${pd?.registerby?.firstName} ${pd?.registerby?.surname}`,
     });
   }

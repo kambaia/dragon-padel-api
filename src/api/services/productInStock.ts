@@ -16,13 +16,15 @@ export default class ProductInStockService {
           .populate('registerby', 'profile firstName surname')
           .populate({
             path: 'product.productId',
-            select: 'serialNumber productCover cover_url model brand condition technicalDescription',
+            select: 'serialNumber productCover cover_url model brand condition technicalDescription active technicalDescription isAvailable',
             populate: {
               path: 'category',
               select: '-_id categoryName', // Seleciona apenas o campo 'name' do departamento
             },
           })
           .sort({ createdAt: -1 });
+          
+       
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

@@ -2,7 +2,6 @@ import path from 'path';
 import { diskStorage, FileFilterCallback } from 'multer';
 import { randomBytes } from 'crypto';
 export const configureStorage = (customPath: string) => {
-  console.log(customPath);
   return {
     dest: path.resolve(__dirname, customPath),
     storage: diskStorage({

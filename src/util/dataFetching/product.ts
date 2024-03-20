@@ -4,7 +4,6 @@ import { IProduct } from '../../interfaces/ProdutosInterface';
 export const fetchAllDataProduct = async (product: IProduct[]) => {
   
   let productResult = [];
-  console.log(product)
   for (const [index, pd] of product.entries()) {
    
     productResult.push({

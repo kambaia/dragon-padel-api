@@ -37,7 +37,6 @@ class EmployeeController {
   }
 
   public async saveEmployee(req: Request, res: Response): Promise<void> {
-    console.log(req.body)
     try {
       const Employee = (await AuthService.authLogin(req.body.email)) as any;
       if (Employee) {

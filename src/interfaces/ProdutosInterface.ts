@@ -45,6 +45,18 @@ export interface IProductInStock extends Document {
   createdAt: Date;
   updatedAt: Date;
 }
+export interface IStockProduct{
+  serialNumber: string;
+  productCover: string;
+  model: string;
+  brand: string;
+  specification:string;
+  technicalDescription: string;
+  condition: string;
+  active: boolean;
+  isAvailable: boolean;
+  productQuantity: number
+}
 
 export interface IDelivery {
   _id: string;

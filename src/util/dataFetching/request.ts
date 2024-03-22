@@ -7,6 +7,7 @@ export const fetchAllDataRequest = async (Request: IRequest[]) => {
     requestResult.push({
       id: ct._id,
       requestedBy: `${ct?.requestedBy.firstName} ${ct.requestedBy.surname}`,
+      requestedById: ct?.requestedBy._id,
       employee: `${ct?.employee?.firstName} ${ct?.employee?.surname}`,
       equipmentName: ct?.equipment.brand,
       equipmentCategory: ct?.equipment?.category?.categoryName,
@@ -21,7 +22,7 @@ export const fetchAllDataRequest = async (Request: IRequest[]) => {
       updatedAt: ct.updatedAt,
       createdAt: formatDate(ct.createdAt),
     });
-  }
+  } 
   return requestResult;
 };
 

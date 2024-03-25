@@ -1,15 +1,16 @@
 import { Request, Response } from 'express';
 import { Delivery } from '../model/Delivery';
-import { IDelivery, IProductInStock } from '../../interfaces/ProdutosInterface';
+import { IDelivery, IProduct, IStock } from '../../interfaces/ProdutosInterface';
 import {
   responseDatadelivery,
   fetchAllDatadelivery,
 } from '../../util/dataFetching/delivery';
-
+import MovimentService from '../services/moviment';
+import { getDataFormat, getTimeFormat } from '../../util/functionshelp';
 import deliveryService from '../services/delivery';
-
+import StockService from '../services/stock';
 import { ISearch } from '../../interfaces/app/search';
-import { ProductInStock } from '../model/Stock';
+import { Stock } from '../model/Stock';
 
 class deliveryController {
   public async listAllDelivery(req: Request, res: Response): Promise<void> {
@@ -44,7 +45,7 @@ class deliveryController {
     }
   }
 
-  
+
   public async saveDelivery(req: Request, res: Response): Promise<void> {
     try {
       const verifyDelivery = await deliveryService.verifyDelivery(req.body.product);
@@ -53,23 +54,26 @@ class deliveryController {
           .status(409)
           .json({ error: 'Esse pedido já foi feito. Experimente outro' });
       } else {
-        
-      const deliveryDetails = req.body;
-      
-      const delivery = (await deliveryService.saveDelivery(
-        deliveryDetails
-      )) as IDelivery;
-
-      await this.updateStock(deliveryDetails.products);
-  
-        const datadelivery = {
-          deliveryName: delivery.product,
-          id: delivery._id,
-        };
-
-        res
-          .status(201)
-          .json({ success: 'Cadastro feito  com sucesso', ...datadelivery });
+        const deliveryDetails = req.body as IDelivery;
+        const stockData = (await StockService.findExisteProduct(deliveryDetails.product)) as IStock;
+        if (stockData) {
+          const totalQuantity = stockData.productQuantity + deliveryDetails.deliveryQuantity;
+          const stock = await StockService.updateStock(stockData._id!, { product: deliveryDetails.product, productQuantity: totalQuantity }) as IStock;
+          if (stock) {
+            await MovimentService.saveMoviment({
+              productQuantity: deliveryDetails.deliveryQuantity,
+              movementDay: getDataFormat(),
+              movementTime: getTimeFormat(),
+              entry: true,
+              productOutput: false,
+              product: deliveryDetails.product,
+            });
+            const resultDelivery = await deliveryService.saveDelivery(deliveryDetails);  
+            res
+            .status(201)
+            .json({ success: 'Cadastro feito  com sucesso', resultDelivery });
+          }
+        }
       }
     } catch (error) {
       res.status(500).send({ message: error });
@@ -77,16 +81,9 @@ class deliveryController {
   }
 
 
-  public async updateStock(products: IDelivery[]) {
+  public async updateStock(products: IProduct[]): Promise<boolean> {
     try {
-      for (const productuStock of products) {
-        const stockItem = await ProductInStock.findOne({ productId: productuStock.product._id });
-        if (!stockItem) {
-          throw new Error('Produto não encontrado no estoque.');
-        }
-        stockItem.product.productQuantity -= productuStock.product.deliveryQuantity;
-        await stockItem.save();
-      }
+      return true;
     } catch (error) {
       throw new Error('Erro ao atualizar estoque.');
     }

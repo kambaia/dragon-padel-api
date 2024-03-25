@@ -7,7 +7,7 @@ import { ISearch } from '../../interfaces/app/search';
 import { Delivery } from '../model/Delivery';
 import { IDelivery } from '../../interfaces/ProdutosInterface';
 import { Types } from 'mongoose';
-export default class AuthService {
+export default class DeliveryService {
   public static async findAllDelivery({ limit, page }: ISearch) {
     return new Promise(async function (resolve, reject) {
       try {
@@ -92,7 +92,7 @@ export default class AuthService {
       }
     });
   }
-  public static async saveDelivery(delivery: IDelivery) {
+  public static async saveDelivery(delivery: IDelivery):Promise<IDelivery> {
     return new Promise(async function (resolve, reject) {
       try {
         const result = await Delivery.create(delivery);

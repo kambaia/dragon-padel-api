@@ -17,7 +17,6 @@ export default class AuthService {
             populate: { path: 'company' },
           })
           .sort({ createdAt: -1 });
-        console.log(result);
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

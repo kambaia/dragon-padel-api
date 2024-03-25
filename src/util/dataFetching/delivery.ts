@@ -29,7 +29,7 @@ export const fetchAllDatadelivery = async (product: IDelivery[]) => {
           logo_url: pd.beneficiary?.department.company.logo_url,
         },
       },
-      deliveryQuantity: pd.product.deliveryQuantity,
+      deliveryQuantity: pd.product,
       deliveryDate: pd.deliveryDate,
       
       active: pd.active,

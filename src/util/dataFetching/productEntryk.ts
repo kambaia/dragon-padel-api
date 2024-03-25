@@ -1,8 +1,8 @@
 import { ICompany } from '../../interfaces/CompanyInterface';
-import { IProductInStock, IStockProduct } from '../../interfaces/ProdutosInterface';
+import { IProductEntry, IStockProduct } from '../../interfaces/ProdutosInterface';
 import { fetchOrganizeProductData } from '../functionshelp';
 
-export const fetchAllDataProductStock = async (productInstok: IProductInStock[]) => {
+export const fetchAllDataProductStock = async (productInstok: IProductEntry[]) => {
   let productResult = [];
   for (const [index, pd] of productInstok.entries()) {
     productResult.push({

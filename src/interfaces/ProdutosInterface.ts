@@ -34,7 +34,7 @@ export interface IProduct extends Document {
   updatedAt: Date;
 }
 
-export interface IProductInStock extends Document {
+export interface IProductEntry extends Document {
   _id: string;
   invoiceDocument: string;
   documentNumber: string;
@@ -45,6 +45,7 @@ export interface IProductInStock extends Document {
   createdAt: Date;
   updatedAt: Date;
 }
+
 export interface IStockProduct{
   serialNumber: string;
   cover_url: string;
@@ -55,7 +56,26 @@ export interface IStockProduct{
   condition: string;
   active: boolean;
   isAvailable: boolean;
-  productQuantity: number
+  productQuantity: number;
+}
+
+export interface IStock{
+  _id?: string;
+  product: string;
+  productStok?: IProduct;
+  productQuantity: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface Imovements{
+  productQuantity: number,
+  product: string;
+  movementDay: string;
+  movementTime: string;
+  entry: boolean;
+  productOutput: boolean;
+  delivery?: IDelivery;
 }
 
 export interface IDelivery {
@@ -63,7 +83,8 @@ export interface IDelivery {
   deliveredBy: IUser;
   receivedBy: IUser;
   beneficiary: IUser;
-  product:  IProductInStock & { deliveryQuantity: number }; 
+  product: string;
+  deliveryQuantity: number;
   deliveryDate: Date;
   additionalAccessorie: IAdditionalAccessorie[];
   active: boolean;

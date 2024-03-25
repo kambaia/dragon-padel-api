@@ -1,40 +1,16 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import mongoose, { Model, Schema } from 'mongoose';
-import {IProductInStock } from '../../interfaces/ProdutosInterface';
+import mongoose, { Model } from 'mongoose';
+import {IStock } from '../../interfaces/ProdutosInterface';
 
-const productInStockSchema  = new mongoose.Schema(
+const stockSchema  = new mongoose.Schema(
   {
-    documentNumber: {
-      type: String,
-    },
-    supplier: {
-      type: String,
-    },
-
-    invoiceDocument: {
-      type: String,
-    },
-    product: [{
-      productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
-      productQuantity: { type: Number},
-    }],
-    registerby: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // Make sure you have a model for user
-    },
+    product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+    productQuantity: { type: Number},
   },
   {
     timestamps: true,
-    toJSON: {
-      virtuals: true,
-    },
   }
 );
-
-productInStockSchema.virtual('document_url').get(function () {
-  return `http://localhost:5000/files/product/doc/${this.invoiceDocument}`;
-});
-
 // Export the model and return your IUser interface
-export const ProductInStock: Model<IProductInStock> =
-  mongoose.models.ProductInStock || mongoose.model('ProductInStock', productInStockSchema);
+export const Stock: Model<IStock> =
+  mongoose.models.Stock || mongoose.model('stock', stockSchema);

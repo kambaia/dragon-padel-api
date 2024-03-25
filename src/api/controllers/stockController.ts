@@ -1,69 +1,104 @@
-import { Request, Response, raw } from 'express';
-import productInStockService from '../services/productInStock';
+import { Request, Response } from 'express';
 import { ISearch } from '../../interfaces/app/search';
-import { deleteFileInDataBase } from '../../util/deleteFile';
-import { IProductInStock } from '../../interfaces/ProdutosInterface';
-import { fetchAllDataProductStock, responseDataProductStock } from '../../util/dataFetching/productStock';
-import { fetchOrganizeProductData } from '../../util/functionshelp';
+import { IStock } from '../../interfaces/ProdutosInterface';
+import StockService from '../services/stock';
+import MovimentService from '../services/moviment';
+import { getDataFormat, getTimeFormat } from '../../util/functionshelp';
+import { fetchAllDataStock, responseDataStock} from '../../util/dataFetching/stock';
+
 
 class StockController {
-  public async listAllProductInStock(req: Request, res: Response): Promise<void> {
-    const { limit = 25, page = 0 } = req.query as unknown as ISearch;
+  public async listAllStock(req: Request, res: Response): Promise<void> {
     try {
-      const product = (await productInStockService.findAllProductStock({ limit, page })) as IProductInStock[];
-     
-      const allDataUser = await fetchAllDataProductStock(product);
-      const responseData = responseDataProductStock(allDataUser, Number(0));
-    
+      const { limit = 25, page } = req.query as unknown as ISearch;
+      const stock = (await StockService.findAllStock({
+        limit,
+        page,
+      })) as IStock[];
+       const allDataStock = await fetchAllDataStock(stock);
+      const responseData = responseDataStock(allDataStock, Number(0));
+      
       res.status(200).send(responseData);
     } catch (error) {
       res.status(404).send(error);
+
     }
   }
 
-  public async listOneProductInStock(req: Request, res: Response): Promise<void> {
+  public async listOneStock(req: Request, res: Response): Promise<void> {
     try {
-      const { productId } = req.params;
-      if (productId) {
-        const product = (await productInStockService.findOneProductStock(productId)) as IProductInStock;
-        if (product) {
-          res.status(200).send(product);
-        } else {
-          res
-            .status(404)
-            .send({ message: 'Não foi encontrada nenhuma producto.' });
-        }
+      const { stockId } = req.params;
+      const stock = (await StockService.findOneStock(
+        stockId
+      )) as IStock;
+      if (stock) {
+        res.status(200).send(stock);
+      } else {
+        res
+          .status(404)
+          .send({ message: 'Não foi encontrada nenhuma producto em stock.' });
       }
     } catch (error) {
       res.status(404).send(error);
     }
   }
 
-  public async saveProductInStock(req: Request, res: Response): Promise<void> {
+  public async saveStock(req: Request, res: Response): Promise<void> {
     try {
-  
-        const inputs = {
-          ...req.body,
-          invoiceDocument: req.file?.filename
-        };
-        const data = (await productInStockService.saveProductStock(inputs)) as any;
+
+      const { productId, productQuantity } = req.body;
+      const newStock = {
+        product: productId, productQuantity: parseInt(productQuantity)
+      } as IStock
+
+      const stockData = (await StockService.findExisteProduct(productId)) as IStock;
+      if (stockData) {
+        const totalQuantity = stockData.productQuantity + newStock.productQuantity;
+        const stock = await StockService.updateStock(stockData._id!, { product: productId, productQuantity: totalQuantity }) as IStock;
+        if (stock) {
+          await MovimentService.saveMoviment({
+            productQuantity: newStock.productQuantity,
+            movementDay: getDataFormat(),
+            movementTime: getTimeFormat(),
+            entry: true,
+            productOutput: false,
+            product: newStock.product,
+          });
+        }
         res
           .status(201)
-          .json({ success: 'Cadastro feito  com sucesso', stockId: data?._id });
-      
+          .json({ success: 'Cadastro feito  com sucesso', stock });
+      } else {
+
+        const stockData = (await StockService.saveStock(newStock)) as IStock;
+        if (stockData) {
+          await MovimentService.saveMoviment({
+            productQuantity: newStock.productQuantity,
+            movementDay: getDataFormat(),
+            movementTime: getTimeFormat(),
+            entry: true,
+            productOutput: false,
+            product: newStock.product,
+          });
+          res
+            .status(201)
+            .json({ success: 'Cadastro feito  com sucesso', stockData });
+
+        }
+      }
     } catch (error) {
-      console.log(error);
       res.status(500).send({ message: error });
     }
   }
 
-  public async updateProductInStock(req: Request, res: Response): Promise<void> {
+  public async updateStock(req: Request, res: Response): Promise<void> {
     try {
-      const { productId } = req.params;
-      const ProductInStock = (await productInStockService.updateProductStock(productId, req.body)) as IProductInStock;
+      const inputs = req.body;
+      const { stocktId } = req.params;
+      const stock = await StockService.updateStock(stocktId, inputs);
       res.status(204).json({
         message: 'As suas informações foram actualizadas com sucesso',
-        ProductInStock,
+        stock,
       });
     } catch (error) {
       res
@@ -72,60 +107,17 @@ class StockController {
     }
   }
 
-  public async updateProductInStockWithProfile(req: Request, res: Response): Promise<Response> {
+  public async deleteStock(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
     try {
-      const {productId } = req.params;
-
-      const inputs = {
-        profile: {
-          thumbnail: req.file?.filename,
-          name: req.file?.originalname,
-        },
-        ...req.body,
-      };
-      const ProductInStockFinded = (await productInStockService.findOneProductStock(productId)) as IProductInStock;
-
-      if (ProductInStockFinded) {
-        const resultDelete = await deleteFileInDataBase('stock', ProductInStockFinded?.invoiceDocument);
-        if (resultDelete) {
-          const ProductInStock = (await productInStockService.updateProductStock(productId, inputs)) as any;
-          return res.status(204).json({
-            message: 'As suas informações foram actualizadas com sucesso',
-            ProductInStock,
-          });
-        }
+      const { stockId } = req.params;
+      const request = await StockService.deleteStock(stockId);
+      if (Request) {
+        return res.status(204).send('Deletado com sucesso');
       }
-      return res
-        .status(500)
-        .json({ message: 'Ocorreu um erro ao atualizar os dados' });
-
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ message: 'Ocorreu um erro ao atualizar os dados', error });
-    }
-
-  }
-
-  public async deleteProductInStock(req: Request, res: Response): Promise<Response> {
-    try {
-      const { productId } = req.params;
-
-      const productInStockFinded = (await productInStockService.findOneProductStock(productId)) as IProductInStock;
-
-      if (productInStockFinded) {
-        const resultDelete = await deleteFileInDataBase('stock', productInStockFinded?.invoiceDocument);
-        if (resultDelete) {
-          const ProductInStock = (await productInStockService.deleteProductStock(productId)) as IProductInStock;;
-          return res.status(204).json({
-            message: 'As suas informações foram deletadas com sucesso',
-            ProductInStock,
-          });
-        }
-      }
-      return res
-        .status(500)
-        .json({ message: 'Aconteceu um erro ao deletar os dados do stock' });
+      return res.status(404).send(Request);
     } catch (error) {
       return res.status(404).send(error);
     }

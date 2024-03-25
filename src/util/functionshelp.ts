@@ -1,11 +1,10 @@
+import moment from 'moment';
 
-
-import { IProductInStock, IStockProduct } from "../interfaces/ProdutosInterface";
+import { IStockProduct } from "../interfaces/ProdutosInterface";
 export const fetchOrganizeProductData = async (product: any): Promise<IStockProduct[]> => {
 
     return new Promise(async function (resolve, reject) {
-        const productInstock = product?.map((p:any) => {
-            console.log(p)
+        const productInstock = product?.map((p: any) => {
             return {
                 id: p?.productId._id,
                 serialNumber: p?.productId.serialNumber,
@@ -21,12 +20,28 @@ export const fetchOrganizeProductData = async (product: any): Promise<IStockProd
                 category: p?.productId.category.categoryName
             };
         });
-        if(productInstock){
+        if (productInstock) {
             resolve(productInstock);
-        }else{
+        } else {
             reject([])
         }
-      
+
     })
-  
+
 }
+
+
+export const getDataFormat = () => {
+    const currentDate = moment();
+    const day = currentDate.date();
+    const month = currentDate.month() + 1; // Adiciona 1 porque os meses são indexados de 0 a 11
+    const year = currentDate.year();
+    const formattedMonth = String(month).padStart(2, '0');
+    const movementDay = `${day}/${formattedMonth}/${year}`;
+   return movementDay; // Saída: dia/mês/ano (por exemplo, 22/03/2024)
+}
+export const getTimeFormat = () => {
+    const currentDate = moment();
+   return currentDate.format('HH:mm:ss');
+}
+

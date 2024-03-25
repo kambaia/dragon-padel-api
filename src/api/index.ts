@@ -6,18 +6,16 @@ import { categoryRouter } from './category';
 import { companyRouter } from './company';
 import { productRouter } from './product';
 import { departmentRouter } from './department';
-import { productInStockRouter } from './stock';
+import { productEntryRouter } from './productEntry';
 import { deliveryRouter } from './delivery';
 import { RequestRouter } from './request';
+import { stockRouter } from './stock';
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  return res.send(`
-  <body style="display:flex;justify-content: center;  align-items: center;background-color:black;color:black;text-align:center;padding:30px; font-size:40pt;">
- <h2  style="color:#008bd0;text-align:center;padding:30px; font-size:40pt;">Seja bem-vindo a maior plataforma de conteúdo artistico angolano .</h2>
-   <p style="color:#fff;text-align:center;padding:20px; font-size:20pt;">A nossa api tem como objectivo ajudar qualquer desenvolvedor no fornecimento de conteúdos de musicas e videos de todos os artistas angolanos</a></p>
- </body>
-`);
+  return res.send({
+    message: "Seja bem vido"
+  });
 });
 
 router.use(sessionRouter);
@@ -27,7 +25,8 @@ roleRouter.use(categoryRouter);
 roleRouter.use(companyRouter);
 roleRouter.use(productRouter);
 roleRouter.use(departmentRouter);
-roleRouter.use(productInStockRouter);
+roleRouter.use(productEntryRouter);
+roleRouter.use(stockRouter);
 roleRouter.use(deliveryRouter);
 roleRouter.use(RequestRouter);
 export default router;

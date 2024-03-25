@@ -1,16 +1,16 @@
 
 import { handleMongoError } from '../../util/errors/api-error';
 import { ISearch } from '../../interfaces/app/search';
-import { IProduct, IProductInStock } from '../../interfaces/ProdutosInterface';
-import { ProductInStock } from '../model/Stock';
+import { IProduct, IProductEntry } from '../../interfaces/ProdutosInterface';
+import { ProductEntry } from '../model/ProductEntry';
 
 
-export default class ProductInStockService {
+export default class ProductEntryService {
     
   public static async findAllProductStock({ limit, page }: ISearch) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await ProductInStock.find({})
+        const result = await ProductEntry.find({})
           .limit(Number(limit))
           .skip(Number(page))
           .populate('registerby', 'profile firstName surname')
@@ -34,7 +34,7 @@ export default class ProductInStockService {
   public static async findOneProductStock(userId: string) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = (await ProductInStock.findById(userId)
+        const result = (await ProductEntry.findById(userId)
         .populate('registerby', 'profile firstName surname')
         .populate({
           path: 'product',
@@ -43,7 +43,7 @@ export default class ProductInStockService {
             path: 'category',
             select: '-_id categoryName', // Seleciona apenas o campo 'name' do departamento
           },
-        })) as IProductInStock;
+        })) as IProductEntry;
 
         resolve(result);
       } catch (error: unknown) {
@@ -54,7 +54,7 @@ export default class ProductInStockService {
   public static async verifyProduct(documentNumber: string) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = (await ProductInStock.findOne({
+        const result = (await ProductEntry.findOne({
           documentNumber: documentNumber,
         }).populate('category', '_id  categoryName')) as IProduct;
         resolve(result);
@@ -64,10 +64,10 @@ export default class ProductInStockService {
     });
   }
 
-  public static async saveProductStock(product: IProductInStock) {
+  public static async saveProductStock(product: IProductEntry) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await ProductInStock.create(product) as IProductInStock;
+        const result = await ProductEntry.create(product) as IProductEntry;
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));
@@ -77,7 +77,7 @@ export default class ProductInStockService {
   public static async updateProductStock(productId: string, product: IProduct) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await ProductInStock.findByIdAndUpdate(
+        const result = await ProductEntry.findByIdAndUpdate(
           { _id: productId },
           { $set: product },
           { new: false }
@@ -92,7 +92,7 @@ export default class ProductInStockService {
   public static async deleteProductStock(productId: string) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await ProductInStock.findByIdAndDelete(productId);
+        const result = await ProductEntry.findByIdAndDelete(productId);
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

@@ -25,10 +25,7 @@ const deliverySchema: Schema = new Schema(
       type: Number,
       required: true,
     },
-    product: [{
-      productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
-      productQuantity: { type: Number},
-    }],
+    product:{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
     active: Boolean,
     isAvailable: Boolean,
   },

@@ -2,36 +2,19 @@ import { IDelivery } from '../../interfaces/ProdutosInterface';
 
 export const fetchAllDatadelivery = async (product: IDelivery[]) => {
   let productResult = [];
-  for (const [index, pd] of product.entries()) {
+  for (const [_index, pd] of product.entries()) {
     productResult.push({
       id: pd._id,
-      deliveredBy: {
-        fullName: `${pd.deliveredBy?.firstName} ${pd.deliveredBy?.surname}`,
-        department: {
-          departmentName: pd.deliveredBy?.department.departmentName,
-          company: pd.deliveredBy?.department.company.companyName,
-          logo_url: pd.deliveredBy?.department.company.logo_url,
-        },
-      },
-      receivedBy: {
-        fullName: `${pd.receivedBy?.firstName} ${pd.receivedBy?.surname}`,
-        department: {
-          departmentName: pd.receivedBy?.department.departmentName,
-          company: pd.receivedBy?.department.company.companyName,
-          logo_url: pd.receivedBy?.department.company.logo_url,
-        },
-      },
-      beneficiary: {
-        fullName: `${pd.beneficiary?.firstName} ${pd.beneficiary.surname}`,
-        department: {
-          departmentName: pd.beneficiary?.department.departmentName,
-          company: pd.beneficiary?.department.company.companyName,
-          logo_url: pd.beneficiary?.department.company.logo_url,
-        },
-      },
-      deliveryQuantity: pd.product,
-      deliveryDate: pd.deliveryDate,
-      
+      deliveredByFullName: `${pd?.deliveredBy?.firstName} ${pd.deliveredBy?.surname}`,
+      receivedByFullName: `${pd?.receivedBy?.firstName} ${pd.receivedBy?.surname}`,
+      beneficiaryFullName: `${pd?.beneficiary?.firstName} ${pd.beneficiary.surname}`,
+      beneficiaryCompany: `${pd?.beneficiary?.department?.company.companyName}-${pd?.beneficiary?.department?.departmentName}`,
+      deliveryQuantity: pd.deliveryQuantity,
+      serialNumber: pd.product.serialNumber,
+			productCover :  pd.product.productCover,
+			model : `${pd.product.brand}-${pd.product.model}`,
+			condition : pd.product.condition,
+      deliveryDate:  pd.deliveryDate?.split("-").reverse().join("-"),
       active: pd.active,
       isAvailable: pd.isAvailable,
     });

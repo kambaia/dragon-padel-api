@@ -1,12 +1,10 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import bcrypt from 'bcrypt';
-import { User } from '../model/User';
-import { IUser, IUserRegister } from '../../interfaces/UserInterface';
+import { IUserRegister } from '../../interfaces/UserInterface';
 import { handleMongoError } from '../../util/errors/api-error';
 import { ISearch } from '../../interfaces/app/search';
 import { Delivery } from '../model/Delivery';
-import { IDelivery } from '../../interfaces/ProdutosInterface';
+import { IDelivery, IDeliveryRegister } from '../../interfaces/ProdutosInterface';
 import { Types } from 'mongoose';
+
 export default class DeliveryService {
   public static async findAllDelivery({ limit, page }: ISearch) {
     return new Promise(async function (resolve, reject) {
@@ -92,7 +90,7 @@ export default class DeliveryService {
       }
     });
   }
-  public static async saveDelivery(delivery: IDelivery):Promise<IDelivery> {
+  public static async saveDelivery(delivery: IDeliveryRegister):Promise<IDelivery> {
     return new Promise(async function (resolve, reject) {
       try {
         const result = await Delivery.create(delivery);
@@ -102,11 +100,11 @@ export default class DeliveryService {
       }
     });
   }
-  public static async updateDelivery(userId: string, user: IUserRegister) {
+  public static async updateDelivery(deliveryId: string, user: IUserRegister) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await User.findByIdAndUpdate(
-          { _id: userId },
+        const result = await Delivery.findByIdAndUpdate(
+          { _id: deliveryId },
           { $set: user },
           { new: false }
         );
@@ -117,10 +115,10 @@ export default class DeliveryService {
     });
   }
 
-  public static async deleteDelivery(userId: string) {
+  public static async deleteDelivery(deliveryId: string) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await User.findByIdAndDelete(userId);
+        const result = await Delivery.findByIdAndDelete(deliveryId);
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

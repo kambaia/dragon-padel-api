@@ -15,7 +15,7 @@ const deliverySchema: Schema = new Schema(
     },
     beneficiary: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // Assuming User model for the beneficiary
+      ref: 'Employee', // Assuming User model for the beneficiary
     },
     deliveryDate: {
       type: String,

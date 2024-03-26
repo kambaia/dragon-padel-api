@@ -16,7 +16,7 @@ export const fetchAllDataStock = async (productInstok: any) => {
 			isAvailable : true,
 			technicalDescription : pd.product.technicalDescription,
 			cover_url : pd.product.cover_url,
-			ProductId : pd.product.id,
+			productId : pd.product.id,
       quantity : pd.productQuantity,
     });
   }

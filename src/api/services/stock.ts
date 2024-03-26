@@ -2,7 +2,7 @@ import { ISearch } from "../../interfaces/app/search";
 import {IStock } from "../../interfaces/ProdutosInterface";
 import { handleMongoError } from "../../util/errors/api-error";
 import { Stock } from "../model/Stock";
-
+import { ObjectId } from 'mongodb';
 export default class StockService{
     public static async findAllStock({ limit, page }: ISearch) {
         return new Promise(async function (resolve, reject) {
@@ -33,7 +33,8 @@ export default class StockService{
     public static async findExisteProduct(productId: string) {
         return new Promise(async function (resolve, reject) {
             try {
-                const result = await Stock.findOne({product: productId})
+                const objectId: ObjectId = new ObjectId(productId);
+                const result = await Stock.findOne({product: objectId})
                     .populate('product', 'serialNumber productCover cover_url model brand condition technicalDescription active technicalDescription isAvailable')
                     .sort({ createdAt: -1 });
                 resolve(result);

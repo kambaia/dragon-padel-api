@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Delivery } from '../model/Delivery';
-import { IDelivery, IProduct, IStock } from '../../interfaces/ProdutosInterface';
+import { IDelivery, IDeliveryRegister, IProduct, IStock } from '../../interfaces/ProdutosInterface';
 import {
   responseDatadelivery,
   fetchAllDatadelivery,
@@ -20,6 +20,7 @@ class deliveryController {
         limit,
         page,
       })) as IDelivery[];
+      console.log(delivery);
       const allDataUser = await fetchAllDatadelivery(delivery);
       const responseData = responseDatadelivery(allDataUser, Number(0));
 
@@ -48,33 +49,31 @@ class deliveryController {
 
   public async saveDelivery(req: Request, res: Response): Promise<void> {
     try {
-      const verifyDelivery = await deliveryService.verifyDelivery(req.body.product);
-      if (verifyDelivery) {
-        res
-          .status(409)
-          .json({ error: 'Esse pedido já foi feito. Experimente outro' });
-      } else {
-        const deliveryDetails = req.body as IDelivery;
+        const deliveryDetails = req.body as IDeliveryRegister;
         const stockData = (await StockService.findExisteProduct(deliveryDetails.product)) as IStock;
         if (stockData) {
-          const totalQuantity = stockData.productQuantity + deliveryDetails.deliveryQuantity;
+          const totalQuantity = stockData.productQuantity - deliveryDetails.deliveryQuantity;
           const stock = await StockService.updateStock(stockData._id!, { product: deliveryDetails.product, productQuantity: totalQuantity }) as IStock;
           if (stock) {
             await MovimentService.saveMoviment({
               productQuantity: deliveryDetails.deliveryQuantity,
               movementDay: getDataFormat(),
               movementTime: getTimeFormat(),
-              entry: true,
-              productOutput: false,
+              entry: false,
+              productOutput: true,
               product: deliveryDetails.product,
             });
             const resultDelivery = await deliveryService.saveDelivery(deliveryDetails);  
             res
             .status(201)
-            .json({ success: 'Cadastro feito  com sucesso', resultDelivery });
+            .json({ success: 'Cadastro feito  com sucesso', resultDelivery});
+          }else{
+            res.status(500).json({ message: 'Aconteceu um erro ao atualizada o stock'});
           }
+        }else{
+          res.status(500).send({ message: 'Não foi encontrado nenhum produto em estoque com esta referencia!' });
         }
-      }
+      
     } catch (error) {
       res.status(500).send({ message: error });
     }

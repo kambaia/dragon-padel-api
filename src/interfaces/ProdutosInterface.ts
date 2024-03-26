@@ -78,12 +78,13 @@ export interface Imovements{
   delivery?: IDelivery;
 }
 
-export interface IDelivery {
+
+export interface IDeliveryRegister {
   _id: string;
   deliveredBy: IUser;
   receivedBy: IUser;
   beneficiary: IUser;
-  product: string;
+  product: string ;
   deliveryQuantity: number;
   deliveryDate: Date;
   additionalAccessorie: IAdditionalAccessorie[];
@@ -92,6 +93,22 @@ export interface IDelivery {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface IDelivery {
+  _id: string;
+  deliveredBy: IUser;
+  receivedBy: IUser;
+  beneficiary: IUser;
+  product: IProduct ;
+  deliveryQuantity: number;
+  deliveryDate: string;
+  additionalAccessorie: IAdditionalAccessorie[];
+  active: boolean;
+  isAvailable: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface IAdditionalAccessorie {
   name: string;
 }

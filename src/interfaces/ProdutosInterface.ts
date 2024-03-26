@@ -75,7 +75,7 @@ export interface Imovements{
   movementTime: string;
   entry: boolean;
   productOutput: boolean;
-  delivery?: IDelivery;
+  delivery?: string;
 }
 
 

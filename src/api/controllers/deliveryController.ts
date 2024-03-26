@@ -55,15 +55,17 @@ class deliveryController {
           const totalQuantity = stockData.productQuantity - deliveryDetails.deliveryQuantity;
           const stock = await StockService.updateStock(stockData._id!, { product: deliveryDetails.product, productQuantity: totalQuantity }) as IStock;
           if (stock) {
+            const resultDelivery = await deliveryService.saveDelivery(deliveryDetails);
             await MovimentService.saveMoviment({
               productQuantity: deliveryDetails.deliveryQuantity,
               movementDay: getDataFormat(),
               movementTime: getTimeFormat(),
               entry: false,
               productOutput: true,
+              delivery: resultDelivery._id,
               product: deliveryDetails.product,
-            });
-            const resultDelivery = await deliveryService.saveDelivery(deliveryDetails);  
+            });  
+
             res
             .status(201)
             .json({ success: 'Cadastro feito  com sucesso', resultDelivery});
@@ -78,16 +80,6 @@ class deliveryController {
       res.status(500).send({ message: error });
     }
   }
-
-
-  public async updateStock(products: IProduct[]): Promise<boolean> {
-    try {
-      return true;
-    } catch (error) {
-      throw new Error('Erro ao atualizar estoque.');
-    }
-  }
-
   public async updateDelivery(req: Request, res: Response): Promise<void> {
     try {
       const data = req.body;

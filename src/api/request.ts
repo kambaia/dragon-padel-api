@@ -3,7 +3,7 @@ import RequestController from './controllers/requestController';
 
 export const RequestRouter = Router();
 RequestRouter.get('/request', RequestController.listAllRequestt);
-RequestRouter.get('/request/:request', RequestController.listOneRequest);
+RequestRouter.get('/request/:requestId', RequestController.listOneRequest);
 RequestRouter.post('/request', RequestController.saveRequest);
-RequestRouter.put('/request/:request', RequestController.updateRequestt);
-RequestRouter.delete('/request/:request', RequestController.deleteRequest);
+RequestRouter.put('/request/:requestId', RequestController.updateRequest);
+RequestRouter.delete('/request/:requestId', RequestController.deleteRequest);

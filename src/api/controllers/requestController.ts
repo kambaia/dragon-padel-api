@@ -52,16 +52,18 @@ class RequestController {
     }
   }
 
-  public async updateRequestt(req: Request, res: Response): Promise<void> {
+  public async updateRequest(req: Request, res: Response): Promise<void> {
     try {
       const inputs = req.body;
-      const { RequestId } = req.params;
-      const request = await RquestService.updateRequest(RequestId, inputs);
+      console.log("INPUT DO REQUEST: ", inputs)
+      const { requestId } = req.params;
+      const request = await RquestService.updateRequest(requestId, inputs);
       res.status(204).json({
         message: 'As suas informações foram actualizadas com sucesso',
         request,
       });
     } catch (error) {
+      console.log(error)
       res
         .status(500)
         .json({ message: 'Aconteceu um erro ao atualizada', error });

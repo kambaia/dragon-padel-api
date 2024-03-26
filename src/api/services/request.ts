@@ -53,7 +53,7 @@ export default class RequestService {
       try {
         const result = await Request.findByIdAndUpdate(
           { _id: requestId },
-          { $set: Request },
+          { $set: request },
           { new: false }
         );
         resolve(result);

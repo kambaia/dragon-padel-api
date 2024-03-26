@@ -10,7 +10,7 @@ export const fetchAllDataRequest = async (Request: IRequest[]) => {
       requestedById: ct?.requestedBy._id,
       employeeId: ct.employee._id,
       employee: `${ct?.employee?.firstName} ${ct?.employee?.surname}`,
-      equipmentName: ct?.equipment.brand,
+      equipmentName: `${ct?.equipment.brand} ${ct?.equipment.model}`,
       equipmentCategory: ct?.equipment?.category?.categoryName,
       cover_url: ct?.equipment.cover_url,
       observation: ct?.observation,
@@ -21,6 +21,7 @@ export const fetchAllDataRequest = async (Request: IRequest[]) => {
       visible: ct.visible,
       received:ct.received,
       processing:ct.processing,
+      done: ct.done,
       updatedAt: ct.updatedAt,
       createdAt: formatDate(ct.createdAt),
     });

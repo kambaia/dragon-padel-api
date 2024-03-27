@@ -25,7 +25,7 @@ const deliverySchema: Schema = new Schema(
       type: Number,
       required: true,
     },
-    product:{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+    productInStock:{ type: mongoose.Schema.Types.ObjectId, ref: 'stock' },
     active: Boolean,
     isAvailable: Boolean,
   },

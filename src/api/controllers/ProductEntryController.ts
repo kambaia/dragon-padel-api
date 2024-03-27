@@ -38,13 +38,13 @@ class StockController {
   }
 
   public async saveProductEntry(req: Request, res: Response): Promise<void> {
-    console.log("Dados", req.body);
     try {
   
         const inputs = {
           ...req.body,
           invoiceDocument: req.file?.filename
         };
+
         const data = (await ProductEntryService.saveProductStock(inputs)) as IProductEntry;
         res
           .status(201)

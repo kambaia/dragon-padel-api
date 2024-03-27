@@ -46,15 +46,16 @@ class StockController {
   public async saveStock(req: Request, res: Response): Promise<void> {
     try {
 
-      const { productId, productQuantity } = req.body;
+      const { productId, productQuantity, supplier} = req.body;
+      console.log(req.body);
       const newStock = {
-        product: productId, productQuantity: parseInt(productQuantity)
+        product: productId,supplier: supplier, productQuantity: parseInt(productQuantity)
       } as IStock
 
       const stockData = (await StockService.findExisteProduct(productId)) as IStock;
       if (stockData) {
         const totalQuantity = stockData.productQuantity + newStock.productQuantity;
-        const stock = await StockService.updateStock(stockData._id!, { product: productId, productQuantity: totalQuantity }) as IStock;
+        const stock = await StockService.updateStock(stockData._id!, { product: productId, supplier:supplier, productQuantity: totalQuantity }) as IStock;
         if (stock) {
           await MovimentService.saveMoviment({
             productQuantity: newStock.productQuantity,
@@ -62,7 +63,7 @@ class StockController {
             movementTime: getTimeFormat(),
             entry: true,
             productOutput: false,
-            product: newStock.product,
+            productInStock: stockData._id!,
           });
         }
         res
@@ -78,7 +79,7 @@ class StockController {
             movementTime: getTimeFormat(),
             entry: true,
             productOutput: false,
-            product: newStock.product,
+            productInStock: stockData._id!,
           });
           res
             .status(201)

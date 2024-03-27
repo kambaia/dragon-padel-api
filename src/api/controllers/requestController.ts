@@ -4,8 +4,7 @@ import { ISearch } from '../../interfaces/app/search';
 import { IRequest } from '../../interfaces/ProdutosInterface';
 import { fetchAllDataRequest, responseDataRequest } from '../../util/dataFetching/request';
 class RequestController {
-  public async listAllRequestt(req: Request, res: Response): Promise<void> {
-    const { limit = 10, page } = req.query;
+  public async listAllRequest(req: Request, res: Response): Promise<void> {
     try {
       const { limit = 25, page } = req.query as unknown as ISearch;
       const request = (await RquestService.findAllRequest({

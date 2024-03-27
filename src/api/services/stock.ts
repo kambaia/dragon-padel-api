@@ -31,6 +31,7 @@ export default class StockService{
         });
     }
     public static async findExisteProduct(productId: string) {
+        console.log("id producto",productId)
         return new Promise(async function (resolve, reject) {
             try {
                 const objectId: ObjectId = new ObjectId(productId);

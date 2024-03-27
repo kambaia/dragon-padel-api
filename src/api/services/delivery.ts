@@ -49,12 +49,12 @@ export default class DeliveryService {
             },
           })
           .populate({
-            path: 'product',
-            select: 'serialNumber productCover cover_url model brand',
+            path: 'productInStock',
+            select: 'supplier',
             populate: {
-              path: 'category',
-              select: '-_id categoryName', // Seleciona apenas o campo 'name' do departamento
-            },
+              path: 'product',
+              select: 'serialNumber productCover cover_url model brand condition technicalDescription',
+            }
           })
           .sort({ createdAt: -1 });
         resolve(result);
@@ -72,7 +72,7 @@ export default class DeliveryService {
         const result = (await Delivery.findOne({
           product: produtId,
         })) as IDelivery;
-        
+
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));
@@ -90,9 +90,15 @@ export default class DeliveryService {
       }
     });
   }
-  public static async saveDelivery(delivery: IDeliveryRegister):Promise<IDelivery> {
+  public static async saveDelivery({ active, additionalAccessorie, beneficiary, createdAt, deliveredBy, deliveryDate, deliveryQuantity, isAvailable, stockId, receivedBy, updatedAt }: IDeliveryRegister): Promise<IDelivery> {
     return new Promise(async function (resolve, reject) {
       try {
+        const delivery = {
+          active, additionalAccessorie, 
+          beneficiary, createdAt, deliveredBy, 
+          deliveryQuantity, deliveryDate, 
+          isAvailable, productInStock:stockId, receivedBy, updatedAt
+        }
         const result = await Delivery.create(delivery);
         resolve(result);
       } catch (error: unknown) {

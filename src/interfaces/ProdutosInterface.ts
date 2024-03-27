@@ -64,13 +64,24 @@ export interface IStock{
   product: string;
   productStok?: IProduct;
   productQuantity: number;
+  supplier?:string;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-export interface Imovements{
+
+export interface IproductStok{
+  _id?: string;
+  product: IProduct;
+  productQuantity: number;
+  supplier?:string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface ImovementsRegister{
   productQuantity: number,
-  product: string;
+  productInStock: string;
   movementDay: string;
   movementTime: string;
   entry: boolean;
@@ -78,13 +89,27 @@ export interface Imovements{
   delivery?: string;
 }
 
+export interface Imovements{
+  _id: string;
+  productQuantity: number,
+  productInStock: IproductStok;
+  movementDay: string;
+  movementTime: string;
+  entry: boolean;
+  productOutput: boolean;
+  delivery?: IDelivery;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+
 
 export interface IDeliveryRegister {
-  _id: string;
   deliveredBy: IUser;
   receivedBy: IUser;
   beneficiary: IUser;
-  product: string ;
+  stockId: string;
+  productId:string;
   deliveryQuantity: number;
   deliveryDate: Date;
   additionalAccessorie: IAdditionalAccessorie[];
@@ -99,7 +124,7 @@ export interface IDelivery {
   deliveredBy: IUser;
   receivedBy: IUser;
   beneficiary: IUser;
-  product: IProduct ;
+  productInStock: IproductStok;
   deliveryQuantity: number;
   deliveryDate: string;
   additionalAccessorie: IAdditionalAccessorie[];

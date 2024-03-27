@@ -3,6 +3,7 @@ import MovimentService from '../services/moviment';
 import { Imovements } from '../../interfaces/ProdutosInterface';
 import { ISearch } from '../../interfaces/app/search';
 import { Movement } from '../model/Movements';
+import { fetchAllDataMovimet, responseDataMovimet} from '../../util/dataFetching/moviment';
 
 
 
@@ -12,7 +13,9 @@ class MovementsController {
     try {
       const { limit = 25, page = 0 } = req.query as unknown as ISearch;
         const product = (await MovimentService.findAllMoviment({ limit, page })) as Imovements[];
-      res.status(200).send(product);
+        const allDataUser = await fetchAllDataMovimet(product);
+        const responseData = responseDataMovimet(allDataUser, Number(0));
+      res.status(200).send(responseData);
     } catch (error) {
       res.status(404).send(error);
     }

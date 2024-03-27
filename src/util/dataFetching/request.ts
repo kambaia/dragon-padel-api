@@ -1,22 +1,22 @@
 import { IRequest } from '../../interfaces/ProdutosInterface';
 import { formatDate } from '../time';
 
-export const fetchAllDataRequest = async (Request: IRequest[]) => {
+export const fetchAllDataRequest = async (request: IRequest[]) => {
   let requestResult = [];
-  for (const [_, ct] of Request.entries()) {
+  for (const [_, ct] of request.entries()) {
     requestResult.push({
       id: ct._id,
       requestedBy: `${ct?.requestedBy.firstName} ${ct.requestedBy.surname}`,
       requestedById: ct?.requestedBy._id,
-      employeeId: ct.employee._id,
+      employeeId: ct?.employee?._id,
       employee: `${ct?.employee?.firstName} ${ct?.employee?.surname}`,
       equipmentName: ct?.equipment.brand,
       equipmentCategory: ct?.equipment?.category?.categoryName,
       cover_url: ct?.equipment.cover_url,
       observation: ct?.observation,
-      productId: ct.equipment._id,
+      productId: ct?.equipment._id,
       equipmentType: ct?.employee?.function,
-      quantity: ct.quantity,
+      quantity: ct?.quantity,
       active: ct.active,
       visible: ct.visible,
       received:ct.received,

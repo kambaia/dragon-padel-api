@@ -20,9 +20,8 @@ class deliveryController {
         limit,
         page,
       })) as IDelivery[];
-      console.log(delivery);
-      const allDataUser = await fetchAllDatadelivery(delivery);
-      const responseData = responseDatadelivery(allDataUser, Number(0));
+     const allDataUser = await fetchAllDatadelivery(delivery);
+      const responseData = responseDatadelivery(allDataUser, Number(0)); 
 
       res.status(200).send(responseData);
     } catch (error) {
@@ -50,10 +49,11 @@ class deliveryController {
   public async saveDelivery(req: Request, res: Response): Promise<void> {
     try {
         const deliveryDetails = req.body as IDeliveryRegister;
-        const stockData = (await StockService.findExisteProduct(deliveryDetails.product)) as IStock;
+        console.log("Dados do product", deliveryDetails)
+        const stockData = (await StockService.findExisteProduct(deliveryDetails.productId)) as IStock;
         if (stockData) {
           const totalQuantity = stockData.productQuantity - deliveryDetails.deliveryQuantity;
-          const stock = await StockService.updateStock(stockData._id!, { product: deliveryDetails.product, productQuantity: totalQuantity }) as IStock;
+          const stock = await StockService.updateStock(stockData._id!, { product: deliveryDetails.productId, productQuantity: totalQuantity }) as IStock;
           if (stock) {
             const resultDelivery = await deliveryService.saveDelivery(deliveryDetails);
             await MovimentService.saveMoviment({
@@ -63,7 +63,7 @@ class deliveryController {
               entry: false,
               productOutput: true,
               delivery: resultDelivery._id,
-              product: deliveryDetails.product,
+              productInStock: deliveryDetails.stockId,
             });  
 
             res

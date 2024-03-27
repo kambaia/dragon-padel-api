@@ -149,6 +149,7 @@ export interface IRequest  {
   visible: boolean;
   received:boolean;
   processing:boolean;
+  done:boolean;
   createdAt: Date;
   updatedAt: Date;
 }

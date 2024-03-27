@@ -25,8 +25,9 @@ const RequestSchema: Schema = new Schema(
         observation: { type: String, required: false },
         active: { type: Boolean, default: true },
         visible: { type: Boolean, default: true },
+        done: { type: Boolean, default: false},
         received: { type: Boolean, default: false},
-        processing: { type: Boolean, default: false}
+        processing: { type: Boolean, default: false},
     },
     { timestamps: true }
 );

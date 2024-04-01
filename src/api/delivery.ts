@@ -4,7 +4,7 @@ export const deliveryRouter = Router();
 deliveryRouter.get('/delivery', deliveryController.listAllDelivery);
 deliveryRouter.get('/delivery/:deliveryId', deliveryController.listOneDelivery);
 deliveryRouter.post('/delivery', deliveryController.saveDelivery);
-deliveryRouter.put('/delivery/:deliveryId', deliveryController.deleteDelivery);
+deliveryRouter.put('/delivery/:deliveryId', deliveryController.updateDelivery);
 deliveryRouter.delete(
   '/delivery/:deliveryId',
   deliveryController.deleteDelivery

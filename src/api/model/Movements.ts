@@ -12,6 +12,10 @@ const movementsSchema: Schema = new Schema(
         productOutput: { type: Boolean, default: false },
         delivery: { type: mongoose.Schema.Types.ObjectId,ref: 'Delivery'},
         productInStock: { type: mongoose.Schema.Types.ObjectId, ref: 'stock'},
+        active: {
+            type: Boolean,
+            default: true
+          },
         
     },
     { timestamps: true }

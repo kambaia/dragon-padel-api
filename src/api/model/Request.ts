@@ -23,7 +23,10 @@ const RequestSchema: Schema = new Schema(
           },
         quantity: { type: Number, required: true },
         observation: { type: String, required: false },
-        active: { type: Boolean, default: true },
+        active: {
+            type: Boolean,
+            default: true
+          },
         visible: { type: Boolean, default: true },
         done: { type: Boolean, default: false},
         received: { type: Boolean, default: false},

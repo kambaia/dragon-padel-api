@@ -7,6 +7,10 @@ const stockSchema  = new mongoose.Schema(
     product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
     productQuantity: { type: Number},
     supplier: { type: String},
+    active: {
+      type: Boolean,
+      default: true
+    },
   },
   {
     timestamps: true,

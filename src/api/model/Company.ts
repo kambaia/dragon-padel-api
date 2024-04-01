@@ -10,7 +10,10 @@ const companySchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    active: Boolean,
+    active: {
+      type: Boolean,
+      default: true
+    },
     isAvailable: Boolean,
   },
   {

@@ -9,7 +9,7 @@ export default class RequestService {
   public static async findAllRequest({ limit, page }: ISearch) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await Request.find({})
+        const result = await Request.find({active: true})
           .limit(Number(limit))
           .skip(Number(page))
           .populate('requestedBy', 'profile firstName surname')

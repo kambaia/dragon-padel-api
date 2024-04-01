@@ -9,7 +9,7 @@ export default class DepartamentService {
   public static async findAllDepartament({ limit, page }: ISearch) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await Department.find({})
+        const result = await Department.find({active: true})
           .limit(Number(limit))
           .skip(Number(page))
           .populate('company', '_id  companyName');

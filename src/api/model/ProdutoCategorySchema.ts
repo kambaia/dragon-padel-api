@@ -7,6 +7,10 @@ const produtoCategorySchema: Schema = new Schema(
   {
     categoryName: String,
     description: String,
+    active: {
+      type: Boolean,
+      default: true
+    },
   },
   { timestamps: true }
 );

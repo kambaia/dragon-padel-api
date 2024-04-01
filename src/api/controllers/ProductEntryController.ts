@@ -10,8 +10,8 @@ class StockController {
     try {
       const product = (await ProductEntryService.findAllProductStock({ limit, page })) as IProductEntry[];
      
-      const allDataUser = await fetchAllDataProductStock(product);
-      const responseData = responseDataProductStock(allDataUser, Number(0));
+      const allDataProduct= await fetchAllDataProductStock(product);
+      const responseData = responseDataProductStock(allDataProduct, Number(0));
     
       res.status(200).send(responseData);
     } catch (error) {

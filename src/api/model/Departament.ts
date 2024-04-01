@@ -9,8 +9,14 @@ const departmentSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    active: Boolean,
-    isAvailable: Boolean,
+    active: {
+      type: Boolean,
+      default: true
+    },
+    isAvailable:{
+      type: Boolean,
+      default: true
+    },
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
   },
   { timestamps: true }

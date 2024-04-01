@@ -12,7 +12,10 @@ const EmployeeSchema: Schema = new Schema(
     gender:   { type: String },
     function:{ type: String },
     banned: { type: Boolean },
-    active: { type: Boolean },
+    active: {
+      type: Boolean,
+      default: true
+    },
     department: { type: mongoose.Schema.Types.ObjectId, ref: 'Department' },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   },

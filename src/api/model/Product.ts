@@ -15,8 +15,14 @@ const productSchema = new mongoose.Schema(
     sourceOfPurchase: String,
     purchaseDate: String,
     invoice: String,
-    active: Boolean,
-    isAvailable: Boolean,
+    active: {
+      type: Boolean,
+      default: true
+    },
+    isAvailable: {
+      type: Boolean,
+      default: true
+    },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'ProdutoCategory', // Make sure you have a model for Category

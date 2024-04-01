@@ -22,7 +22,7 @@ export default class AuthService {
   public static async authLogin(email: string) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await User.findOne({ email })
+        const result = await User.findOne({ email, active: true})
           .select('+password')
           .populate('permission', 'roles')
           .populate({

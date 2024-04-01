@@ -9,7 +9,7 @@ export default class AuthService {
   public static async findAllProduct({ limit, page }: ISearch) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await Product.find({})
+        const result = await Product.find({active: true})
           .limit(Number(limit))
           .skip(Number(page))
           .populate('registerby', 'profile firstName surname')

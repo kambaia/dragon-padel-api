@@ -8,7 +8,7 @@ export default class AuthService {
   public static async findAllUser({ limit, page }: ISearch) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await User.find({})
+        const result = await User.find({active: true})
           .limit(Number(limit))
           .skip(Number(page))
           .populate('permission', '_id  id role type')

@@ -8,7 +8,7 @@ export default class EmployeeService {
   public static async findAllEmployee({ limit, page }: ISearch) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await Employee.find({})
+        const result = await Employee.find({active: true})
           .limit(Number(limit))
           .skip(Number(page))
           .populate({

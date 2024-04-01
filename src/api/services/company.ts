@@ -8,7 +8,7 @@ export default class CompanyService {
   public static async findAllCompany({ limit, page }: ISearch):Promise<ICompany[]> {
     return new Promise(async function (resolve, reject) {
       try {
-        const company = await Company.find({})
+        const company = await Company.find({active: true})
         .limit(Number(limit))
         .skip(Number(page))
         .sort({ createdAt: -1 });

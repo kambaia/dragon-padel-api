@@ -26,7 +26,10 @@ const deliverySchema: Schema = new Schema(
       required: true,
     },
     productInStock:{ type: mongoose.Schema.Types.ObjectId, ref: 'stock' },
-    active: Boolean,
+    active: {
+      type: Boolean,
+      default: true
+    },
     isAvailable: Boolean,
   },
   { timestamps: true }

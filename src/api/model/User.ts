@@ -19,7 +19,10 @@ const userSchema: Schema = new Schema(
     fullName: { type: String },
     password: { type: String, required: true },
     banned: { type: Boolean },
-    active: { type: Boolean },
+    active:  {
+      type: Boolean,
+      default: true
+    },
     permission: { type: mongoose.Schema.Types.ObjectId, ref: 'Roles' },
     department: { type: mongoose.Schema.Types.ObjectId, ref: 'Department' },
   },

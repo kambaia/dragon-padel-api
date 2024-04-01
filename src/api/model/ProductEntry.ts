@@ -22,6 +22,10 @@ const productEntrySchema  = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User', // Make sure you have a model for user
     },
+    active: {
+      type: Boolean,
+      default: true
+    },
   },
   {
     timestamps: true,

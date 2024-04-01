@@ -16,7 +16,6 @@ userRouter.put('/user/:userId', userController.updateUser);
 userRouter.put("/user-with-file/:userId", upload.single('profile'), userController.updateUserWithProfile);
 userRouter.delete('/user/:userId', userController.deleteUser);
 
-
 /***********************************************funcionjalidade do cadastro de funcionario  */
 userRouter.get('/employee', employeeController.listAllEmployee);
 userRouter.get('/employee/:employeeId', employeeController.listOneEmployee);

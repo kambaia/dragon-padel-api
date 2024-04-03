@@ -9,7 +9,7 @@ class DepartmentController {
   public async listAllDepartament(req: Request, res: Response): Promise<void> {
     const { limit = 10, page } = req.query;
     try {
-      const department = await Department.find({})
+      const department = await Department.find({active: true})
         .populate('company', '_id companyName thumbnail')
         .limit(Number(limit))
         .skip(Number(page))

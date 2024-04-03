@@ -9,7 +9,7 @@ export default class DeliveryService {
   public static async findAllDelivery({ limit, page }: ISearch) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = await Delivery.find({})
+        const result = await Delivery.find({active: true})
           .limit(Number(limit))
           .skip(Number(page))
           .populate({

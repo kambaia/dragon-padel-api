@@ -19,7 +19,7 @@ class ProdutoCategoryController {
   public async listAllCategory(req: Request, res: Response): Promise<void> {
     const { limit = 25, page } = req.query;
     try {
-      const category = await Category.find({})
+      const category = await Category.find({active: true})
         .limit(Number(limit))
         .skip(Number(page))
         .sort({ createdAt: -1 });

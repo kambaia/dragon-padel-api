@@ -7,7 +7,7 @@ import api from './api';
 import MessageResponse from './interfaces/MessageResponse';
 import * as middlewares from './middlewares';
 import path from 'path';
-
+//import { fazerBackupMongoDB } from './util/backup';
 require('dotenv').config();
 
 const app = express();
@@ -38,6 +38,13 @@ app.get<{}, MessageResponse>('/', (req, res) => {
   });
 });
 
+/*
+  fazerBackupMongoDB().then(() => {
+    console.log('Backup do banco de dados concluído.');
+  }).catch((error) => {
+    console.error('Erro ao fazer o backup do banco de dados:', error);
+  });
+  */
 app.use('/api/v1', api);
 
 app.use(middlewares.notFound);

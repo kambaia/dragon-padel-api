@@ -3,10 +3,10 @@ import stockController from './controllers/stockController';
 import movimentController from './controllers/movimentController';
 export const stockRouter = Router();
 stockRouter.get('/stock', stockController.listAllStock);
-stockRouter.get('/stock/:productId', stockController.listOneStock); 
+stockRouter.get('/stock/:stockId', stockController.listOneStock); 
 stockRouter.post('/stock', stockController.saveStock);
-stockRouter.put('/stock/:productId', stockController.updateStock);
-stockRouter.delete('/stock/:productId', stockController.deleteStock);
+stockRouter.put('/stock/:stockId', stockController.updateStock);
+stockRouter.delete('/stock/:stockId', stockController.deleteStock);
 
 
 stockRouter.get('/moviment', movimentController.listAllMovement);

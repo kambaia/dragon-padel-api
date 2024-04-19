@@ -1,9 +1,10 @@
 import { Request, Response, raw } from 'express';
 import ProductEntryService from '../services/productEntry';
 import { ISearch } from '../../interfaces/app/search';
-import { deleteFileInDataBase } from '../../util/deleteFile';
+import { deleteFileDocDataBase } from '../../util/deleteFile';
 import { IProductEntry } from '../../interfaces/ProdutosInterface';
 import { fetchAllDataProductStock, responseDataProductStock } from '../../util/dataFetching/productEntryk';
+import { Console } from 'console';
 class StockController {
   public async listAllProductEntry(req: Request, res: Response): Promise<void> {
     const { limit = 25, page = 0 } = req.query as unknown as ISearch;
@@ -75,18 +76,15 @@ class StockController {
   public async updateProductEntryWithProfile(req: Request, res: Response): Promise<Response> {
     try {
       const {productId } = req.params;
-
+      console.log(req.file?.filename)
       const inputs = {
-        profile: {
-          thumbnail: req.file?.filename,
-          name: req.file?.originalname,
-        },
+        invoiceDocument: req.file?.filename,
         ...req.body,
       };
+    console.log(req.body)
       const productEntryFinded = (await ProductEntryService.findOneProductStock(productId)) as IProductEntry;
-
       if (productEntryFinded) {
-        const resultDelete = await deleteFileInDataBase('stock', productEntryFinded?.invoiceDocument);
+        const resultDelete = await deleteFileDocDataBase('stock', productEntryFinded?.invoiceDocument);
         if (resultDelete) {
           const productEntry = (await ProductEntryService.updateProductStock(productId, inputs)) as any;
           return res.status(204).json({
@@ -114,7 +112,7 @@ class StockController {
       const productEntryFinded = (await ProductEntryService.findOneProductStock(productId)) as IProductEntry;
 
       if (productEntryFinded) {
-        const resultDelete = await deleteFileInDataBase('stock', productEntryFinded?.invoiceDocument);
+        const resultDelete = await deleteFileDocDataBase('stock', productEntryFinded?.invoiceDocument);
         if (resultDelete) {
           const ProductEntry = (await ProductEntryService.deleteProductStock(productId)) as IProductEntry;;
           return res.status(204).json({

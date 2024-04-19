@@ -86,6 +86,7 @@ export interface ImovementsRegister{
   movementTime: string;
   entry: boolean;
   productOutput: boolean;
+  annulment?:boolean;
   delivery?: string;
 }
 

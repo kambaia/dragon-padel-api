@@ -44,4 +44,9 @@ export const getTimeFormat = () => {
     const currentDate = moment();
    return currentDate.format('HH:mm:ss');
 }
-
+export function extrairId(str:any) {
+    // Verifica se a string contém o padrão comum de um ObjectId
+    const match = str.match(/ObjectId\("(\w+)"\)/);
+    // Se encontrar, retorna o ID, senão retorna a string original
+    return match ? match[1] : str;
+}

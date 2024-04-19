@@ -10,9 +10,7 @@ import {
 import ProductService from '../services/product';
 
 import { ISearch } from '../../interfaces/app/search';
-import { deleteFileInDataBase } from '../../util/deleteFile';
-import { promises } from 'dns';
-
+import { deleteFileImageDataBase } from '../../util/deleteFile';
 class ProductController {
   public async listAllproduct(req: Request, res: Response): Promise<void> {
     const { limit = 25, page } = req.query as unknown as ISearch;
@@ -111,7 +109,7 @@ class ProductController {
       const userFinded = (await ProductService.findOneProduct(productId)) as IProduct;
 
       if (userFinded) {
-        const resultDelete = await deleteFileInDataBase('product', userFinded?.productCover);
+        const resultDelete = await deleteFileImageDataBase('product', userFinded?.productCover);
         if (resultDelete) {
           const product = (await ProductService.updateProduct(productId, inputs)) as any;
           return res.status(204).json({
@@ -138,7 +136,7 @@ class ProductController {
       const { productId } = req.params;
       const userFinded = (await ProductService.findOneProduct(productId)) as IProduct;
       if (userFinded) {
-        const resultDelete = await deleteFileInDataBase('product', userFinded?.productCover);
+        const resultDelete = await deleteFileImageDataBase('product', userFinded?.productCover);
         if (resultDelete) {
           const product = await Product.findByIdAndDelete(productId);
           return res.status(204).json({

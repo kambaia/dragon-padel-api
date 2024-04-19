@@ -7,7 +7,7 @@ import api from './api';
 import MessageResponse from './interfaces/MessageResponse';
 import * as middlewares from './middlewares';
 import path from 'path';
-//import { fazerBackupMongoDB } from './util/backup';
+import { fazerBackupMongoDB } from './util/backup';
 require('dotenv').config();
 
 const app = express();
@@ -27,7 +27,7 @@ app.use(
   express.static(path.resolve(__dirname, '..', 'public', 'img', 'product'))
 );
 app.use(
-  '/files/product/doc',
+  '/files/doc',
   express.static(path.resolve(__dirname, '..', 'public', 'documents', 'stock'))
 );
 app.use(express.json());

@@ -80,7 +80,7 @@ export default class ProductEntryService {
         const result = await ProductEntry.findByIdAndUpdate(
           { _id: productId },
           { $set: product },
-          { new: false }
+          { new: true }
         );
         resolve(result);
       } catch (error: unknown) {

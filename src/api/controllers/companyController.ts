@@ -7,7 +7,7 @@ import CompanyService from '../services/company';
 import { ISearch } from '../../interfaces/app/search';
 import { Company } from '../model/Company';
 import { ICompany } from '../../interfaces/CompanyInterface';
-import { deleteFileInDataBase } from '../../util/deleteFile';
+import { deleteFileImageDataBase } from '../../util/deleteFile';
 class CompanyController {
   public async listAllCompany(req: Request, res: Response): Promise<void> {
     try {
@@ -87,7 +87,7 @@ class CompanyController {
 
       const companyFinded = (await CompanyService.findOneCompany(companyId)) as ICompany;
       if (companyFinded) {
-        const resultDelete = await deleteFileInDataBase('companys', companyFinded?.thumbnail);
+        const resultDelete = await deleteFileImageDataBase('companys', companyFinded?.thumbnail);
         if (resultDelete) {
           const company = (await CompanyService.updateCompany(companyId, inputs)) as any;
           res.status(204).json({

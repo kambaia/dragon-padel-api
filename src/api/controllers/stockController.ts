@@ -15,9 +15,8 @@ class StockController {
         limit,
         page,
       })) as IStock[];
-       const allDataStock = await fetchAllDataStock(stock);
+       const allDataStock = await fetchAllDataStock(stock.sort((a, b) => b.productQuantity - a.productQuantity));
       const responseData = responseDataStock(allDataStock, Number(0));
-      
       res.status(200).send(responseData);
     } catch (error) {
       res.status(404).send(error);

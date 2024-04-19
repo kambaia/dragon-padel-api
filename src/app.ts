@@ -27,7 +27,7 @@ app.use(
   express.static(path.resolve(__dirname, '..', 'public', 'img', 'product'))
 );
 app.use(
-  '/files/product/doc',
+  '/files/doc',
   express.static(path.resolve(__dirname, '..', 'public', 'documents', 'stock'))
 );
 app.use(express.json());

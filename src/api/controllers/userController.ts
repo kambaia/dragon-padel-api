@@ -9,7 +9,7 @@ import UserService from '../services/user';
 
 import { hash } from 'bcrypt';
 import { ISearch } from '../../interfaces/app/search';
-import { deleteFileInDataBase } from '../../util/deleteFile';
+import { deleteFileImageDataBase } from '../../util/deleteFile';
 import { IUser } from '../../interfaces/UserInterface';
 
 class UserController {
@@ -105,7 +105,7 @@ class UserController {
       };
       const userFinded = (await UserService.findOneUser(userId)) as IUser;
       if (userFinded) {
-        const resultDelete = await deleteFileInDataBase('user', userFinded?.profile.thumbnail);
+        const resultDelete = await deleteFileImageDataBase('user', userFinded?.profile.thumbnail);
         if (resultDelete) {
           const user = (await UserService.updateUser(userId, inputs)) as any;
           return res.status(204).json({
@@ -131,7 +131,7 @@ class UserController {
       const { userId } = req.params;
       const userFinded = (await UserService.findOneUser(userId)) as IUser;
       if (userFinded) {
-        const resultDelete = await deleteFileInDataBase('user', userFinded?.profile.thumbnail);
+        const resultDelete = await deleteFileImageDataBase('user', userFinded?.profile.thumbnail);
         if (resultDelete) {
           const user = (await UserService.deleteUser(userId)) as any;
           return res.status(204).json({

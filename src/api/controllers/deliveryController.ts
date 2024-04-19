@@ -16,14 +16,16 @@ class deliveryController {
   public async listAllDelivery(req: Request, res: Response): Promise<void> {
     const { limit = 25, page } = req.query as unknown as ISearch;
     try {
+      // Ordenando os produtos por quantidade (em ordem decrescente)
+     
+
       const delivery = (await deliveryService.findAllDelivery({
         limit,
         page,
       })) as IDelivery[];
-   
-      const allDataDelivery= await fetchAllDatadelivery(delivery);
+      const allDataDelivery= await fetchAllDatadelivery(delivery.sort((a, b) => b.deliveryQuantity - a.deliveryQuantity));
       const responseData = responseDatadelivery(allDataDelivery, Number(0));
-
+    
       res.status(200).send(responseData);
     } catch (error) {
       res.status(404).send(error);
@@ -45,7 +47,6 @@ class deliveryController {
       res.status(404).send(error);
     }
   }
-
 
   public async saveDelivery(req: Request, res: Response): Promise<void> {
     try {
@@ -91,7 +92,6 @@ class deliveryController {
    
         if (stock) {
           const resultDelivery = await deliveryService.deleteDelivery(deliveryId);
-
           await MovimentService.saveMoviment({
             productQuantity: deliveryDetails.deliveryQuantity,
             movementDay: getDataFormat(),

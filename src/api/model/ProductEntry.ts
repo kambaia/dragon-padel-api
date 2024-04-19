@@ -36,7 +36,7 @@ const productEntrySchema  = new mongoose.Schema(
 );
 
 productEntrySchema.virtual('document_url').get(function () {
-  return `http://localhost:5000/files/product/doc/${this.invoiceDocument}`;
+  return `http://localhost:5000/files/doc/${this.invoiceDocument}`;
 });
 
 // Export the model and return your IUser interface

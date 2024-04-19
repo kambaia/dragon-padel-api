@@ -47,7 +47,6 @@ class StockController {
     try {
 
       const { productId, productQuantity, supplier} = req.body;
-      console.log(req.body);
       const newStock = {
         product: productId,supplier: supplier, productQuantity: parseInt(productQuantity)
       } as IStock

@@ -12,7 +12,6 @@ export async function fazerBackupMongoDB() {
     if (fs.existsSync(arquivoUltimoBackup)) {
         // Lê a data do último backup do arquivo
         const ultimaDataBackup = new Date(fs.readFileSync(arquivoUltimoBackup, 'utf-8').trim());
-        console.log('Último backup:', ultimaDataBackup);
 
         // Consulta o banco de dados para verificar se há dados modificados desde o último backup
         // Aqui você precisa implementar a lógica para verificar a data de modificação dos documentos no banco de dados

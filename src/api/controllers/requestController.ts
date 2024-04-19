@@ -54,7 +54,6 @@ class RequestController {
   public async updateRequest(req: Request, res: Response): Promise<void> {
     try {
       const inputs = req.body;
-      console.log("INPUT DO REQUEST: ", inputs)
       const { requestId } = req.params;
       const request = await RquestService.updateRequest(requestId, inputs);
       res.status(204).json({

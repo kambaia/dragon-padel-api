@@ -5,19 +5,23 @@ export const fetchAllDatadelivery = async (product: IDelivery[]) => {
   for (const [_index, pd] of product.entries()) {
     productResult.push({
       id: pd._id,
-      deliveredByFullName: `${pd?.deliveredBy?.firstName} ${pd.deliveredBy?.surname}`,
-      receivedByFullName: `${pd?.receivedBy?.firstName} ${pd.receivedBy?.surname}`,
-      beneficiaryFullName: `${pd?.beneficiary?.firstName} ${pd.beneficiary.surname}`,
+      receivedBy: pd.deliveredBy?._id,
+      deliveredByFullName: `${pd?.deliveredBy?.firstName} ${pd?.deliveredBy?.surname}`,
+      receivedByFullName: `${pd?.receivedBy?.firstName} ${pd?.receivedBy?.surname}`,
+      beneficiary: pd?.deliveredBy?._id,
+      beneficiaryFullName: `${pd?.beneficiary?.firstName} ${pd?.beneficiary?.surname}`,
       beneficiaryCompany: `${pd?.beneficiary?.department?.company.companyName}-${pd?.beneficiary?.department?.departmentName}`,
-      deliveryQuantity: pd.deliveryQuantity,
-      serialNumber: pd.productInStock.product?.serialNumber,
-			productCover :  pd.productInStock.product?.productCover,
-			model : `${pd.productInStock.product?.brand}-${pd.productInStock.product?.model}`,
-			condition : pd.productInStock.product?.condition,
-      technicalDescription : pd.productInStock.product?.technicalDescription,
-      deliveryDate:  pd.deliveryDate?.split("-").reverse().join("-"),
-      active: pd.active,
-      isAvailable: pd.isAvailable,
+      
+      deliveryQuantity: pd?.deliveryQuantity,
+      stockId: pd?.productInStock?._id,
+      serialNumber: pd?.productInStock?.product?.serialNumber,
+			productCover :  pd?.productInStock?.product?.productCover,
+			model : `${pd?.productInStock?.product?.brand}-${pd?.productInStock.product?.model}`,
+			condition : pd?.productInStock?.product?.condition,
+      technicalDescription : pd?.productInStock?.product?.technicalDescription,
+      deliveryDate:  pd?.deliveryDate,
+      active: pd?.active,
+      isAvailable: pd?.isAvailable,
     });
   }
   return productResult;

@@ -7,7 +7,7 @@ import api from './api';
 import MessageResponse from './interfaces/MessageResponse';
 import * as middlewares from './middlewares';
 import path from 'path';
-//import { fazerBackupMongoDB } from './util/backup';
+import { fazerBackupMongoDB } from './util/backup';
 require('dotenv').config();
 
 const app = express();

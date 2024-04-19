@@ -9,6 +9,7 @@ const movementsSchema: Schema = new Schema(
         movementDay: { type: String, required: true },
         movementTime: { type: String, required: false },
         entry: { type: Boolean, default: false },
+        annulment: { type: Boolean, default: false },
         productOutput: { type: Boolean, default: false },
         delivery: { type: mongoose.Schema.Types.ObjectId,ref: 'Delivery'},
         productInStock: { type: mongoose.Schema.Types.ObjectId, ref: 'stock'},

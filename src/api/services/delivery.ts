@@ -106,12 +106,18 @@ export default class DeliveryService {
       }
     });
   }
-  public static async updateDelivery(deliveryId: string, user: IUserRegister) {
+  public static async updateDelivery(deliveryId: string, {  active, additionalAccessorie, beneficiary, createdAt, deliveredBy, deliveryDate, deliveryQuantity, isAvailable, stockId, receivedBy, updatedAt }: IDeliveryRegister) {
     return new Promise(async function (resolve, reject) {
       try {
+        const delivery = {
+          active, additionalAccessorie, 
+          beneficiary, createdAt, deliveredBy, 
+          deliveryQuantity, deliveryDate, 
+          isAvailable, productInStock:stockId, receivedBy, updatedAt
+        }
         const result = await Delivery.findByIdAndUpdate(
           { _id: deliveryId },
-          { $set: user },
+          { $set: delivery },
           { new: false }
         );
         resolve(result);

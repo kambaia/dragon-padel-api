@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { ISearch } from "../../interfaces/app/search";
 import {IStock } from "../../interfaces/ProdutosInterface";
 import { handleMongoError } from "../../util/errors/api-error";
@@ -43,6 +44,7 @@ export default class StockService{
             }
         });
     }
+
     public static async saveStock(stock: IStock) {
         return new Promise(async function (resolve, reject) {
             try {
@@ -77,4 +79,25 @@ export default class StockService{
             }
         });
     }
+    public static async filterMotherStock() {
+        return new Promise(async function (resolve, reject) {
+            try {
+                const stockData = await Stock.find({
+                    createdAt: {
+                        $gte: new Date('2024-01-01'),
+                        $lte: new Date('2024-12-31')
+                    }
+                });
+                resolve(stockData);
+            } catch (error) {
+                reject(error);
+            } 
+        });
+    }
+    
+
+
+    
+
+
 }

@@ -3,7 +3,7 @@ import { ISearch } from '../../interfaces/app/search';
 import { IStock } from '../../interfaces/ProdutosInterface';
 import StockService from '../services/stock';
 import MovimentService from '../services/moviment';
-import { getDataFormat, getTimeFormat } from '../../util/functionshelp';
+import { breaksDowndataByQuarter, getDataFormat, getTimeFormat } from '../../util/functionshelp';
 import { fetchAllDataStock, responseDataStock} from '../../util/dataFetching/stock';
 
 
@@ -121,6 +121,21 @@ class StockController {
       return res.status(404).send(error);
     }
   }
+
+//Função para buscar e filtrar os dados de janeiro a dezembro
+public async filterdataFromGraph(req: Request, res: Response): Promise<void> {
+  try {
+    const stock = await StockService.filterMotherStock();
+    if (stock) {
+      const allMothsGraph = breaksDowndataByQuarter(stock);
+       res.status(200).send(allMothsGraph);
+    }
+  } catch (error) {
+    console.log(error)
+     res.status(404).send(error);
+  }
+  
+}
 }
 
 export default new StockController();

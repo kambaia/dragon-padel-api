@@ -50,3 +50,38 @@ export function extrairId(str:any) {
     // Se encontrar, retorna o ID, senão retorna a string original
     return match ? match[1] : str;
 }
+
+
+// Função para dividir os dados por trimestre
+export function breaksDowndataByQuarter(stockData: any) {
+    const trimestres: { [key: string]: number } = {
+        'firstTrimeste': 0,
+        'secondTrimester': 0,
+        'thirdTrimester': 0,
+        'fourthQuarter': 0
+    };
+    let totalQuantidade = 0;
+    for (const item of stockData) {
+        const trimestre = getTrimestre(item.createdAt);
+        trimestres[trimestre] += item.productQuantity; // Adiciona a quantidade do item ao trimestre correspondente
+        totalQuantidade += item.productQuantity; // Adiciona a quantidade do item ao total
+    }
+
+
+    return trimestres;
+}
+
+// Função para determinar o trimestre de uma data
+function getTrimestre(date: Date): string {
+    const month = date.getMonth();
+    if (month >= 0 && month <= 2) {
+        return 'firstTrimeste';
+    } else if (month >= 3 && month <= 5) {
+        return 'secondTrimester';
+    } else if (month >= 6 && month <= 8) {
+        return 'thirdTrimester';
+    } else {
+        return 'fourthQuarter';
+    }
+}
+

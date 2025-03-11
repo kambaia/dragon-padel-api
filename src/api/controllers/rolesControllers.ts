@@ -4,7 +4,8 @@ import {
   responseDataRole,
 } from '../../util/dataFetching/role';
 import { Role } from '../model/Permission';
-class UserController {
+
+class RolesControllers {
   public async listRoles(req: Request, res: Response): Promise<void> {
     const { limit, page } = req.query;
     try {
@@ -86,4 +87,4 @@ class UserController {
   }
 }
 
-export default new UserController();
+export default new RolesControllers();

@@ -1,17 +1,14 @@
-import { IProdutoCategory } from '../../interfaces/ProdutosInterface';
+
+import { ICategory } from '../../interfaces/generoInterface';
 import { formatDate } from '../time';
 
-export const fetchAllDataCategory = async (category: IProdutoCategory[]) => {
+export const fetchAllDataCategory = async (category: ICategory[]) => {
   let categoryResult = [];
   for (const [index, ct] of category.entries()) {
     categoryResult.push({
       id: ct._id,
       categoryName: ct?.categoryName,
       description: ct?.description,
-      active: ct.active,
-      isAvailable: ct.isAvailable,
-      updatedAt: ct.updatedAt,
-      createdAt: formatDate(ct.createdAt),
     });
   }
   return categoryResult;

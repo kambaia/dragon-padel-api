@@ -4,21 +4,13 @@ import { formatDate } from '../time';
 export const fetchAllDataUser = async (user: IUser) => {
   return {
     id: user._id,
-    firstName: user.firstName,
-    surname: user.surname,
+    surname: user.name,
     email: user.email,
-    fullName: `${user.firstName} ${user?.surname}`,
     banned: user.banned,
     active: user.active,
-    roles: user.permission?.roles,
-    department: {
-      departmentName: user?.department?.departmentName,
-      company: user?.department?.company.companyName,
-      logo_url: user?.department?.company?.logo_url,
-    },
     createdAt: formatDate(user.createdAt),
     updatedAt: formatDate(user.updatedAt),
-    profile_url: user.profile_url,
+    profile: user.profile,
   };
 };
 

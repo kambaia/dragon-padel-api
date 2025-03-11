@@ -9,33 +9,17 @@ export enum CUSTOM_VALIDATION {
 
 const userSchema: Schema = new Schema(
   {
-    profile: {
-      thumbnail: { type: String },
-      name: { type: String },
-    },
-    firstName: { type: String, required: true },
-    surname: { type: String, require: true },
+    profile: { type: String },
     email: { type: String, required: true, unique: true },
-    fullName: { type: String },
+    name: { type: String },
     password: { type: String, required: true },
-    banned: { type: Boolean },
+    banned: { type: Boolean,  default: false },
     active:  {
       type: Boolean,
       default: true
     },
-    permission: { type: mongoose.Schema.Types.ObjectId, ref: 'Roles' },
-    department: { type: mongoose.Schema.Types.ObjectId, ref: 'Department' },
+    permission: [],
   },
-  {
-    timestamps: true,
-    toJSON: {
-      virtuals: true,
-    },
-  }
-);
-userSchema.virtual('profile_url').get(function () {
-  return `http://localhost:5000/files/user/${this.profile?.thumbnail}`;
-});
-
+  { timestamps: true });
 export const User: Model<IUser> =
   mongoose.models.User || mongoose.model('User', userSchema);

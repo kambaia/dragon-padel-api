@@ -1,19 +1,10 @@
 import { Request, Response } from 'express';
-/* import {
-  fetchAllDataAConpany,
-  responseDataCompany,
-} from '../../util/dataFetching/company';
- */
-import { ProdutoCategory as Category } from '../model/ProdutoCategorySchema';
-import { ICompany } from '../../interfaces/CompanyInterface';
-import {
-  fetchAllDataUser,
-  responseDataUser,
-} from '../../util/dataFetching/user';
 import {
   fetchAllDataCategory,
   responseDataCategory,
 } from '../../util/dataFetching/category';
+import { Category } from '../model/Category';
+import { ICategory } from '../../interfaces/generoInterface';
 
 class ProdutoCategoryController {
   public async listAllCategory(req: Request, res: Response): Promise<void> {
@@ -35,7 +26,7 @@ class ProdutoCategoryController {
   public async listOneCategory(req: Request, res: Response): Promise<void> {
     try {
       const { categoryId } = req.params;
-      const category = (await Category.findById(categoryId)) as ICompany;
+      const category = (await Category.findById(categoryId)) as ICategory;
       if (category) {
         res.status(200).send(category);
       } else {

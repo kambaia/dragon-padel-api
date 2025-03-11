@@ -1,5 +1,3 @@
-import { IDepartment } from './CompanyInterface';
-
 export interface IUser extends Document {
   [x: string]: any;
   _id: string;
@@ -19,7 +17,6 @@ export interface IUser extends Document {
   createdAt: Date;
   updatedAt: Date;
   permission: Permission;
-  department: IDepartment;
 }
 
 export interface IUserRegister {
@@ -48,7 +45,6 @@ export interface IEmployee {
   surname: string;
   status: boolean;
   user?:IUser;
-  department: IDepartment;
   createdAt: Date;
   updatedAt: Date;
   address?: Address

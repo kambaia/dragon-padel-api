@@ -7,29 +7,18 @@ import api from './api';
 import MessageResponse from './interfaces/MessageResponse';
 import * as middlewares from './middlewares';
 import path from 'path';
-import { fazerBackupMongoDB } from './util/backup';
 require('dotenv').config();
 
 const app = express();
 db();
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Permite todos os métodos HTTP
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+})
 app.use(morgan('dev'));
-app.use(cors());
-app.use(
-  '/files/user',
-  express.static(path.resolve(__dirname, '..', 'public', 'img', 'user'))
-);
-app.use(
-  '/files/company',
-  express.static(path.resolve(__dirname, '..', 'public', 'img', 'companys'))
-);
-app.use(
-  '/files/product',
-  express.static(path.resolve(__dirname, '..', 'public', 'img', 'product'))
-);
-app.use(
-  '/files/doc',
-  express.static(path.resolve(__dirname, '..', 'public', 'documents', 'stock'))
-);
 app.use(express.json());
 
 app.get<{}, MessageResponse>('/', (req, res) => {

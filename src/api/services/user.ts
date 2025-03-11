@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import bcrypt from 'bcrypt';
 import { User } from '../model/User';
 import { IUser, IUserRegister } from '../../interfaces/UserInterface';
 import { handleMongoError } from '../../util/errors/api-error';
@@ -11,11 +10,6 @@ export default class AuthService {
         const result = await User.find({active: true})
           .limit(Number(limit))
           .skip(Number(page))
-          .populate('permission', '_id  id role type')
-          .populate({
-            path: 'department',
-            populate: { path: 'company' },
-          })
           .sort({ createdAt: -1 });
         resolve(result);
       } catch (error: unknown) {
@@ -26,16 +20,7 @@ export default class AuthService {
   public static async findOneUser(userId: string) {
     return new Promise(async function (resolve, reject) {
       try {
-        const result = (await User.findById(userId)
-          .populate('permission', '_id  id role type')
-          .populate({
-            path: 'department',
-            select: 'departmentName', // Seleciona apenas o campo 'name' do departamento
-            populate: {
-              path: 'company',
-              select: 'thumbnail logo_url companyName', // Seleciona apenas os campos 'logo' e 'name' da empresa
-            },
-          })) as IUser;
+        const result = (await User.findById(userId)) as IUser;
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

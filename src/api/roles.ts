@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import rolesController from '../api/controllers/rolesControllers';
+import rolesControllers from './controllers/rolesControllers';
+
 export const roleRouter = Router();
-roleRouter.get('/role', rolesController.listRoles);
-roleRouter.get('/role/:roleId', rolesController.listOne);
-roleRouter.post('/role', rolesController.saveRoles);
-roleRouter.put('/role/:roleId', rolesController.updateRole);
-roleRouter.delete('/role/:roleId', rolesController.deleteRole);
+roleRouter.get('/role', rolesControllers.listRoles);
+roleRouter.get('/role/:roleId', rolesControllers.listOne);
+roleRouter.post('/role', rolesControllers.saveRoles);
+roleRouter.put('/role/:roleId', rolesControllers.updateRole);
+roleRouter.delete('/role/:roleId', rolesControllers.deleteRole);

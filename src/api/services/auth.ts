@@ -23,16 +23,7 @@ export default class AuthService {
     return new Promise(async function (resolve, reject) {
       try {
         const result = await User.findOne({ email, active: true})
-          .select('+password')
-          .populate('permission', 'roles')
-          .populate({
-            path: 'department',
-            select: '-_id departmentName',
-            populate: {
-              path: 'company',
-              select: '-_id thumbnail logo_url companyName', // Seleciona apenas os campos 'logo' e 'name' da empresa
-            },
-          });
+          .select('+password');
         resolve(result);
       } catch (error: unknown) {
         reject(handleMongoError(error));

@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import userController from '../api/controllers/userController';
-import employeeController from '../api/controllers/employeeController';
 import { securetyUser } from '../middlewares/ensureAuthenticated';
 import multer from 'multer';
 
@@ -17,9 +16,3 @@ userRouter.put("/user-with-file/:userId", upload.single('profile'), userControll
 userRouter.delete('/user/:userId', userController.deleteUser);
 
 /***********************************************funcionjalidade do cadastro de funcionario  */
-userRouter.get('/employee', employeeController.listAllEmployee);
-userRouter.get('/employee/:employeeId', employeeController.listOneEmployee);
-userRouter.post('/employee', employeeController.saveEmployee);
-userRouter.put('/employee/:employeeId', employeeController.updateEmployee);
-userRouter.delete('/employee/:employeeId', employeeController.deleteEmployee);
-

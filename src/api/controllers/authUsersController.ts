@@ -6,10 +6,11 @@ import { fetchAllDataUser } from '../../util/dataFetching/user-access';
 
 class authUsersController {
   public async auth(req: Request, res: Response): Promise<Response> {
+    console.log(req.body)
     try {
       const { email, password } = req.body;
       const user = (await AuthService.authLogin(email)) as any;
-
+   
       if (!user)
         return res
           .status(404)
@@ -22,6 +23,7 @@ class authUsersController {
         user.password! = undefined;
         const acess = await fetchAllDataUser(user);
         const token = authToke(user._id.toString());
+        console.log(user)
         return res.json({ acess, token });
       }
     } catch (error) {

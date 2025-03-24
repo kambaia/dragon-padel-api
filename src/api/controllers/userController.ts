@@ -16,10 +16,14 @@ class UserController {
   public async listAllUser(req: Request, res: Response): Promise<void> {
     const { limit = 25, page = 0 } = req.query as unknown as ISearch;
     try {
+
       const user = (await UserService.findAllUser({ limit, page })) as any;
       const allDataUser = await fetchAllDataUser(user);
+
       const responseData = responseDataUser(allDataUser, Number(0));
+
       res.status(200).send(responseData);
+
     } catch (error) {
       res.status(404).send(error);
     }
@@ -53,7 +57,9 @@ class UserController {
           .json({ error: 'Esse nome de usuário já existe. Experimente outro' });
       } else {
         const newpassword = await hash(req.body.password, 8);
+
         req.body.password = newpassword;
+
         const inputs = {
           profile: {
             thumbnail: req.file?.filename,

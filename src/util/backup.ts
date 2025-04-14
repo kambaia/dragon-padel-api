@@ -34,7 +34,6 @@ export async function fazerBackupMongoDB() {
             console.log('Registro do último backup atualizado.');
         });
     } else {
-        console.log('Não há registro do último backup. Fazendo backup completo.');
         // Se não houver registro do último backup, faz um backup completo do banco de dados
         const comandoBackup = `mongodump --db ${nomeBancoDados} --out ${pastaBackup}`;
         exec(comandoBackup, (error, stdout, stderr) => {

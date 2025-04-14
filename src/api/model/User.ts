@@ -13,8 +13,10 @@ const userSchema: Schema = new Schema(
     email: { type: String, required: true, unique: true },
     name: { type: String },
     password: { type: String, required: true },
-    banned: { type: Boolean,  default: false },
-    active:  {
+    banned: { type: Boolean, default: false },
+    gender: { type: String },
+    bio: { type: String },
+    active: {
       type: Boolean,
       default: true
     },

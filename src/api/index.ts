@@ -2,9 +2,11 @@ import express from 'express';
 import { roleRouter } from './roles';
 import { userRouter } from './user';
 import { sessionRouter } from './session';
-import { categoryRouter } from './category';
 import { participantRouter } from './participant';
 import { reservationRouter } from './reservation';
+import routerProduct from './product';
+import routerInstructor from './instructor';
+
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -16,7 +18,8 @@ router.get('/', (req, res) => {
 router.use(sessionRouter);
 router.use(userRouter);
 router.use(roleRouter);
-roleRouter.use(categoryRouter);
-roleRouter.use(participantRouter);
-roleRouter.use(reservationRouter);
+router.use(participantRouter);
+router.use(reservationRouter);
+router.use('/product', routerProduct);
+router.use('/instructor', routerInstructor);
 export default router;

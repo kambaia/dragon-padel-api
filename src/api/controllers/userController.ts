@@ -61,11 +61,8 @@ class UserController {
         req.body.password = newpassword;
 
         const inputs = {
-          profile: {
-            thumbnail: req.file?.filename,
-            name: req.file?.originalname,
-          },
           ...req.body,
+          permission: [ 'admin' ],
         };
         const data = (await UserService.saveUser(inputs)) as any;
         const userdata = {
@@ -78,7 +75,6 @@ class UserController {
           .json({ success: 'Cadastro feito  com sucesso', ...userdata });
       }
     } catch (error) {
-      console.log(error);
       res.status(500).send({ message: error });
     }
   }

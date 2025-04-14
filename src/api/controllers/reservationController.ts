@@ -12,8 +12,6 @@ class ReservationController {
             .populate('participants')
                 .limit(Number(limit))
                 .skip(Number(page) * Number(limit));
-
-                console.log(reservations)
             
             const allDataUser = await fetchAllDataReservation(reservations)
             const responseData = responseDataReservation(allDataUser, Number(0));

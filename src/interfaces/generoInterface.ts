@@ -36,3 +36,67 @@ export interface ICategory extends Document {
   categoryName: string;
   description?: string;
 }
+
+interface Supplier {
+  name: string;
+  contact: string;
+}
+
+export interface IProduct {
+  _id: string;
+  name: string;
+  image: string;
+  description?: string;
+  category: string;
+  price: number;
+  stock: number;
+  color: string;
+  createdAt: Date;
+  supplier?: Supplier;
+}
+
+export interface ProductQueryParams {
+  search?: string;
+  category?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  inStock?: boolean;
+  sort?: string;
+  page?: number;
+  limit?: number;
+}
+export interface InstructorQueryParams {
+  search?: string;
+  gender?: 'Male' | 'Female' | 'Other';
+  experienceLevel?: 'Beginner' | 'Intermediate' | 'Advanced';
+  classType?: string;
+  sort?: string;
+  page?: number;
+  limit?: number;
+}
+
+export interface IInstructor {
+  _id?: string;
+  fullName: string;
+  profilePhoto?: string;
+  personalData: {
+    gender: 'Masculino' | 'Feminino' | 'Outro'
+    address: string;
+    email: string;
+    contact: string;
+  };
+  professionalData: {
+    experienceLevel: 'Iniciante' | 'Intermediário' | 'Avançado'
+    classType: string;
+  };
+  financialData: {
+    hourlyRate: number; // In AKZ
+    paymentType: 'Fixo Mensal' | 'Por Hora' | 'Por Aula'
+  };
+  administrativeData: {
+    studentCount: number;
+    classCount: number;
+  };
+  createdAt?: Date;
+  updatedAt?: Date;
+}

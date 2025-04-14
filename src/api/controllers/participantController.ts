@@ -1,19 +1,50 @@
 import { Request, Response } from 'express';
-import { IParticipant } from '../../interfaces/generoInterface';
 import { ISearch } from '../../interfaces/app/search';
 import { Participant } from '../model/ParticipantSchema';
 import { fetchAllDataParticipant, responseDataParticipant } from '../../util/dataFetching/participant';
-
+import { CloudflareService } from '../../util/cloudflare';
 class ParticipantController {
+  private cloudflare: CloudflareService;
+  constructor() {
+    this.cloudflare = new CloudflareService();
+    this.createParticipant = this.createParticipant.bind(this);
+  }
+
+  createParticipant = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+      const urls: { profile?: string; pdf_url?: string } = {};
+
+      if (files?.profile && files.profile[0]) {
+        const imageUrl = await this.cloudflare.uploadFile('participant', files.profile[0]);
+        console.log("Não foi", imageUrl);
+        urls.profile = imageUrl; // agora já é a URL pública
+      }
+
+      const dadosParticipant = req.body;
+
+      const participant = await Participant.create({ ...dadosParticipant, ...urls });
+      res.status(201).json({
+        message: 'Participant created successfully',
+        participant: participant
+      });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating participant', error });
+    }
+  }
+
+
+
   public async listAllParticipants(req: Request, res: Response): Promise<void> {
+
     const { limit = 25, page = 0 } = req.query as unknown as ISearch;
     try {
       const participants = await Participant.find()
         .limit(Number(limit))
         .skip(Number(page) * Number(limit))
         .populate('user_id');
-        const allDataUser = await fetchAllDataParticipant(participants)
-        const responseData = responseDataParticipant(allDataUser, Number(0));
+      const allDataUser = await fetchAllDataParticipant(participants)
+      const responseData = responseDataParticipant(allDataUser, Number(0));
       res.status(200).json(responseData);
     } catch (error) {
       res.status(404).json({ message: 'Error fetching participants', error });
@@ -33,18 +64,6 @@ class ParticipantController {
       }
     } catch (error) {
       res.status(404).json({ message: 'Error fetching participant', error });
-    }
-  }
-
-  public async createParticipant(req: Request, res: Response): Promise<void> {
-    try {
-      const participant = await Participant.create(req.body);
-      res.status(201).json({
-        message: 'Participant created successfully',
-        participant: participant
-      });
-    } catch (error) {
-      res.status(500).json({ message: 'Error creating participant', error });
     }
   }
 
@@ -99,7 +118,7 @@ class ParticipantController {
         .limit(Number(limit))
         .skip(Number(page) * Number(limit))
         .populate('user_id');
-        
+
       res.status(200).json(participants);
     } catch (error) {
       res.status(404).json({ message: 'Error fetching participants by category', error });

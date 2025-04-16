@@ -17,7 +17,6 @@ class ParticipantController {
 
       if (files?.profile && files.profile[0]) {
         const imageUrl = await this.cloudflare.uploadFile('participant', files.profile[0]);
-        console.log("Não foi", imageUrl);
         urls.profile = imageUrl; // agora já é a URL pública
       }
 

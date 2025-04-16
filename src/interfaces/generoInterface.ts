@@ -87,11 +87,6 @@ export interface IInstructor {
   };
   professionalData: {
     experienceLevel: 'Iniciante' | 'Intermediário' | 'Avançado'
-    classType: string;
-  };
-  financialData: {
-    hourlyRate: number; // In AKZ
-    paymentType: 'Fixo Mensal' | 'Por Hora' | 'Por Aula'
   };
   administrativeData: {
     studentCount: number;

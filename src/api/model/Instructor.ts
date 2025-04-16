@@ -4,13 +4,8 @@ import { IInstructor } from "../../interfaces/generoInterface";
 const mongoose = require('mongoose');
 
 const InstructorSchema = new mongoose.Schema({
-  fullName: {
-    type: String,
-    required: true
-  },
-  profilePhoto: {
-    type: String // URL or file path to the image
-  },
+  fullName: {type: String, required: true },
+  profilePhoto: {type: String},
   personalData: {
     gender: {
       type: String,
@@ -28,16 +23,6 @@ const InstructorSchema = new mongoose.Schema({
       type: String,
       enum: ['Iniciante', 'Intermediário', 'Avançado']
     },
-    classType: String
-  },
-  financialData: {
-    hourlyRate: {
-      type: Number 
-    },
-    paymentType: {
-      type: String,
-      enum: ['Fixo Mensal', 'Por Hora', 'Por Aula']
-    }
   },
   administrativeData: {
     studentCount: Number,

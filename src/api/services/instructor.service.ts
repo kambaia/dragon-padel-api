@@ -1,6 +1,6 @@
 import { FilterQuery } from "mongoose";
 
-import { Instructor } from "../model/InstructorSchema";
+import { Instructor } from "../model/Instructor";
 import { IInstructor, InstructorQueryParams } from "../../interfaces/generoInterface";
 
 class InstructorService {
@@ -28,7 +28,7 @@ class InstructorService {
         gender,
         experienceLevel,
         classType,
-        sort = '-createdAt',
+        sort = 'createdAt',
         page = 1,
         limit = 10
       } = params;

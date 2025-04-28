@@ -12,7 +12,7 @@ const upload = multer({
 
 
 participantRouter.post('/participant', upload.fields([
-  { name: 'profile', maxCount: 1 },
+  { name: 'profilePicture', maxCount: 1 },
 ]), participantControllers.createParticipant);
 
 participantRouter.get('/participant', participantControllers.listAllParticipants);

@@ -26,9 +26,8 @@ export interface IUserRegister {
   firstName: string;
   fullName: string;
   password: string;
-  profileName: string;
   surname: string;
-  urlProfile: string;
+  profile: string;
   userBirth: string;
   userName: string;
   status: boolean;

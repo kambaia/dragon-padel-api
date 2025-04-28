@@ -5,10 +5,14 @@ import { CloudflareService } from '../../util/cloudflare';
 
 class ProductController {
   private cloudflare: CloudflareService;
-
   constructor() {
     this.cloudflare = new CloudflareService();
     this.createProduct = this.createProduct.bind(this);
+    this.getAllProducts = this.getAllProducts.bind(this);
+    this.getProductById = this.getProductById.bind(this);
+    this.updateProduct = this.updateProduct.bind(this);
+    this.deleteProduct = this.deleteProduct.bind(this);
+    this.getProductsByCategory = this.getProductsByCategory.bind(this);
   }
 
   createProduct = async (req: Request, res: Response): Promise<void> => {
@@ -19,7 +23,7 @@ class ProductController {
 
       if (files?.image && files.image[0]) {
         const imageUrl = await this.cloudflare.uploadFile('product',files.image[0]);
-        urls.image = imageUrl; // agora já é a URL pública
+        urls.image = imageUrl;
       }
 
       const dadosProduct = req.body;
@@ -108,8 +112,11 @@ class ProductController {
   }
 
   async deleteProduct(req: Request, res: Response): Promise<void> {
-    try {
+    try {  const url_image= req.query.url_image as string;
+      console.log(url_image);
+      await this.cloudflare.deleteFile(url_image);
       const product = await ProductService.deleteProduct(req.params.id);
+
       if (!product) {
         res.status(404).json({ message: 'Product not found' });
         return;
@@ -123,6 +130,7 @@ class ProductController {
   async getProductsByCategory(req: Request, res: Response): Promise<void> {
     try {
       const products = await ProductService.getProductsByCategory(req.params.category);
+     
       res.status(200).json(products);
     } catch (error: unknown) {
       res.status(500).json({ message: error instanceof Error ? error.message : 'Erro desconhecido' });

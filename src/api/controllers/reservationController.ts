@@ -3,6 +3,7 @@ import { IReservation } from '../../interfaces/generoInterface';
 import { ISearch } from '../../interfaces/app/search';
 import { fetchAllDataReservation, responseDataReservation } from '../../util/dataFetching/reservation';
 import { Reservation } from '../model/Reservation';
+import InicialData from '../services/inicialData.service';
 
 class ReservationController {
     public async listAllReservations(req: Request, res: Response): Promise<void> {
@@ -23,6 +24,18 @@ class ReservationController {
         }
     }
 
+    public async getSummary(req: Request, res: Response): Promise<void> {
+        try {
+           const resertion = await InicialData.getReservationSummaryByCurrentMonth();
+            if (resertion) {
+                res.status(200).json(resertion);
+            } else {
+                res.status(404).json({ message: 'Reservation not found' });
+            }
+        } catch (error) {
+            res.status(404).json({ message: 'Error fetching reservation', error });
+        }
+    }
     public async getReservation(req: Request, res: Response): Promise<void> {
         try {
             const { reservationId } = req.params;

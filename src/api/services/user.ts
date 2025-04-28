@@ -28,6 +28,7 @@ export default class AuthService {
     });
   }
   public static async saveUser(user: IUserRegister) {
+    console.log(user);
     return new Promise(async function (resolve, reject) {
       try {
         const result = await User.create(user);

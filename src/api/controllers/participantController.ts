@@ -9,28 +9,32 @@ class ParticipantController {
     this.cloudflare = new CloudflareService();
     this.createParticipant = this.createParticipant.bind(this);
   }
-
   createParticipant = async (req: Request, res: Response): Promise<void> => {
     try {
       const files = req.files as { [fieldname: string]: Express.Multer.File[] };
       const urls: { profile?: string; pdf_url?: string } = {};
-
-      if (files?.profile && files.profile[0]) {
-        const imageUrl = await this.cloudflare.uploadFile('participant', files.profile[0]);
-        urls.profile = imageUrl; // agora já é a URL pública
+      if (files?.profilePicture && files.profilePicture[0]) {
+        const imageUrl = await this.cloudflare.uploadFile('participant', files.profilePicture[0]);
+        urls.profile = imageUrl;
       }
-
+      // Se for apenas uma URL enviada no body
+      if (req.body.profile && !urls.profile) {
+        urls.profile = req.body.profile;
+      }
+  
       const dadosParticipant = req.body;
 
       const participant = await Participant.create({ ...dadosParticipant, ...urls });
+  
       res.status(201).json({
         message: 'Participant created successfully',
-        participant: participant
+        participant
       });
     } catch (error) {
       res.status(500).json({ message: 'Error creating participant', error });
     }
-  }
+  };
+  
 
 
 
